@@ -21,9 +21,9 @@ export default function Navbar() {
             <Link to="why-choose" smooth={true} duration={500}>
               Why Choose Us
             </Link>
-            <a href="#providers" className="">
+            <NavLink to="/providers" className="">
               For Providers
-            </a>
+            </NavLink>
             <a href="#about" className="">
               About
             </a>
