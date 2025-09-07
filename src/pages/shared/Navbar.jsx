@@ -1,23 +1,26 @@
-import logo from "../../assets/images/logo.png"
+import { Link } from "react-scroll";
+import logo from "../../assets/images/logo.png";
+import { NavLink, useNavigate } from "react-router-dom";
 
 export default function Navbar() {
+  const navigate = useNavigate();
   return (
     <header className="w-full py-4">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
-          <div>
+          <div onClick={() => navigate("/")}>
             <img src={logo} alt="" />
           </div>
 
           {/* Navigation */}
           <nav className="flex items-center font-medium text-lg text-[#2c2c2c] gap-10">
-            <a href="#services" className="">
+            <NavLink to="/services" className="">
               Services
-            </a>
-            <a href="#why-choose" className="">
+            </NavLink>
+            <Link to="why-choose" smooth={true} duration={500}>
               Why Choose Us
-            </a>
+            </Link>
             <a href="#providers" className="">
               For Providers
             </a>

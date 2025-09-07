@@ -7,7 +7,7 @@ import clock from "../../assets/images/clock.png";
 
 export const WhyChoose = () => {
   return (
-    <section className="py-16 mb-24">
+    <section id="why-choose" className="py-16 mb-24">
       <div className="text-center">
         <h2 className="text-4xl font-bold text-gray-900">
           Why Choose Primepath?
