@@ -22,10 +22,10 @@ export default function PartnershipApplication() {
   return (
     <div className="bg-white rounded-lg shadow-sm p-20">
       <div className="text-center mb-8">
-        <h2 className="text-2xl font-semibold text-gray-900 mb-2">
+        <h2 className="text-4xl font-bold text-[#111827] mb-2">
           Partnership Application
         </h2>
-        <p className="text-gray-600">
+        <p className="text-[#4B5563] text-xl">
           Take the first step towards expanding your healthcare services
         </p>
       </div>
@@ -47,7 +47,7 @@ export default function PartnershipApplication() {
               onChange={(e) =>
                 setFormData({ ...formData, organizationName: e.target.value })
               }
-              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-yellow-500 focus:outline-none"
+              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-500 focus:outline-none"
             />
           </div>
 
@@ -65,7 +65,7 @@ export default function PartnershipApplication() {
               onChange={(e) =>
                 setFormData({ ...formData, contactPerson: e.target.value })
               }
-              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-yellow-500 focus:outline-none"
+              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-500 focus:outline-none"
             />
           </div>
         </div>
@@ -87,7 +87,7 @@ export default function PartnershipApplication() {
               onChange={(e) =>
                 setFormData({ ...formData, emailAddress: e.target.value })
               }
-              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-yellow-500 focus:outline-none"
+              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-500 focus:outline-none"
             />
           </div>
 
@@ -105,7 +105,7 @@ export default function PartnershipApplication() {
               onChange={(e) =>
                 setFormData({ ...formData, phoneNumber: e.target.value })
               }
-              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-yellow-500 focus:outline-none"
+              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-500 focus:outline-none"
             />
           </div>
         </div>
@@ -124,7 +124,7 @@ export default function PartnershipApplication() {
             onChange={(e) =>
               setFormData({ ...formData, serviceModel: e.target.value })
             }
-            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-yellow-500 focus:outline-none bg-white"
+            className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-500 focus:outline-none bg-white"
           >
             <option value="">Select preferred service model</option>
             <option value="telehealth">Telehealth Services</option>
@@ -148,7 +148,7 @@ export default function PartnershipApplication() {
             onChange={(e) =>
               setFormData({ ...formData, patientVolume: e.target.value })
             }
-            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-yellow-500 focus:outline-none bg-white"
+            className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-500 focus:outline-none bg-white"
           >
             <option value="">Select patient volume range</option>
             <option value="0-50">0-50 patients</option>
@@ -174,7 +174,7 @@ export default function PartnershipApplication() {
             onChange={(e) =>
               setFormData({ ...formData, additionalInfo: e.target.value })
             }
-            className="w-full min-h-[120px] px-3 py-2 border border-gray-300 rounded-md resize-none focus:ring-2 focus:ring-yellow-500 focus:outline-none"
+            className="w-full min-h-[120px] px-3 py-2 border border-gray-300 rounded-lg resize-none focus:ring-2 focus:ring-yellow-500 focus:outline-none"
           />
         </div>
 
@@ -204,7 +204,7 @@ export default function PartnershipApplication() {
         {/* Submit Button */}
         <button
           type="submit"
-          className="w-full bg-[#C9A14A] hover:bg-[#C9A14A]/95 text-white font-medium py-3 rounded-lg "
+          className="w-full bg-[#C9A14A] hover:bg-[#C9A14A]/95 text-white font-semibold text-lg py-3 rounded-lg "
           disabled={!formData.agreeToTerms}
         >
           Submit Partnership Application
