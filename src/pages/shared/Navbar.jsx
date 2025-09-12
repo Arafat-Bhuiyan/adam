@@ -24,9 +24,9 @@ export default function Navbar() {
             <NavLink to="/providers" className="">
               For Providers
             </NavLink>
-            <a href="#about" className="">
+            <NavLink to="/about" className="">
               About
-            </a>
+            </NavLink>
           </nav>
 
           {/* CTA Button */}
