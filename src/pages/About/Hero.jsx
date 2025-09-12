@@ -6,7 +6,7 @@ import tag from "../../assets/images/tag.svg";
 
 export default function Hero() {
   return (
-    <section className="bg-gradient-to-r from-[#F4ECDB] to-[#FAF6ED] py-16 px-32 rounded-3xl mb-48 relative">
+    <section className="bg-gradient-to-r from-[#F4ECDB] to-[#FAF6ED] py-16 px-32 rounded-3xl mb-60 relative">
       <div className="max-w-7xl mx-auto ">
         <div className="grid lg:grid-cols-2 items-center">
           {/* Left side - Doctor image */}
