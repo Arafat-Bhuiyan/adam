@@ -4,6 +4,8 @@ import { Home } from "../pages/Home/Home";
 import { Services } from "../pages/Services/Services";
 import { Providers } from "../pages/Providers/Providers";
 import { About } from "../pages/About/About";
+import Terms from "../pages/Terms & Policy/Terms";
+import Privacy from "../pages/Terms & Policy/Privacy";
 
 const router = createBrowserRouter([
   {
@@ -26,6 +28,14 @@ const router = createBrowserRouter([
       {
         path: "/about",
         element: <About />,
+      },
+      {
+        path: "/terms",
+        element: <Terms />,
+      },
+      {
+        path: "/privacy",
+        element: <Privacy />,
       },
     ],
   },

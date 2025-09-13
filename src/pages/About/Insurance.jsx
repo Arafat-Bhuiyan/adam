@@ -1,4 +1,3 @@
-import { Shield, CheckCircle } from "lucide-react"
 import Umbrella from "../../assets/images/umbrella.png";
 import Bonding from "../../assets/images/bonding.png";
 

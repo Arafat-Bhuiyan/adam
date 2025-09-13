@@ -1,8 +1,9 @@
-import { Facebook, Twitter, Linkedin, Phone, Mail, MapPin } from "lucide-react";
+import { Phone, Mail, MapPin } from "lucide-react";
 import logo from "../../assets/images/logo.png";
 import fb from "../../assets/images/fb.png";
 import tweet from "../../assets/images/tweet.png";
 import linkedin from "../../assets/images/linkedin.png";
+import { NavLink } from "react-router-dom";
 
 export default function Footer() {
   return (
@@ -37,9 +38,21 @@ export default function Footer() {
         <div className="text-base">
           <h4 className="text-white font-semibold text-lg mb-3">Company</h4>
           <ul className="space-y-2 ">
-            <li>About Us</li>
-            <li>Privacy Policy</li>
-            <li>Terms of Service</li>
+            <li>
+              <NavLink to="/about" className="">
+                About Us
+              </NavLink>
+            </li>
+            <li>
+              <NavLink to="/privacy" className="">
+                Privacy Policy
+              </NavLink>
+            </li>
+            <li>
+              <NavLink to="/terms" className="">
+                Terms of Service
+              </NavLink>
+            </li>
           </ul>
         </div>
 
