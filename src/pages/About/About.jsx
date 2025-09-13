@@ -4,6 +4,8 @@ import MeetFounder from './MeetFounder'
 import OurMission from './OurMission'
 import OurCoreValues from './OurCore'
 import CredentialsCertifications from './CredentialsCertifications'
+import CommitmentConfidentiality from './Commitment'
+import InsuranceBonding from './Insurance'
 
 export const About = () => {
   return (
@@ -13,6 +15,8 @@ export const About = () => {
         <OurMission />
         <OurCoreValues />
         <CredentialsCertifications />
+        <CommitmentConfidentiality />
+        <InsuranceBonding />
     </div>
   )
 }

@@ -40,7 +40,7 @@ export default function OurCoreValues() {
           {values.map((value, index) => {
             const IconComponent = value.icon
             return (
-              <div key={index} className="bg-white rounded-lg p-6 text-center shadow-sm">
+              <div key={index} className="bg-white rounded-lg p-6 text-center shadow-xl">
                 <div
                   className={`w-12 h-12 ${value.bgColor} rounded-full flex items-center justify-center mx-auto mb-4`}
                 >
