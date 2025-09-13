@@ -6,6 +6,7 @@ import { Providers } from "../pages/Providers/Providers";
 import { About } from "../pages/About/About";
 import Terms from "../pages/Terms & Policy/Terms";
 import Privacy from "../pages/Terms & Policy/Privacy";
+import { Schedule } from "../pages/Schedule/Schedule";
 
 const router = createBrowserRouter([
   {
@@ -36,6 +37,10 @@ const router = createBrowserRouter([
       {
         path: "/privacy",
         element: <Privacy />,
+      },
+      {
+        path: "/schedule",
+        element: <Schedule />,
       },
     ],
   },
