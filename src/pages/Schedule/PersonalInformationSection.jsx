@@ -1,19 +1,26 @@
-import { Calendar } from "lucide-react"
+import { Calendar } from "lucide-react";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 
 export function PersonalInformationSection({ formData, onInputChange }) {
   return (
-    <div className="bg-white border border-gray-200 rounded-lg p-6">
+    <div className="bg-white border border-[#E5E7EB] rounded-lg p-6">
       <div className="flex items-center gap-3 mb-6">
-        <div className="w-8 h-8 bg-orange-500 text-white rounded-full flex items-center justify-center font-semibold">
+        <div className="w-8 h-8 bg-[#C9A14A] text-white rounded-full flex items-center justify-center font-semibold text-sm">
           1
         </div>
-        <h2 className="text-xl font-semibold text-gray-900">Personal Information</h2>
+        <h2 className="text-xl font-semibold text-[#2c2c2c]">
+          Personal Information
+        </h2>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         {/* First Name */}
         <div>
-          <label htmlFor="firstName" className="text-sm font-medium text-gray-700 mb-2 block">
+          <label
+            htmlFor="firstName"
+            className="text-sm font-medium text-gray-700 mb-2 block"
+          >
             First Name
           </label>
           <input
@@ -28,7 +35,10 @@ export function PersonalInformationSection({ formData, onInputChange }) {
 
         {/* Last Name */}
         <div>
-          <label htmlFor="lastName" className="text-sm font-medium text-gray-700 mb-2 block">
+          <label
+            htmlFor="lastName"
+            className="text-sm font-medium text-gray-700 mb-2 block"
+          >
             Last Name
           </label>
           <input
@@ -43,7 +53,10 @@ export function PersonalInformationSection({ formData, onInputChange }) {
 
         {/* Email */}
         <div>
-          <label htmlFor="email" className="text-sm font-medium text-gray-700 mb-2 block">
+          <label
+            htmlFor="email"
+            className="text-sm font-medium text-gray-700 mb-2 block"
+          >
             Email Address
           </label>
           <input
@@ -58,7 +71,10 @@ export function PersonalInformationSection({ formData, onInputChange }) {
 
         {/* Phone */}
         <div>
-          <label htmlFor="phone" className="text-sm font-medium text-gray-700 mb-2 block">
+          <label
+            htmlFor="phone"
+            className="text-sm font-medium text-gray-700 mb-2 block"
+          >
             Phone Number
           </label>
           <input
@@ -73,25 +89,34 @@ export function PersonalInformationSection({ formData, onInputChange }) {
 
         {/* Date of Birth */}
         <div>
-          <label htmlFor="dob" className="text-sm font-medium text-gray-700 mb-2 block">
+          <label
+            htmlFor="dob"
+            className="text-sm font-medium text-gray-700 mb-2 block"
+          >
             Date of Birth
           </label>
           <div className="relative">
-            <input
-              type="text"
+            <DatePicker
               id="dob"
-              placeholder="mm/dd/yyyy"
-              value={formData.dateOfBirth}
-              onChange={(e) => onInputChange("dateOfBirth", e.target.value)}
-              className="border rounded-md p-2 w-full pr-10"
+              selected={
+                formData.dateOfBirth ? new Date(formData.dateOfBirth) : null
+              }
+              onChange={(date) =>
+                onInputChange("dateOfBirth", date?.toISOString() || "")
+              }
+              placeholderText="mm/dd/yyyy"
+              className="border rounded-md p-2 w-full"
             />
-            <Calendar className="absolute right-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
+            <Calendar className="absolute right-48 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
           </div>
         </div>
 
         {/* Gender */}
         <div>
-          <label htmlFor="gender" className="text-sm font-medium text-gray-700 mb-2 block">
+          <label
+            htmlFor="gender"
+            className="text-sm font-medium text-gray-700 mb-2 block"
+          >
             Gender
           </label>
           <select
@@ -109,5 +134,5 @@ export function PersonalInformationSection({ formData, onInputChange }) {
         </div>
       </div>
     </div>
-  )
+  );
 }
