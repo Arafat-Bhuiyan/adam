@@ -7,6 +7,7 @@ import { About } from "../pages/About/About";
 import Terms from "../pages/Terms & Policy/Terms";
 import Privacy from "../pages/Terms & Policy/Privacy";
 import { Schedule } from "../pages/Schedule/Schedule";
+import AdminDashboard from "../Admin/Dashboard/AdminDashboard";
 
 const router = createBrowserRouter([
   {
@@ -43,6 +44,10 @@ const router = createBrowserRouter([
         element: <Schedule />,
       },
     ],
+  },
+  {
+    path: "/admin",
+    element: <AdminDashboard />,
   },
 ]);
 
