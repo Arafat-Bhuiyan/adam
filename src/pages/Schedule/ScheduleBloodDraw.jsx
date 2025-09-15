@@ -1,9 +1,12 @@
+"use client";
+
 import { useState } from "react";
 import { PersonalInformationSection } from "./PersonalInformationSection";
 import { ServiceDetailsSection } from "./ServiceDetailsSection";
 import { MedicalInformationSection } from "./MedicalInformationSection";
 import { AdditionalOptionsSection } from "./AdditionalOptionsSection";
 import { SidebarInfo } from "./SidebarInfo";
+import { SecurePaymentModal } from "./SecurePaymentModal";
 
 export default function BloodDrawBooking() {
   const [formData, setFormData] = useState({
@@ -27,6 +30,8 @@ export default function BloodDrawBooking() {
     consentAccepted: false,
   });
 
+  const [isPaymentModalOpen, setIsPaymentModalOpen] = useState(false);
+
   const handleInputChange = (field, value) => {
     setFormData((prev) => ({ ...prev, [field]: value }));
   };
@@ -38,6 +43,10 @@ export default function BloodDrawBooking() {
         ? [...prev.medicalConditions, condition]
         : prev.medicalConditions.filter((c) => c !== condition),
     }));
+  };
+
+  const handleSubmitBooking = () => {
+    setIsPaymentModalOpen(true);
   };
 
   return (
@@ -91,14 +100,14 @@ export default function BloodDrawBooking() {
                 />
                 <label
                   htmlFor="terms"
-                  className="text-sm text-gray-700 leading-relaxed"
+                  className="text-sm text-[#5B5B5B] leading-relaxed"
                 >
                   I acknowledge that I have read and agree to the{" "}
-                  <span className="text-orange-500 underline cursor-pointer">
+                  <span className="text-[#C9A14A] underline cursor-pointer">
                     Terms of Service
                   </span>{" "}
                   and{" "}
-                  <span className="text-orange-500 underline cursor-pointer">
+                  <span className="text-[#C9A14A] underline cursor-pointer">
                     Privacy Policy
                   </span>
                 </label>
@@ -116,7 +125,7 @@ export default function BloodDrawBooking() {
                 />
                 <label
                   htmlFor="consent"
-                  className="text-sm text-gray-700 leading-relaxed"
+                  className="text-sm text-[#5B5B5B] leading-relaxed"
                 >
                   I consent to receive appointment confirmations and results via
                   my provided contact information
@@ -126,10 +135,13 @@ export default function BloodDrawBooking() {
 
             {/* Submit Button */}
             <div className="space-y-4">
-              <button className="w-full bg-orange-600 hover:bg-orange-700 text-white py-3 text-lg font-medium rounded">
+              <button
+                onClick={handleSubmitBooking}
+                className="w-full bg-[#C9A14A] hover:bg-[#C9A14A]/80 text-white py-3 font-semibold text-base rounded-md"
+              >
                 Submit Booking Request
               </button>
-              <p className="text-center text-sm text-gray-600">
+              <p className="text-center text-sm text-[#5B5B5B]">
                 You will receive a confirmation email within 2 hours
               </p>
             </div>
@@ -139,6 +151,11 @@ export default function BloodDrawBooking() {
           <SidebarInfo />
         </div>
       </div>
+
+      <SecurePaymentModal
+        isOpen={isPaymentModalOpen}
+        onClose={() => setIsPaymentModalOpen(false)}
+      />
     </div>
   );
 }

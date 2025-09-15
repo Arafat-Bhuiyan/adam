@@ -5,7 +5,7 @@ export function AdditionalOptionsSection({ formData, onInputChange }) {
     <div className="bg-white border border-gray-200 rounded-lg p-6">
       {/* Section Header */}
       <div className="flex items-center gap-3 mb-6">
-        <div className="w-8 h-8 bg-orange-500 text-white rounded-full flex items-center justify-center font-semibold">
+        <div className="w-8 h-8 bg-[#C9A14A] text-white rounded-full flex items-center justify-center font-semibold">
           4
         </div>
         <h2 className="text-xl font-semibold text-gray-900">Additional Options</h2>
