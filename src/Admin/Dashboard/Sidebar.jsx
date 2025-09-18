@@ -16,6 +16,7 @@ export const Sidebar = ({ currentComponent, onMenuClick }) => {
     { icon: BriefcaseBusiness, label: "Job Management" },
     { icon: Handshake, label: "Dispute Management" },
     { icon: MessageCircleMore, label: "Communication & Reviews" },
+    { icon: MessageCircleMore, label: "Job Matching" },
     { icon: ChartBar, label: "Analytics & Reporting" },
     { icon: Banknote, label: "Payroll Management" },
   ];

@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Sidebar } from "./Sidebar";
-import UserManagement from "./UserManagement/UserManagement";
+import UserManagement from "../UserManagement/UserManagement";
 import Header from "./Header";
 import { StatCard } from "./StatCard";
 import { Users, Clock, Briefcase, DollarSign, Factory } from "lucide-react";
@@ -16,6 +16,9 @@ import ProfileModal from "./ProfileModal";
 import DocumentManager from "./DocumentManager";
 import NotificationsPanel from "./NotificationsPanel";
 import DeleteConfirmationModal from "./DeleteConfirmationModal";
+import DisputeManagement from "../DisputeManagement/DisputeManagement";
+import JobManagement from "../JobManagement/JobManagement";
+import JobMatching from "../JobMatching/JobMatching";
 
 export default function AdminDashboard() {
   const [currentComponent, setCurrentComponent] = useState("Dashboard"); // New state to track the active component
@@ -141,9 +144,11 @@ export default function AdminDashboard() {
             </div>
           )}
           {currentComponent === "User Management" && <UserManagement />}
-          {/* {currentComponent === "Job Management" && <Monetization />}
-          {currentComponent === "Dispute Management" && <Account />}
-          {currentComponent === "Communication & Reviews" && <Terms />}
+          {currentComponent === "Job Management" && <JobManagement />}
+          {currentComponent === "Dispute Management" && <DisputeManagement />}
+          {currentComponent === "Job Matching" && <JobMatching  />}
+
+          {/*  {currentComponent === "Communication & Reviews" && <Terms />}
           {currentComponent === "Analytics & Reporting" && <Terms />}
           {currentComponent === "Payroll Management" && <Privacy />} */}
         </div>

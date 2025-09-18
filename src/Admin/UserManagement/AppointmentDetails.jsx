@@ -2,7 +2,7 @@ import { FaCalendar, FaCalendarCheck, FaLocationDot } from "react-icons/fa6";
 import { HiDocumentPlus } from "react-icons/hi2";
 import { PiTestTubeFill } from "react-icons/pi";
 import { FaStar, FaUsers } from "react-icons/fa";
-import AvatarImage from "../../../assets/images/Image-52.png";
+import AvatarImage from "../../assets/images/Image-52.png";
 const AppointmentDetails = ({ isOpen, onClose, appointment }) => {
   if (!isOpen) return null;
 
