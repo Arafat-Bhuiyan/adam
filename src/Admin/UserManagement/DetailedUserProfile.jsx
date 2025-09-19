@@ -40,7 +40,7 @@ const DetailedUserProfile = ({ user, onClose }) => {
               </svg>
             </button>
           </div>
-        </div>{" "}
+        </div>
         <div className="px-6 mt-5">
           {" "}
           <div className="flex items-center justify-between p-6   shadow-sm">
