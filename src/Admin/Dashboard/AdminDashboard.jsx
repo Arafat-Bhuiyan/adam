@@ -19,6 +19,8 @@ import DeleteConfirmationModal from "./DeleteConfirmationModal";
 import DisputeManagement from "../DisputeManagement/DisputeManagement";
 import JobManagement from "../JobManagement/JobManagement";
 import JobMatching from "../JobMatching/JobMatching";
+import Communication from "../Communication/Communication";
+import MessagingInterface from "../Communication/MessagingInterface";
 
 export default function AdminDashboard() {
   const [currentComponent, setCurrentComponent] = useState("Dashboard"); // New state to track the active component
@@ -146,10 +148,10 @@ export default function AdminDashboard() {
           {currentComponent === "User Management" && <UserManagement />}
           {currentComponent === "Job Management" && <JobManagement />}
           {currentComponent === "Dispute Management" && <DisputeManagement />}
-          {currentComponent === "Job Matching" && <JobMatching  />}
-
-          {/*  {currentComponent === "Communication & Reviews" && <Terms />}
-          {currentComponent === "Analytics & Reporting" && <Terms />}
+          {currentComponent === "Job Matching" && <JobMatching />}
+          {/* {currentComponent === "Communication & Reviews" && <Communication />} */}
+          {currentComponent === "Communication & Reviews" && <MessagingInterface/>}
+          {/*    {currentComponent === "Analytics & Reporting" && <Terms />}
           {currentComponent === "Payroll Management" && <Privacy />} */}
         </div>
       </div>

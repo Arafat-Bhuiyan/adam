@@ -66,7 +66,7 @@ const JobManagement = () => {
   });
 
   return (
-    <div className=" ">
+    <div  style={{ fontFamily: "Montserrat" }} className=" ">
       {/* Header */}
       {/* <div className="flex items-center justify-between p-6 border-b border-gray-200">
         <div>

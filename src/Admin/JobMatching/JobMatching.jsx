@@ -60,7 +60,7 @@ const JobMatching = () => {
 
   return (
     // <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-    <div className="bg-white w-full  ">
+    <div  style={{ fontFamily: "Montserrat" }} className="bg-white w-full  ">
       {/* Search and Filters */}
       <div className="p-6 border rounded-md m-5 ml-0 border-gray-200">
         <div className="flex flex-col sm:flex-row gap-4">

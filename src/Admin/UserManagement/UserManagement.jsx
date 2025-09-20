@@ -118,7 +118,7 @@ const UserManagement = () => {
   });
 
   return (
-    <div className="w-full  mx-auto mt-6 bg-white rounded-lg shadow-sm">
+    <div  style={{ fontFamily: "Montserrat" }} className="w-full  mx-auto mt-6 bg-white rounded-lg shadow-sm">
       {/* Header with Search and Filters */}
       <div className="p-6 border rounded-md border-gray-200">
         <div className="flex flex-col sm:flex-row gap-4 items-start sm:items-center">
