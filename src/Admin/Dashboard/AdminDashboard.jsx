@@ -21,10 +21,13 @@ import JobManagement from "../JobManagement/JobManagement";
 import JobMatching from "../JobMatching/JobMatching";
 import Communication from "../Communication/Communication";
 import MessagingInterface from "../Communication/MessagingInterface";
+import PayrollManagement from "../PayrollManagement/PayrollManagement";
+import Setting from "../Setting/Setting";
 
 export default function AdminDashboard() {
   const [currentComponent, setCurrentComponent] = useState("Dashboard"); // New state to track the active component
-
+  const [isOpenDocumentVerifyModal, setIsOpenDocumentVerifyModal] =
+    useState(false);
   const handleComponentChange = (component) => {
     setCurrentComponent(component);
   };
@@ -104,13 +107,15 @@ export default function AdminDashboard() {
                         buttonText="Review Now"
                         color="orange"
                       />
-                      <ActionCard
-                        title="Documents to Verify"
-                        description="Verify professional credentials and certifications submitted by users"
-                        count={8}
-                        buttonText="Verify Now"
-                        color="blue"
-                      />
+                      <div onClick={() => setIsOpenDocumentVerifyModal(true)}>
+                        <ActionCard
+                          title="Documents to Verify"
+                          description="Verify professional credentials and certifications submitted by users"
+                          count={8}
+                          buttonText="Verify Now"
+                          color="blue"
+                        />
+                      </div>
                     </div>
 
                     {/* Recent Activity */}
@@ -140,7 +145,10 @@ export default function AdminDashboard() {
               </div>
               {/* <ProfessionalList /> */}
               {/* <ProfileModal /> */}
-              {/* <DocumentManager /> */}
+              <DocumentManager
+                isOpen={isOpenDocumentVerifyModal}
+                onClose={() => setIsOpenDocumentVerifyModal(false)}
+              />
               {/* <NotificationsPanel /> */}
               {/* <DeleteConfirmationModal /> */}
             </div>
@@ -150,9 +158,11 @@ export default function AdminDashboard() {
           {currentComponent === "Dispute Management" && <DisputeManagement />}
           {currentComponent === "Job Matching" && <JobMatching />}
           {/* {currentComponent === "Communication & Reviews" && <Communication />} */}
-          {currentComponent === "Communication & Reviews" && <MessagingInterface/>}
+          {currentComponent === "Communication & Reviews" && <Communication />}
+          {currentComponent === "Payroll Management" && <PayrollManagement />}
+          {currentComponent === "Setting" && <Setting />}
           {/*    {currentComponent === "Analytics & Reporting" && <Terms />}
-          {currentComponent === "Payroll Management" && <Privacy />} */}
+           */}
         </div>
       </div>
     </div>

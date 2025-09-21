@@ -9,11 +9,12 @@ import {
 } from "react-icons/fa6";
 import { FaEdit } from "react-icons/fa";
 
-const DetailedUserProfile = ({ user, onClose }) => {
+const DetailedUserProfile = ({ user, isOpen, onClose }) => {
   const handleSkillRemove = (skillToRemove) => {
     // Handle skill removal logic here
     console.log("Removing skill:", skillToRemove);
   };
+  if (!isOpen) return null;
 
   return (
     <div className=" fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
