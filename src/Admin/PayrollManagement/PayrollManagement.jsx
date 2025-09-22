@@ -2,6 +2,7 @@ import { useState } from "react";
 import { FaAngleDown, FaDownload, FaEye } from "react-icons/fa6";
 import PayrollManagementDetails from "./PayrollManagementDetails";
 import ActionDropdown from "../ActionDropdown";
+import SelectionDropdown from "../Dashboard/SelectionDropdown";
 // import PaymentProcessingModal from "./PaymentProcessingModal"
 
 const PayrollManagement = () => {
@@ -11,6 +12,9 @@ const PayrollManagement = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [showPaymentModal, setShowPaymentModal] = useState(false);
   const [selectedTransaction, setSelectedTransaction] = useState(null);
+  const [selectedTransactionAction, setSelectedTransactionAction] = useState(
+    {}
+  );
 
   const [openDropdown, setOpenDropdown] = useState(null);
 
@@ -22,7 +26,7 @@ const PayrollManagement = () => {
       amount: 125.0,
       date: "Jan 15, 2025",
       status: "Completed",
-      action: "Approve",
+      action: "Approved",
     },
     {
       id: "JOB-2025-002",
@@ -291,23 +295,19 @@ const PayrollManagement = () => {
                         className="cursor-pointer"
                       />
 
-                      <div className="relative">
-                        <button
-                          onClick={() => toggleDropdown(transaction.id)}
-                          className={`px-3 py-1 flex justify-center items-center gap-1 rounded-lg text-sm font-medium transition-colors duration-200 ${
-                            transaction.action === "Approve"
-                              ? "bg-green-500  text-white"
-                              : "bg-yellow-500  text-white"
-                          }`}
-                        >
-                          {transaction.action} <FaAngleDown/>
-                        </button>
-                        <ActionDropdown
-                          transactionId={transaction.id}
-                          transaction={transaction}
-                          onAction={handleDropdownAction}
-                          isOpen={openDropdown === transaction.id}
-                          onToggle={setOpenDropdown}
+                      <div className="w-32">
+                        <SelectionDropdown
+                          options={["Pending", "Approved"]} // action options
+                          selected={
+                            selectedTransactionAction[transaction.id] ||
+                            transaction.action
+                          }
+                          onSelect={(action) =>
+                            setSelectedTransactionAction((prev) => ({
+                              ...prev,
+                              [transaction.id]: action,
+                            }))
+                          }
                         />
                       </div>
                     </div>

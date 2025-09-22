@@ -6,7 +6,7 @@ import { useState } from "react";
 import SelectionDropdown from "./SelectionDropdown";
 
 const ProfileModal = ({ isOpen, onClose, professional }) => {
-  const [selectedAction, setSelectedAction] = useState("approve");
+  const [selectedAction, setSelectedAction] = useState("approved");
 
   if (!isOpen) return null;
 
@@ -102,9 +102,9 @@ const ProfileModal = ({ isOpen, onClose, professional }) => {
                 </button>
                 <div className="w-36">
                   <SelectionDropdown
-                    options={["approve", "deny"]}
+                    options={["approved", "deny"]}
                     selected={
-                      selectedAction["professionalLicense"] || "approve"
+                      selectedAction["professionalLicense"] || "approved"
                     } // unique key
                     onSelect={(action) =>
                       setSelectedAction((prev) => ({
@@ -141,9 +141,9 @@ const ProfileModal = ({ isOpen, onClose, professional }) => {
                 </button>
                 <div className="w-36">
                   <SelectionDropdown
-                    options={["approve", "deny"]}
+                    options={["approved", "deny"]}
                     selected={
-                      selectedAction["insuranceCertificate"] || "approve"
+                      selectedAction["insuranceCertificate"] || "approved"
                     } // unique key
                     onSelect={(action) =>
                       setSelectedAction((prev) => ({

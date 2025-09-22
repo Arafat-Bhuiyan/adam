@@ -206,7 +206,7 @@ const DocumentManager = ({ isOpen, onClose }) => {
                   {/* Dropdown Button */}
                   <div className="flex-1">
                     <SelectionDropdown
-                      options={["approve", "deny"]}
+                      options={["approved", "deny"]}
                       selected={selectedAction[doc.id]}
                       onSelect={(action) => handleAction(doc.id, action)}
                     />
