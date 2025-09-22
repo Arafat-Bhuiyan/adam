@@ -29,6 +29,8 @@ export default function AdminDashboard() {
   const [currentComponent, setCurrentComponent] = useState("Dashboard"); // New state to track the active component
   const [isOpenDocumentVerifyModal, setIsOpenDocumentVerifyModal] =
     useState(false);
+  const [messageOpen, setMessageOpen] = useState(false);
+  const [isOpenProfessionalList, setIsOpenProfessionalList] = useState(false);
   const handleComponentChange = (component) => {
     setCurrentComponent(component);
   };
@@ -58,12 +60,55 @@ export default function AdminDashboard() {
               alt="profile"
               className="w-12 h-12"
             /> */}
-            <Header />
+            <Header
+              title={
+                currentComponent === "Dashboard"
+                  ? "Welcome back, Admin Fariha"
+                  : currentComponent === "User Management"
+                  ? "User Management"
+                  : currentComponent === "Job Management"
+                  ? "Job Management"
+                  : currentComponent === "Dispute Management"
+                  ? "Dispute Management"
+                  : currentComponent === "Communication & Reviews"
+                  ? "Communication & Reviews Moderation"
+                  : currentComponent === "Job Matching"
+                  ? "Job Matching"
+                  : currentComponent === "Payroll Management"
+                  ? "Payroll Management"
+                  : currentComponent === "Setting"
+                  ? "Setting"
+                  : currentComponent === "Analytics & Reporting"
+                  ? "Analytics & Reporting"
+                  : ""
+              }
+              subtitle={
+                currentComponent === "Dashboard"
+                  ? "Here's what's happening with Phlebotomist today"
+                  : currentComponent === "User Management"
+                  ? "Manage all registered users on the platform"
+                  : currentComponent === "Job Management"
+                  ? "Review and manage job postings on the platform"
+                  : currentComponent === "Dispute Management"
+                  ? "Review and resolve reported issues and disputes"
+                  : currentComponent === "Communication & Reviews"
+                  ? "Review and resolve reported issues and disputes"
+                  : currentComponent === "Job Matching"
+                  ? "Find and assign qualified phlebotomists to open jobs"
+                  : currentComponent === "Payroll Management"
+                  ? "Review and resolve reported issues and disputes"
+                  : currentComponent === "Setting"
+                  ? "Information about your current plan and usages"
+                  : currentComponent === "Analytics & Reporting"
+                  ? "Monitor platform performance and generate insights"
+                  : ""
+              }
+            />
           </div>
         </div>
 
         {/* Content */}
-        <div className="px-6 mt-6 bg-[#ffffff]">
+        <div className="px-6 mt-3 bg-[#ffffff]">
           {/* Conditionally render the component based on the state */}
           {currentComponent === "Dashboard" && (
             <div className="">
@@ -107,14 +152,20 @@ export default function AdminDashboard() {
                         count={15}
                         buttonText="Review Now"
                         color="orange"
+                        isOpen={() => setIsOpenProfessionalList(true)}
+                        isOpenProfileList={isOpenProfessionalList}
+                        onClose={() => setIsOpenProfessionalList(false)}
                       />
-                      <div onClick={() => setIsOpenDocumentVerifyModal(true)}>
+                      <div>
                         <ActionCard
                           title="Documents to Verify"
                           description="Verify professional credentials and certifications submitted by users"
                           count={8}
                           buttonText="Verify Now"
                           color="blue"
+                          isOpen={() => setIsOpenDocumentVerifyModal(true)}
+                          isOpenDocumentVerifyModal={isOpenDocumentVerifyModal}
+                          onClose={() => setIsOpenDocumentVerifyModal(false)}
                         />
                       </div>
                     </div>
@@ -144,22 +195,28 @@ export default function AdminDashboard() {
                   </div>
                 </div>
               </div>
-              {/* <ProfessionalList /> */}
+
               {/* <ProfileModal /> */}
-              <DocumentManager
-                isOpen={isOpenDocumentVerifyModal}
-                onClose={() => setIsOpenDocumentVerifyModal(false)}
-              />
+
               {/* <NotificationsPanel /> */}
               {/* <DeleteConfirmationModal /> */}
             </div>
           )}
           {currentComponent === "User Management" && <UserManagement />}
-          {currentComponent === "Job Management" && <JobManagement />}
+          {currentComponent === "Job Management" && (
+            <JobManagement
+              onMessage={() => {
+                setCurrentComponent("Communication & Reviews");
+                setMessageOpen(true);
+              }}
+            />
+          )}
           {currentComponent === "Dispute Management" && <DisputeManagement />}
           {currentComponent === "Job Matching" && <JobMatching />}
           {/* {currentComponent === "Communication & Reviews" && <Communication />} */}
-          {currentComponent === "Communication & Reviews" && <Communication />}
+          {currentComponent === "Communication & Reviews" && (
+            <Communication messageOpen={messageOpen} />
+          )}
           {currentComponent === "Payroll Management" && <PayrollManagement />}
           {currentComponent === "Setting" && <Setting />}
           {currentComponent === "Analytics & Reporting" && (

@@ -1,7 +1,10 @@
 import { useEffect, useState } from "react";
-
+import JobDetailsModal from "../JobManagement/JobDetailsModal";
+import { BsThreeDots } from "react-icons/bs";
 const NotificationsPanel = ({ isOpen, onClose }) => {
   const [activeFilter, setActiveFilter] = useState("All");
+  const [isJobDetailsOpen, setIsJobDetailsOpen] = useState(false);
+  const [hideNotification, setHideNotification] = useState(false);
   if (!isOpen) return null;
 
   const notifications = [
@@ -25,7 +28,10 @@ const NotificationsPanel = ({ isOpen, onClose }) => {
 
   return (
     <>
-      <div className="bg-white  absolute top-7 right-0 shadow-xl w-[400px] max-w-md h-[600px] flex flex-col z-[10000]">
+      <div
+        style={{ display: hideNotification ? "none" : "block" }}
+        className="bg-white  absolute top-7 right-0 shadow-xl w-[400px] max-w-md h-[600px] flex flex-col z-[10000]"
+      >
         {/* Header */}
         <div className="flex items-center justify-between p-4">
           <span className="text-gray-600 font-medium">View All</span>
@@ -72,6 +78,7 @@ const NotificationsPanel = ({ isOpen, onClose }) => {
                   </h3>
                   <span className="text-xs text-gray-500 flex-shrink-0">
                     {notification.time}
+                    <BsThreeDots className="cursor-pointer" />
                   </span>
                 </div>
 
@@ -80,7 +87,13 @@ const NotificationsPanel = ({ isOpen, onClose }) => {
                   dangerouslySetInnerHTML={{ __html: notification.message }}
                 ></p>
 
-                <button className="px-5 py-1  border border-[#C9A14A] rounded-md text-sm font-medium text-[#C9A14A] transition-colors">
+                <button
+                  onClick={() => {
+                    setIsJobDetailsOpen(true);
+                    setHideNotification(true);
+                  }}
+                  className="px-5 py-1  border border-[#C9A14A] rounded-md text-sm font-medium text-[#C9A14A] transition-colors"
+                >
                   View Job
                 </button>
               </div>
@@ -88,6 +101,13 @@ const NotificationsPanel = ({ isOpen, onClose }) => {
           ))}
         </div>
       </div>
+      <JobDetailsModal
+        isOpen={isJobDetailsOpen}
+        onClose={() => {
+          setIsJobDetailsOpen(false);
+          setHideNotification(false);
+        }}
+      />
     </>
   );
 };

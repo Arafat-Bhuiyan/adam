@@ -4,6 +4,9 @@ import { ArrowRight, UserPlus, FileCheck } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { FaUserPlus } from "react-icons/fa6";
 import { GoQuestion } from "react-icons/go";
+import DocumentManager from "./DocumentManager";
+import React from "react";
+import ProfessionalList from "./ProfessionalList";
 
 const colorVariants = {
   orange: "text-orange-600",
@@ -11,6 +14,10 @@ const colorVariants = {
 };
 
 export function ActionCard({
+  isOpenDocumentVerifyModal,
+  isOpenProfileList,
+  onClose,
+  isOpen,
   title,
   description,
   count,
@@ -27,7 +34,11 @@ export function ActionCard({
             <h3 className="text-lg font-semibold text-foreground">{title}</h3>
           </div>
           <p className="mt-2 text-sm text-muted-foreground">{description}</p>
-          <Button className="mt-4 bg-[#C9A14A] hover:bg-[#C9A14A]" size="sm">
+          <Button
+            onClick={() => isOpen()}
+            className="mt-4 bg-[#C9A14A] hover:bg-[#C9A14A]"
+            size="sm"
+          >
             {buttonText}
             <ArrowRight className="ml-2 h-4 w-4" />
           </Button>
@@ -49,6 +60,12 @@ export function ActionCard({
           </div>
         </div>
       </div>
+
+      <DocumentManager
+        isOpen={isOpenDocumentVerifyModal}
+        onClose={() => onClose()}
+      />
+      <ProfessionalList isOpen={isOpenProfileList} onClose={() => onClose()} />
     </Card>
   );
 }

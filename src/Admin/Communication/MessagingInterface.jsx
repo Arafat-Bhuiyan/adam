@@ -10,7 +10,7 @@ import {
 } from "react-icons/io5";
 import { FaEdit } from "react-icons/fa";
 
-const MessagingInterface = () => {
+const MessagingInterface = ({ onPageShow }) => {
   const [selectedConversation, setSelectedConversation] = useState(0);
   const [newMessage, setNewMessage] = useState("");
   const [searchTerm, setSearchTerm] = useState("");
@@ -170,7 +170,33 @@ const MessagingInterface = () => {
     >
       {/* Left Sidebar - Conversations List */}
       {/* Search Bar */}
-      <div className="p-4 border-b border-gray-200">
+      <div className="p-4 border-b flex justify-between items-center border-gray-200">
+        {/* Tabs */}
+        <div className="flex  ">
+          <button
+            onClick={() => onPageShow()}
+            className={` font-medium text-sm border-b-2 transition-colors 
+             ${
+               ""
+               // activeTab === "content"
+               //   ? "border-[#C9A14A] text-[#C9A14A]"
+               //   : "border-transparent text-gray-500 hover:text-gray-700"
+             }
+          `}
+          >
+            Content
+          </button>
+          <button
+            className={`px-4 py-2 font-medium text-sm border-b-2 transition-colors ml-6  border-[#C9A14A] text-[#C9A14A] ${
+              ""
+              // activeTab === "messages"
+              //   ? "border-[#C9A14A] text-[#C9A14A]"
+              //   : "border-transparent text-gray-500 hover:text-gray-700"
+            }`}
+          >
+            Messages
+          </button>
+        </div>
         <div className="relative">
           <input
             type="text"

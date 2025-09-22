@@ -20,7 +20,7 @@ import {
 } from "react-icons/fa6";
 import Avatar from "../../assets/images/Image-52.png";
 
-const JobDetailsModal = ({ isOpen, onClose, job }) => {
+const JobDetailsModal = ({ isOpen, onClose, job, onMessage }) => {
   if (!isOpen) return null;
 
   const handleApprove = () => {
@@ -244,7 +244,10 @@ const JobDetailsModal = ({ isOpen, onClose, job }) => {
                   directly for more information.
                 </p>
                 <button
-                  onClick={handleMessage}
+                  onClick={() => {
+                    handleMessage();
+                    onMessage();
+                  }}
                   className="w-full bg-[#C9A14A] text-white px-4 py-2 rounded-lg font-medium transition-colors flex items-center justify-center space-x-2"
                 >
                   <MessageCircle className="w-4 h-4" />

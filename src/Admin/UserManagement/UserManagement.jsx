@@ -65,7 +65,7 @@ const UserManagement = () => {
 
   const getStatusBadgeColor = (status) => {
     switch (status) {
-      case "approve":
+      case "Active":
         return "bg-green-100 text-green-800";
       case "pending":
         return "bg-yellow-100 text-yellow-800";
@@ -177,7 +177,7 @@ const UserManagement = () => {
                 <option>All Status</option>
                 <option>Active</option>
                 <option>Pending</option>
-                <option>Denied</option>
+                <option>Draft</option>
               </select>
             </div>
           </div>
@@ -265,7 +265,7 @@ const UserManagement = () => {
               <div className="flex items-center gap-2">
                 <button
                   // onClick={() => handleStatusChange(user.id, "Approved")}
-                  onClick={() => setIsProfileOpen(true)}
+                  onClick={() => setIsAppointmentOpen(true)}
                   className="px-3 flex gap-1 items-center justify-center py-1 bg-[#C9A14A] text-white text-sm rounded-md transition-colors"
                 >
                   <FaEye /> View
@@ -301,6 +301,10 @@ const UserManagement = () => {
       <DetailedUserProfile
         isOpen={isProfileOpen}
         onClose={() => setIsProfileOpen(false)}
+      />
+      <AppointmentDetails
+        isOpen={isAppointmentOpen}
+        onClose={() => setIsAppointmentOpen(false)}
       />
     </div>
   );
