@@ -1,5 +1,7 @@
 import { useState } from "react";
 import PrivacyPolicy from "./Privacy";
+import RichTextEditor from "./RichTextEditor";
+
 
 const TermsAndConditions = () => {
   const [currentView, setCurrentView] = useState("terms"); // 'terms' or 'privacy'
@@ -160,10 +162,10 @@ const TermsAndConditions = () => {
           )}
 
           {/* Processing Time Info Box */}
-          <div className="mt-4 p-3 bg-blue-50  border-l-4 border-blue-400 rounded-r-md">
+          <div className="mt-4 p-3 bg-gray-50  border-l-4 border-gray-400 rounded-r-md">
             <div className="flex items-center">
-              <div className="w-2 h-2 bg-blue-400 rounded-full mr-3"></div>
-              <span className="text-blue-800 font-medium">
+              <div className="w-2 h-2 bg-gray-800 rounded-full mr-3"></div>
+              <span className="text-gray-800 font-medium">
                 Average processing time:{" "}
                 {isEditing ? (
                   <input
