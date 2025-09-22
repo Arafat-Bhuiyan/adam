@@ -1,10 +1,9 @@
-"use client"
-
-import { useState } from "react"
-import RichTextEditor from "./RichTextEditor"
+import { useState } from "react";
+import PrivacyPolicy from "./Privacy";
 
 const TermsAndConditions = () => {
-  const [isEditing, setIsEditing] = useState(false)
+  const [currentView, setCurrentView] = useState("terms"); // 'terms' or 'privacy'
+  const [isEditing, setIsEditing] = useState(false);
   const [content, setContent] = useState({
     termsOfService:
       "By using Phlebotomist services, you agree to provide accurate healthcare services in accordance with professional standards and applicable regulations. This agreement establishes the framework for our partnership.",
@@ -18,29 +17,42 @@ const TermsAndConditions = () => {
     processingTime: "2-3 business days",
     legalDisclaimers:
       "This agreement is governed by state healthcare regulations. Both parties acknowledge understanding of their rights and responsibilities under this partnership.",
-  })
+  });
 
   const handleEdit = () => {
     if (isEditing) {
-      console.log("Saving changes:", content)
+      console.log("Saving changes:", content);
     }
-    setIsEditing(!isEditing)
-  }
+    setIsEditing(!isEditing);
+  };
 
   const handleNext = () => {
-    console.log("Proceeding to next step...")
-  }
+    console.log("Proceeding to next step...");
+    setCurrentView("privacy");
+  };
+
+  const handleBackToTerms = () => {
+    setCurrentView("terms");
+  };
 
   const removeKeyPoint = (index) => {
-    const newPoints = content.keyPoints.filter((_, i) => i !== index)
-    setContent({ ...content, keyPoints: newPoints })
+    const newPoints = content.keyPoints.filter((_, i) => i !== index);
+    setContent({ ...content, keyPoints: newPoints });
+  };
+
+  // Show Privacy Policy if currentView is 'privacy'
+  if (currentView === "privacy") {
+    return <PrivacyPolicy onBack={handleBackToTerms} />;
   }
 
+  // Show Terms and Conditions (original component)
   return (
     <div className=" rounded-lg shadow-sm ">
       {/* Header */}
       <div className="flex items-center justify-between p-6 ">
-        <h1 className="text-2xl underline underline-offset-4  font-semibold text-[#C9A14A]">Terms And Condition</h1>
+        <h1 className="text-2xl underline underline-offset-4  font-semibold text-[#C9A14A]">
+          Terms And Condition
+        </h1>
         <button
           onClick={handleEdit}
           className="px-4 py-2 bg-yellow-500 hover:bg-yellow-600 text-white rounded-md font-medium transition-colors"
@@ -53,16 +65,23 @@ const TermsAndConditions = () => {
       <div className="p-6 space-y-6">
         {/* Terms of Service */}
         <div>
-          <h2 className="text-lg font-semibold text-gray-900 mb-3">1. Terms of Service</h2>
+          <h2 className="text-lg font-semibold text-gray-900 mb-3">
+            1. Terms of Service
+          </h2>
           {isEditing ? (
             <RichTextEditor
               value={content.termsOfService}
-              onChange={(value) => setContent({ ...content, termsOfService: value })}
+              onChange={(value) =>
+                setContent({ ...content, termsOfService: value })
+              }
               placeholder="Enter terms of service..."
               className="mb-4"
             />
           ) : (
-            <p className="text-gray-700 leading-relaxed" dangerouslySetInnerHTML={{ __html: content.termsOfService }} />
+            <p
+              className="text-gray-700 leading-relaxed"
+              dangerouslySetInnerHTML={{ __html: content.termsOfService }}
+            />
           )}
 
           {/* Key Points */}
@@ -71,7 +90,12 @@ const TermsAndConditions = () => {
               <h3 className="font-semibold text-gray-900">Key Points:</h3>
               {isEditing && (
                 <button
-                  onClick={() => setContent({ ...content, keyPoints: [...content.keyPoints, "New key point"] })}
+                  onClick={() =>
+                    setContent({
+                      ...content,
+                      keyPoints: [...content.keyPoints, "New key point"],
+                    })
+                  }
                   className="px-3 py-1 text-sm bg-yellow-500 hover:bg-yellow-600 text-white rounded transition-colors"
                 >
                   + Add Point
@@ -88,9 +112,9 @@ const TermsAndConditions = () => {
                         type="text"
                         value={point}
                         onChange={(e) => {
-                          const newPoints = [...content.keyPoints]
-                          newPoints[index] = e.target.value
-                          setContent({ ...content, keyPoints: newPoints })
+                          const newPoints = [...content.keyPoints];
+                          newPoints[index] = e.target.value;
+                          setContent({ ...content, keyPoints: newPoints });
                         }}
                         className="flex-1 p-2   rounded focus:outline-none focus:ring-2 focus:ring-yellow-500"
                         placeholder="Enter key point..."
@@ -116,11 +140,15 @@ const TermsAndConditions = () => {
 
         {/* Payment Policies */}
         <div>
-          <h2 className="text-lg font-semibold text-gray-900 mb-3">2. Payment Policies</h2>
+          <h2 className="text-lg font-semibold text-gray-900 mb-3">
+            2. Payment Policies
+          </h2>
           {isEditing ? (
             <RichTextEditor
               value={content.paymentPolicies}
-              onChange={(value) => setContent({ ...content, paymentPolicies: value })}
+              onChange={(value) =>
+                setContent({ ...content, paymentPolicies: value })
+              }
               placeholder="Enter payment policies..."
               className="mb-4"
             />
@@ -141,7 +169,9 @@ const TermsAndConditions = () => {
                   <input
                     type="text"
                     value={content.processingTime}
-                    onChange={(e) => setContent({ ...content, processingTime: e.target.value })}
+                    onChange={(e) =>
+                      setContent({ ...content, processingTime: e.target.value })
+                    }
                     className="inline-block px-2 py-1 border border-blue-300 rounded text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white"
                     placeholder="Processing time"
                   />
@@ -155,11 +185,15 @@ const TermsAndConditions = () => {
 
         {/* Legal Disclaimers */}
         <div>
-          <h2 className="text-lg font-semibold text-gray-900 mb-3">3. Legal Disclaimers</h2>
+          <h2 className="text-lg font-semibold text-gray-900 mb-3">
+            3. Legal Disclaimers
+          </h2>
           {isEditing ? (
             <RichTextEditor
               value={content.legalDisclaimers}
-              onChange={(value) => setContent({ ...content, legalDisclaimers: value })}
+              onChange={(value) =>
+                setContent({ ...content, legalDisclaimers: value })
+              }
               placeholder="Enter legal disclaimers..."
             />
           ) : (
@@ -181,7 +215,7 @@ const TermsAndConditions = () => {
         </button>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default TermsAndConditions
+export default TermsAndConditions;
