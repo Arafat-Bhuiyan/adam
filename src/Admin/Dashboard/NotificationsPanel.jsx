@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import JobDetailsModal from "../JobManagement/JobDetailsModal";
 import { BsThreeDots } from "react-icons/bs";
-const NotificationsPanel = ({ isOpen, onClose }) => {
+const NotificationsPanel = ({ isOpen, onClose, onMessage }) => {
   const [activeFilter, setActiveFilter] = useState("All");
   const [isJobDetailsOpen, setIsJobDetailsOpen] = useState(false);
   const [hideNotification, setHideNotification] = useState(false);
@@ -103,6 +103,7 @@ const NotificationsPanel = ({ isOpen, onClose }) => {
       </div>
       <JobDetailsModal
         isOpen={isJobDetailsOpen}
+        onMessage={onMessage}
         onClose={() => {
           setIsJobDetailsOpen(false);
           setHideNotification(false);

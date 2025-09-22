@@ -247,6 +247,7 @@ const JobDetailsModal = ({ isOpen, onClose, job, onMessage }) => {
                   onClick={() => {
                     handleMessage();
                     onMessage();
+                    onClose();
                   }}
                   className="w-full bg-[#C9A14A] text-white px-4 py-2 rounded-lg font-medium transition-colors flex items-center justify-center space-x-2"
                 >

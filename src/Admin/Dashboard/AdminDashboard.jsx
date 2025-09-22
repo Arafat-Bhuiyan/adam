@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Sidebar } from "./Sidebar";
 import UserManagement from "../UserManagement/UserManagement";
 import Header from "./Header";
@@ -34,6 +34,11 @@ export default function AdminDashboard() {
   const handleComponentChange = (component) => {
     setCurrentComponent(component);
   };
+  useEffect(() => {
+    if (currentComponent !== "Communication & Reviews") {
+      setMessageOpen(false);
+    }
+  }, [currentComponent]);
   return (
     <div
       style={{ fontFamily: "Montserrat" }}
@@ -61,6 +66,10 @@ export default function AdminDashboard() {
               className="w-12 h-12"
             /> */}
             <Header
+              onMessage={() => {
+                setCurrentComponent("Communication & Reviews");
+                setMessageOpen(true);
+              }}
               title={
                 currentComponent === "Dashboard"
                   ? "Welcome back, Admin Fariha"

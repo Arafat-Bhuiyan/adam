@@ -3,7 +3,7 @@ import { AvatarImage } from "@radix-ui/react-avatar";
 import React from "react";
 import { FaBell } from "react-icons/fa6";
 import NotificationsPanel from "./NotificationsPanel";
-const Header = ({title,subtitle}) => {
+const Header = ({title,subtitle,onMessage}) => {
   const [isNotificationsOpen, setIsNotificationsOpen] = React.useState(false);
 
   const toggleNotifications = () => {
@@ -24,7 +24,7 @@ const Header = ({title,subtitle}) => {
           <span onClick={toggleNotifications} className="cursor-pointer">
             <FaBell className="w-6 h-6 text-gray-600 mr-1" />
           </span>
-          <NotificationsPanel isOpen={isNotificationsOpen} onClose={()=>setIsNotificationsOpen(false)}/>
+          <NotificationsPanel  onMessage={onMessage} isOpen={isNotificationsOpen} onClose={()=>setIsNotificationsOpen(false)}/>
         </div>
 
         <Avatar>
