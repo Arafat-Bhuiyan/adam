@@ -4,6 +4,7 @@ import { FaEye } from "react-icons/fa";
 import { FaAngleDown } from "react-icons/fa6";
 import DetailedUserProfile from "./DetailedUserProfile";
 import AppointmentDetails from "./AppointmentDetails";
+import SelectionDropdown from "../Dashboard/SelectionDropdown";
 const UserManagement = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedRole, setSelectedRole] = useState("All Roles");
@@ -87,23 +88,23 @@ const UserManagement = () => {
     }
   };
 
-  const getActionButton = (status) => {
-    status = status.toLowerCase();
+  // state for selected actions
+  const [selectedAction, setSelectedAction] = useState({}); // { userId: "pending" }
+
+  const getActionButton = (user) => {
     return (
-      <>
-        <button
-          // onClick={() => handleStatusChange(user.id, "Approved")}
-          className={`px-3 py-1 flex justify-center gap-1 items-center  bg-green-500 text-white text-sm rounded-md transition-colors ${
-            status === "pending"
-              ? "bg-[#eab308]"
-              : status === "approve"
-              ? "bg-[#22c55e]"
-              : status == "draft" && "bg-[#F87171]"
-          }`}
-        >
-          {status} <FaAngleDown />
-        </button>
-      </>
+      <div className="w-28">
+        <SelectionDropdown
+          options={["pending", "active", "draft"]}
+          selected={selectedAction[user.id] || user.status} // user unique id অনুযায়ী
+          onSelect={(action) =>
+            setSelectedAction((prev) => ({
+              ...prev,
+              [user.id]: action,
+            }))
+          }
+        />
+      </div>
     );
   };
 
@@ -236,7 +237,7 @@ const UserManagement = () => {
                 >
                   <FaEye /> View
                 </button>
-                {getActionButton(user?.status)}
+                {getActionButton(user)}
               </div>
             </div>
           </div>

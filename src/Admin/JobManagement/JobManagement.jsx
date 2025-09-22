@@ -3,8 +3,9 @@ import { Search, Bell, MapPin, ChevronRight, Calendar } from "lucide-react";
 import DatePicker from "../DataPicker";
 import { FaAngleDown, FaBuilding } from "react-icons/fa6";
 import JobDetailsModal from "./JobDetailsModal";
+import SelectionDropdown from "../Dashboard/SelectionDropdown";
 
-const JobManagement = ({onMessage}) => {
+const JobManagement = ({ onMessage }) => {
   const [searchTerm, setSearchTerm] = useState("");
   const [statusFilter, setStatusFilter] = useState("All Status");
   const [dateFilter, setDateFilter] = useState("");
@@ -56,6 +57,28 @@ const JobManagement = ({onMessage}) => {
       statusColor: "bg-green-500",
     },
   ];
+
+  // state for selected job status
+  const [selectedJobStatus, setSelectedJobStatus] = useState({}); // { jobId: "Published" }
+
+  // replace the span with SelectionDropdown
+  const getStatusDropdown = (job) => {
+    return (
+      <div className="w-32">
+        <SelectionDropdown
+          options={["Published", "Approved"]}
+          selected={selectedJobStatus[job.id] || job.status}
+          onSelect={(status) =>
+            setSelectedJobStatus((prev) => ({
+              ...prev,
+              [job.id]: status,
+            }))
+          }
+          icon={<FaAngleDown />} // icon pass করো
+        />
+      </div>
+    );
+  };
 
   const filteredJobs = jobs.filter((job) => {
     const matchesSearch =
@@ -172,12 +195,7 @@ const JobManagement = ({onMessage}) => {
                     </div>
 
                     <div className="flex items-center space-x-3">
-                      <span
-                        className={`px-4 py-2 flex justify-center items-center gap-1 rounded-md text-xs font-medium text-white ${job.statusColor}`}
-                      >
-                        {job.status}
-                        <FaAngleDown />
-                      </span>
+                      {getStatusDropdown(job)}
                       <span className="text-sm text-gray-500">
                         {job.postedTime}
                       </span>
