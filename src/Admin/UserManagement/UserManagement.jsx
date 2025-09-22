@@ -8,7 +8,8 @@ const UserManagement = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedRole, setSelectedRole] = useState("All Roles");
   const [selectedStatus, setSelectedStatus] = useState("All Status");
-
+  const [isProfileOpen, setIsProfileOpen] = useState(false);
+  const [isAppointmentOpen, setIsAppointmentOpen] = useState(false);
   const users = [
     {
       id: "SID-2025-001",
@@ -97,7 +98,7 @@ const UserManagement = () => {
               ? "bg-[#eab308]"
               : status === "approve"
               ? "bg-[#22c55e]"
-              : status == "draft" && "bg-[#F87171]" 
+              : status == "draft" && "bg-[#F87171]"
           }`}
         >
           {status} <FaAngleDown />
@@ -118,7 +119,10 @@ const UserManagement = () => {
   });
 
   return (
-    <div className="w-full  mx-auto mt-6 bg-white rounded-lg shadow-sm">
+    <div
+      style={{ fontFamily: "Montserrat" }}
+      className="w-full  mx-auto mt-6 bg-white rounded-lg shadow-sm"
+    >
       {/* Header with Search and Filters */}
       <div className="p-6 border rounded-md border-gray-200">
         <div className="flex flex-col sm:flex-row gap-4 items-start sm:items-center">
@@ -226,6 +230,7 @@ const UserManagement = () => {
               {/* Action Buttons */}
               <div className="flex items-center gap-2">
                 <button
+                  onClick={() => setIsProfileOpen(true)}
                   // onClick={() => handleStatusChange(user.id, "Approved")}
                   className="px-3 flex gap-1 items-center justify-center py-1 bg-[#C9A14A] text-white text-sm rounded-md transition-colors"
                 >
@@ -260,11 +265,11 @@ const UserManagement = () => {
               <div className="flex items-center gap-2">
                 <button
                   // onClick={() => handleStatusChange(user.id, "Approved")}
+                  onClick={() => setIsProfileOpen(true)}
                   className="px-3 flex gap-1 items-center justify-center py-1 bg-[#C9A14A] text-white text-sm rounded-md transition-colors"
                 >
                   <FaEye /> View
                 </button>
-                
               </div>
             </div>
           </div>
@@ -293,7 +298,10 @@ const UserManagement = () => {
         </div>
       )}
       {/* <DetailedUserProfile /> */}
-      {/* <AppointmentDetails isOpen={true} /> */}
+      <DetailedUserProfile
+        isOpen={isProfileOpen}
+        onClose={() => setIsProfileOpen(false)}
+      />
     </div>
   );
 };

@@ -223,6 +223,7 @@ const AppointmentDetails = ({ isOpen, onClose, appointment }) => {
           </div>
         </div>
       </div>
+      
     </div>
   );
 };

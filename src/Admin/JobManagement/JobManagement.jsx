@@ -8,6 +8,7 @@ const JobManagement = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [statusFilter, setStatusFilter] = useState("All Status");
   const [dateFilter, setDateFilter] = useState("");
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const jobs = [
     {
@@ -66,7 +67,7 @@ const JobManagement = () => {
   });
 
   return (
-    <div className=" ">
+    <div style={{ fontFamily: "Montserrat" }} className=" ">
       {/* Header */}
       {/* <div className="flex items-center justify-between p-6 border-b border-gray-200">
         <div>
@@ -142,8 +143,9 @@ const JobManagement = () => {
           <div className="space-y-4">
             {filteredJobs.map((job) => (
               <div
+                
                 key={job.id}
-                className="bg-white rounded-lg p-4  transition-colors cursor-pointer"
+                className="bg-white rounded-lg p-4  transition-colors "
               >
                 <div className="flex items-center justify-between">
                   <div className="flex-1">
@@ -182,14 +184,17 @@ const JobManagement = () => {
                     </div>
                   </div>
 
-                  <ChevronRight className="w-5 h-5  self-start text-gray-400" />
+                  <ChevronRight onClick={() => setIsModalOpen(true)} className="w-5 h-5 cursor-pointer self-start text-gray-400" />
                 </div>
               </div>
             ))}
           </div>
         </div>
       </div>
-      <JobDetailsModal isOpen={true} />
+      <JobDetailsModal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+      />
     </div>
   );
 };

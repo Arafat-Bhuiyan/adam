@@ -1,7 +1,8 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 const NotificationsPanel = ({ isOpen, onClose }) => {
   const [activeFilter, setActiveFilter] = useState("All");
+  if (!isOpen) return null;
 
   const notifications = [
     {
@@ -23,8 +24,8 @@ const NotificationsPanel = ({ isOpen, onClose }) => {
   //   if (!isOpen) return null
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
-      <div className="bg-white  shadow-xl w-full max-w-md h-[600px] flex flex-col">
+    <>
+      <div className="bg-white  absolute top-7 right-0 shadow-xl w-[400px] max-w-md h-[600px] flex flex-col z-[10000]">
         {/* Header */}
         <div className="flex items-center justify-between p-4">
           <span className="text-gray-600 font-medium">View All</span>
@@ -87,7 +88,7 @@ const NotificationsPanel = ({ isOpen, onClose }) => {
           ))}
         </div>
       </div>
-    </div>
+    </>
   );
 };
 

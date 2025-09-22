@@ -19,6 +19,7 @@ export const Sidebar = ({ currentComponent, onMenuClick }) => {
     { icon: MessageCircleMore, label: "Job Matching" },
     { icon: ChartBar, label: "Analytics & Reporting" },
     { icon: Banknote, label: "Payroll Management" },
+    { icon: Banknote, label: "Setting" },
   ];
   return (
     <div className="w-full h-full bg-white shadow-xl flex flex-col items-start border-r border-[#E5E7EB]">
@@ -40,8 +41,8 @@ export const Sidebar = ({ currentComponent, onMenuClick }) => {
       </div>
 
       {/* Navigation */}
-      <nav className="w-full">
-        <ul className="w-full">
+      <nav className="w-full overflow-scroll [&::-webkit-scrollbar]:hidden ">
+        <ul className="w-full ">
           {menuItems.map((item, index) => {
             const Icon = item.icon;
             const isActive = currentComponent === item.label;

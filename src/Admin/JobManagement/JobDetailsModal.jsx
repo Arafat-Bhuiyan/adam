@@ -18,6 +18,7 @@ import {
   FaDollarSign,
   FaLocationDot,
 } from "react-icons/fa6";
+import Avatar from "../../assets/images/Image-52.png";
 
 const JobDetailsModal = ({ isOpen, onClose, job }) => {
   if (!isOpen) return null;
@@ -177,8 +178,8 @@ const JobDetailsModal = ({ isOpen, onClose, job }) => {
                 </h3>
 
                 <div className="flex items-center space-x-3 mb-4">
-                  <div className="w-12 h-12 bg-teal-500 rounded-full flex items-center justify-center">
-                    <span className="text-white font-semibold">CH</span>
+                  <div className="w-12 h-12  rounded-full flex items-center justify-center">
+                    <img src={Avatar} alt="" />
                   </div>
                   <div>
                     <h4 className="font-medium text-[#003366]">

@@ -83,7 +83,7 @@ const DocumentManager = ({ isOpen, onClose }) => {
     console.log("Viewing details for document:", docId);
   };
 
-  //   if (!isOpen) return null
+  if (!isOpen) return null
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
@@ -237,7 +237,7 @@ const DocumentManager = ({ isOpen, onClose }) => {
                   onClick={() => setCurrentPage(page)}
                   className={`w-8 h-8 rounded-md border text-sm font-medium ${
                     currentPage === page
-                      ? "bg-orange-500 text-white"
+                      ? "bg-[#C9A14A] text-white"
                       : "text-gray-600 hover:bg-gray-100"
                   }`}
                 >
