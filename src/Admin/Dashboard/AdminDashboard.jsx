@@ -23,6 +23,7 @@ import Communication from "../Communication/Communication";
 import MessagingInterface from "../Communication/MessagingInterface";
 import PayrollManagement from "../PayrollManagement/PayrollManagement";
 import Setting from "../Setting/Setting";
+import AnalyticsDashboard from "../AnalyticsDashboard/AnalyticsDashboard";
 
 export default function AdminDashboard() {
   const [currentComponent, setCurrentComponent] = useState("Dashboard"); // New state to track the active component
@@ -161,8 +162,9 @@ export default function AdminDashboard() {
           {currentComponent === "Communication & Reviews" && <Communication />}
           {currentComponent === "Payroll Management" && <PayrollManagement />}
           {currentComponent === "Setting" && <Setting />}
-          {/*    {currentComponent === "Analytics & Reporting" && <Terms />}
-           */}
+          {currentComponent === "Analytics & Reporting" && (
+            <AnalyticsDashboard />
+          )}
         </div>
       </div>
     </div>
