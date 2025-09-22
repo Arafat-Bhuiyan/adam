@@ -1,3 +1,4 @@
+import { useLocation, useParams } from "react-router-dom";
 import logo from "../../assets/images/logo2.png";
 import {
   BriefcaseBusiness,
@@ -21,6 +22,10 @@ export const Sidebar = ({ currentComponent, onMenuClick }) => {
     { icon: Banknote, label: "Payroll Management" },
     { icon: Banknote, label: "Setting" },
   ];
+
+  const params = useLocation();
+  const currentPath = params.pathname.split("/").pop();
+  console.log(currentPath);
   return (
     <div className="w-full h-full bg-white shadow-xl flex flex-col items-start border-r border-[#E5E7EB]">
       {/* Logo */}

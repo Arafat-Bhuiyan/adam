@@ -18,7 +18,7 @@ const DetailedUserProfile = ({ user, isOpen, onClose }) => {
 
   return (
     <div className=" fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
-      <div className="relative bg-white rounded-lg shadow-xl max-w-[70vw] w-full max-h-[90vh]  pt-7 overflow-y-scroll [&::-webkit-scrollbar]:hidden [-ms-overflow-style:'none'] [scrollbar-width:none]">
+      <div className="relative bg-white  shadow-xl max-w-[70vw] w-full max-h-[90vh]  pt-7 overflow-y-scroll [&::-webkit-scrollbar]:hidden [-ms-overflow-style:'none'] [scrollbar-width:none]">
         {/* Header */}
         <div className="sticky top-0 ">
           <div className="absolute top-0 right-4">

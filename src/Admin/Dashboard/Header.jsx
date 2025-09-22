@@ -3,7 +3,7 @@ import { AvatarImage } from "@radix-ui/react-avatar";
 import React from "react";
 import { FaBell } from "react-icons/fa6";
 import NotificationsPanel from "./NotificationsPanel";
-const Header = () => {
+const Header = ({title,subtitle}) => {
   const [isNotificationsOpen, setIsNotificationsOpen] = React.useState(false);
 
   const toggleNotifications = () => {
@@ -13,10 +13,10 @@ const Header = () => {
     <>
       <div>
         <h2 className=" font-semibold text-[24px] leading-[32px] text-[#2C2C2C]">
-          Welcome back, Admin Fariha
+          {title }
         </h2>
         <p className="text-[#8E8E8E]">
-          Here's what's happening with Phlebotomist today
+          {subtitle}
         </p>
       </div>
       <div className="flex items-center space-x-4">
@@ -28,7 +28,7 @@ const Header = () => {
         </div>
 
         <Avatar>
-          <AvatarImage src="https://github.com/shadcn.png" />
+          <AvatarImage className="shadow-lg" src="https://github.com/shadcn.png" />
           {/* <AvatarFallback>CN</AvatarFallback> */}
         </Avatar>
       </div>

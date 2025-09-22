@@ -1,9 +1,19 @@
 import { useState } from "react";
 import { FaBan, FaCheckCircle, FaTimesCircle } from "react-icons/fa";
+import { FaFileImage } from "react-icons/fa6";
 import { IoWarning } from "react-icons/io5";
 
 function CaseDetails({ isOpen, onClose }) {
   const [selectedAction, setSelectedAction] = useState("");
+  const [images, setImages] = useState({ one: null, two: null });
+
+  const handleImageUpload = (e, key) => {
+    const file = e.target.files[0];
+    if (file) {
+      const url = URL.createObjectURL(file); // preview purpose
+      setImages((prev) => ({ ...prev, [key]: url }));
+    }
+  };
 
   const actions = [
     {
@@ -144,32 +154,86 @@ function CaseDetails({ isOpen, onClose }) {
                     Evidence & Timeline Review
                   </h3>{" "}
                   <div className="flex items-center gap-2 mb-3">
-                    <div className="w-2 h-2 bg-teal-500 rounded-full"></div>
+                    <FaFileImage className="text-[#00A6A6]" />
                     <span className="font-medium text-gray-900">
                       Submitted Evidence
                     </span>
                   </div>
                   <div className="">
                     <div className="space-y-2">
-                      {evidenceItems.map((item) => (
-                        <div
-                          key={item.id}
-                          className=" py-2 px-3 bg-white rounded border"
-                        >
-                          <div className="flex justify-between items-center mt-2">
-                            <span className="text-gray-700 text-sm">
-                              {item.name}
-                            </span>
-                            <span className="text-sm text-gray-500">
-                              {item.date}
-                            </span>
-                          </div>
-                          <div className="border py-3 my-2 h-[130px] w-full rounded-md"></div>
-                          <p className="text-[13px] text-gray-400">
-                            Profile page showing continued attempts
-                          </p>
+                      {/* Screenshot 1 */}
+                      <div className="py-2 px-3 bg-white rounded border">
+                        <div className="flex justify-between items-center mt-2">
+                          <span className="text-gray-700 text-sm">
+                            ScreenShoot 1
+                          </span>
+                          <span className="text-sm text-gray-500">
+                            Dec 5, 9:20 AM
+                          </span>
                         </div>
-                      ))}
+
+                        {/* Upload area */}
+                        <label className="border py-3 my-2 h-[130px] w-full rounded-md flex items-center justify-center cursor-pointer">
+                          {images.one ? (
+                            <img
+                              src={images.one}
+                              alt="screenshot1"
+                              className="h-[100px] w-[100px] self-start object-cover rounded-md"
+                            />
+                          ) : (
+                            <span className="text-gray-400 text-sm">
+                              Click to upload
+                            </span>
+                          )}
+                          <input
+                            type="file"
+                            accept="image/*"
+                            className="hidden"
+                            onChange={(e) => handleImageUpload(e, "one")}
+                          />
+                        </label>
+
+                        <p className="text-[13px] text-gray-400">
+                          Messages from alternate account
+                        </p>
+                      </div>
+
+                      {/* Screenshot 2 */}
+                      <div className="py-2 px-3 bg-white rounded border">
+                        <div className="flex justify-between items-center mt-2">
+                          <span className="text-gray-700 text-sm">
+                            ScreenShoot 2
+                          </span>
+                          <span className="text-sm text-gray-500">
+                            Dec 5, 9:20 AM
+                          </span>
+                        </div>
+
+                        {/* Upload area */}
+                        <label className="border py-3 my-2 h-[130px] w-full rounded-md flex items-center justify-center cursor-pointer">
+                          {images.two ? (
+                            <img
+                              src={images.two}
+                              alt="screenshot2"
+                              className="h-[100px] self-start w-[100px] object-cover rounded-md"
+                            />
+                          ) : (
+                            <span className="text-gray-400 text-sm">
+                              Click to upload
+                            </span>
+                          )}
+                          <input
+                            type="file"
+                            accept="image/*"
+                            className="hidden"
+                            onChange={(e) => handleImageUpload(e, "two")}
+                          />
+                        </label>
+
+                        <p className="text-[13px] text-gray-400">
+                          Profile page showing continued attempts
+                        </p>
+                      </div>
                     </div>
                   </div>
                 </div>

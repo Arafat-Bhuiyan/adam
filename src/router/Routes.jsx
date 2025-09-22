@@ -8,6 +8,7 @@ import Terms from "../pages/Terms & Policy/Terms";
 import Privacy from "../pages/Terms & Policy/Privacy";
 import { Schedule } from "../pages/Schedule/Schedule";
 import AdminDashboard from "../Admin/Dashboard/AdminDashboard";
+import MessagingInterface from "@/Admin/Communication/MessagingInterface";
 
 const router = createBrowserRouter([
   {

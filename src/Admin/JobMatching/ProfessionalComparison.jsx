@@ -68,7 +68,7 @@ const ProfessionalComparison = ({ isOpen, onClose }) => {
             />
             <div>
               <h3 className="font-semibold text-gray-900">Dr. Ratul Hossain</h3>
-              <p className="text-sm text-gray-600">Doctor</p>
+              <p className="text-sm text-gray-600">Client</p>
               <div className="flex items-center space-x-1">
                 <div className="flex text-yellow-400">{"★".repeat(5)}</div>
                 <span className="text-sm text-gray-600">4.5 (127 reviews)</span>
