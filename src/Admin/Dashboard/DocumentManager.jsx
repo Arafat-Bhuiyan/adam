@@ -6,12 +6,16 @@ import {
   FaCalendar,
   FaClock,
 } from "react-icons/fa6";
+import SelectionDropdown from "./SelectionDropdown";
 
 const DocumentManager = ({ isOpen, onClose }) => {
   const [searchTerm, setSearchTerm] = useState("");
   const [documentType, setDocumentType] = useState("All Document Types");
   const [dateFilter, setDateFilter] = useState("All Dates");
   const [currentPage, setCurrentPage] = useState(1);
+  const [openDropdownId, setOpenDropdownId] = useState(null);
+  const [selectedAction, setSelectedAction] = useState({}); // { docId: action }
+  const [selectedStatus, setSelectedStatus] = useState("pending");
 
   // Sample document data
   const documents = [
@@ -75,15 +79,17 @@ const DocumentManager = ({ isOpen, onClose }) => {
   const documentsPerPage = 6;
   const totalPages = Math.ceil(totalDocuments / documentsPerPage);
 
-  const handleApprove = (docId) => {
-    console.log("Approving document:", docId);
+  const handleAction = (docId, action) => {
+    console.log(`Document ${docId} -> ${action}`);
+    setSelectedAction((prev) => ({ ...prev, [docId]: action }));
+    setOpenDropdownId(null);
   };
 
   const handleViewDetails = (docId) => {
     console.log("Viewing details for document:", docId);
   };
 
-  if (!isOpen) return null
+  if (!isOpen) return null;
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
@@ -148,8 +154,12 @@ const DocumentManager = ({ isOpen, onClose }) => {
               </select>
             </div>
 
-            <div className="bg-orange-100 flex items-center gap-1 text-orange-800 px-3 py-1 rounded-md text-sm font-medium">
-              Pending <FaAngleDown />
+            <div className="w-32">
+              <SelectionDropdown
+                options={["pending", "active", "draft"]}
+                selected={selectedStatus}
+                onSelect={(status) => setSelectedStatus(status)}
+              />
             </div>
           </div>
         </div>
@@ -192,12 +202,15 @@ const DocumentManager = ({ isOpen, onClose }) => {
                     <FaFilePdf />
                     View Details
                   </button>
-                  <button
-                    onClick={() => handleApprove(doc.id)}
-                    className="flex-1 flex items-center justify-center gap-1 px-3 py-2 bg-[#C9A14A] text-white text-sm rounded-md  transition-colors"
-                  >
-                    Approve <FaAngleDown />
-                  </button>
+
+                  {/* Dropdown Button */}
+                  <div className="flex-1">
+                    <SelectionDropdown
+                      options={["approved", "deny"]}
+                      selected={selectedAction[doc.id]}
+                      onSelect={(action) => handleAction(doc.id, action)}
+                    />
+                  </div>
                 </div>
               </div>
             ))}

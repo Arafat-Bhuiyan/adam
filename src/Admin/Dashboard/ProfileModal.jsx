@@ -2,9 +2,13 @@ import { FaEye } from "react-icons/fa";
 import { FaAngleDown } from "react-icons/fa6";
 import { FaFilePdf } from "react-icons/fa6";
 import Avatar from "../../assets/images/Image-52.png";
+import { useState } from "react";
+import SelectionDropdown from "./SelectionDropdown";
 
 const ProfileModal = ({ isOpen, onClose, professional }) => {
-    if (!isOpen) return null;
+  const [selectedAction, setSelectedAction] = useState("approved");
+
+  if (!isOpen) return null;
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
@@ -93,12 +97,23 @@ const ProfileModal = ({ isOpen, onClose, professional }) => {
                 </div>
               </div>
               <div className="flex gap-2">
-                <button className="flex items-center gap-1  px-3 py-1 bg-[#C9A14A] text-white text-xs rounded ">
+                <button className="flex items-center gap-1 px-3 py-1 bg-[#C9A14A] text-white text-xs rounded ">
                   <FaEye className="text-white" /> View
                 </button>
-                <button className="flex items-center gap-1  px-3 py-1 bg-[#C9A14A] text-white text-xs rounded ">
-                  Approve <FaAngleDown />
-                </button>
+                <div className="w-36">
+                  <SelectionDropdown
+                    options={["approved", "deny"]}
+                    selected={
+                      selectedAction["professionalLicense"] || "approved"
+                    } // unique key
+                    onSelect={(action) =>
+                      setSelectedAction((prev) => ({
+                        ...prev,
+                        professionalLicense: action,
+                      }))
+                    }
+                  />
+                </div>
               </div>
             </div>
 
@@ -121,12 +136,23 @@ const ProfileModal = ({ isOpen, onClose, professional }) => {
                 </div>
               </div>
               <div className="flex gap-2">
-                <button className="flex items-center gap-1  px-3 py-1 bg-[#C9A14A] text-white text-xs rounded ">
+                <button className="flex items-center gap-1 px-3 py-1 bg-[#C9A14A] text-white text-xs rounded ">
                   <FaEye className="text-white" /> View
                 </button>
-                <button className="flex items-center gap-1  px-3 py-1 bg-[#C9A14A] text-white text-xs rounded ">
-                  Approve <FaAngleDown className="text-white" />
-                </button>
+                <div className="w-36">
+                  <SelectionDropdown
+                    options={["approved", "deny"]}
+                    selected={
+                      selectedAction["insuranceCertificate"] || "approved"
+                    } // unique key
+                    onSelect={(action) =>
+                      setSelectedAction((prev) => ({
+                        ...prev,
+                        insuranceCertificate: action,
+                      }))
+                    }
+                  />
+                </div>
               </div>
             </div>
           </div>

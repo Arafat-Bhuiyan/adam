@@ -60,8 +60,8 @@ const AnalyticsDashboard = () => {
       netRevenue: 91672,
     },
     revenueByJobType: [
-      { type: "Diagnostic Test", amount: 98450, color: "#3B82F6" },
-      { type: "Routine Blood Draw", amount: 87200, color: "#EF4444" },
+      { type: "Diagnostic Test", amount: 98450, color: "#EF4444" },
+      { type: "Routine Blood Draw", amount: 87200, color: "#3B82F6" },
       { type: "Fasting Blood Test", amount: 65100, color: "#10B981" },
       { type: "Home Collection", amount: 34000, color: "#F59E0B" },
       { type: "Pediatric Blood Draw", amount: 34000, color: "#8B5CF6" },
