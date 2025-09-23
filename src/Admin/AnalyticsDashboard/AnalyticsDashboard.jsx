@@ -332,7 +332,9 @@ const AnalyticsDashboard = () => {
                 </div>
                 <div className="w-10 h-10 bg-green-100 rounded-lg flex items-center justify-center">
                   <div className="w-6 h-6 bg-green-500 rounded-full flex items-center justify-center">
-                    <span className="text-white text-xs"><FaCheck/></span>
+                    <span className="text-white text-xs">
+                      <FaCheck />
+                    </span>
                   </div>
                 </div>
               </div>
@@ -347,7 +349,9 @@ const AnalyticsDashboard = () => {
                   </p>
                 </div>
                 <div className="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center">
-                  <span className="text-blue-600 text-lg"><FaUserPlus/></span>
+                  <span className="text-blue-600 text-lg">
+                    <FaUserPlus />
+                  </span>
                 </div>
               </div>
             </div>
@@ -361,7 +365,9 @@ const AnalyticsDashboard = () => {
                   </p>
                 </div>
                 <div className="w-10 h-10 bg-green-100 rounded-lg flex items-center justify-center">
-                  <span className="text-green-600 text-lg"><FaDollarSign/></span>
+                  <span className="text-green-600 text-lg">
+                    <FaDollarSign />
+                  </span>
                 </div>
               </div>
             </div>
@@ -399,13 +405,13 @@ const AnalyticsDashboard = () => {
               <thead>
                 <tr className="border-b border-t border-gray-200 bg-gray-50">
                   <th className="text-left py-2 px-4 font-medium text-gray-500">
+                    Business Name
+                  </th>
+                  <th className="text-left py-2 px-4 font-medium text-gray-500">
                     Jobs Completed
                   </th>
                   <th className="text-left py-2 px-4 font-medium text-gray-500">
                     Average Rating
-                  </th>
-                  <th className="text-left py-2 px-4 font-medium text-gray-500">
-                    Business Name
                   </th>
                   <th className="text-left py-2 px-4 font-medium text-gray-500">
                     Revenue
