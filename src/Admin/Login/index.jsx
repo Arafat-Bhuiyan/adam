@@ -1,6 +1,30 @@
-import React from "react";
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { useLoginMutation } from "../../store/api";
+import { loginSuccess } from "../../store/authSlice";
 
 const LoginPage = () => {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const [login, { isLoading }] = useLoginMutation();
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setError("");
+
+    try {
+      const result = await login({ email, password }).unwrap();
+      dispatch(loginSuccess(result));
+      navigate("/admin");
+    } catch (err) {
+      setError("Invalid credentials. Please try again.");
+    }
+  };
+
   return (
     <div className="min-h-screen bg-gray-100 flex items-center justify-center px-4">
       <div className="w-full max-w-md">
@@ -14,8 +38,14 @@ const LoginPage = () => {
             Enter your credentials to access the admin portal
           </p>
 
+          {error && (
+            <div className="mb-4 p-3 bg-red-100 border border-red-400 text-red-700 rounded">
+              {error}
+            </div>
+          )}
+
           {/* Form */}
-          <form className="space-y-6">
+          <form onSubmit={handleSubmit} className="space-y-6">
             {/* Email Field */}
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-2">
@@ -23,6 +53,8 @@ const LoginPage = () => {
               </label>
               <input
                 type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
                 required
                 className="w-full px-4 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-transparent transition"
                 placeholder="you@company.com"
@@ -32,10 +64,12 @@ const LoginPage = () => {
             {/* Password Field */}
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-2">
-                Create Password <span className="text-red-500">*</span>
+                Password <span className="text-red-500">*</span>
               </label>
               <input
                 type="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
                 required
                 className="w-full px-4 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-transparent transition"
                 placeholder="••••••••"
@@ -45,9 +79,10 @@ const LoginPage = () => {
             {/* Submit Button */}
             <button
               type="submit"
-              className="w-full bg-amber-600 hover:bg-amber-700 text-white font-semibold py-3 rounded-md transition duration-200 ease-in-out transform hover:scale-105"
+              disabled={isLoading}
+              className="w-full bg-amber-600 hover:bg-amber-700 disabled:bg-amber-400 text-white font-semibold py-3 rounded-md transition duration-200 ease-in-out transform hover:scale-105"
             >
-              Log In
+              {isLoading ? "Logging In..." : "Log In"}
             </button>
           </form>
         </div>

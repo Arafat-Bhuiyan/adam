@@ -10,6 +10,7 @@ import { Schedule } from "../pages/Schedule/Schedule";
 import AdminDashboard from "../Admin/Dashboard/AdminDashboard";
 import MessagingInterface from "@/Admin/Communication/MessagingInterface";
 import LoginPage from "../Admin/Login/index";
+import ProtectedRoute from "../components/ProtectedRoute";
 
 const router = createBrowserRouter([
   {
@@ -53,7 +54,11 @@ const router = createBrowserRouter([
   },
   {
     path: "/admin",
-    element: <AdminDashboard />,
+    element: (
+      <ProtectedRoute>
+        <AdminDashboard />
+      </ProtectedRoute>
+    ),
   },
 ]);
 

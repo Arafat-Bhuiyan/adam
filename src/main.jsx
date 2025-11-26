@@ -5,6 +5,10 @@ import { Provider } from 'react-redux';
 import "./index.css";
 import router from "./router/Routes.jsx";
 import store from './store/store';
+import { initializeAuth } from './store/authSlice';
+
+// Initialize auth state from localStorage
+store.dispatch(initializeAuth());
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
