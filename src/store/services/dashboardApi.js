@@ -8,8 +8,8 @@ export const dashboardApi = createApi({
   baseQuery: fetchBaseQuery({
     baseUrl,
     prepareHeaders: (headers, { getState }) => {
-
-      if ( getState().auth.token) {
+      let token = getState()?.auth?.token;
+      if (token) {
         headers.set("authorization", `Bearer ${token}`);
       }
       return headers;
