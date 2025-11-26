@@ -24,7 +24,7 @@ import MessagingInterface from "../Communication/MessagingInterface";
 import PayrollManagement from "../PayrollManagement/PayrollManagement";
 import Setting from "../Setting/Setting";
 import AnalyticsDashboard from "../AnalyticsDashboard/AnalyticsDashboard";
-import { useGetDashboardDataQuery } from "@/store/services/dashboardApi";
+import { useGetDashboardDataQuery, useGetPendingPhlebotomistsQuery } from "@/store/services/dashboardApi";
 
 export default function AdminDashboard() {
   const [currentComponent, setCurrentComponent] = useState("Dashboard"); // New state to track the active component
@@ -35,6 +35,8 @@ export default function AdminDashboard() {
 
   // Fetch dashboard data
   const { data: dashboardData, isLoading, error } = useGetDashboardDataQuery();
+  const { data: pendingPhlebotomistsData } = useGetPendingPhlebotomistsQuery();
+  console.log("🚀 ~ AdminDashboard ~ pendingPhlebotomistsData:", pendingPhlebotomistsData)
 
   const handleComponentChange = (component) => {
     setCurrentComponent(component);
@@ -164,7 +166,8 @@ export default function AdminDashboard() {
                       <ActionCard
                         title="Pending Registrations"
                         description="Review and approve new user registrations waiting for verification"
-                        count={15}
+                        count={pendingPhlebotomistsData?.total_pending || 0}
+                        data ={pendingPhlebotomistsData?.phlebotomists || []}
                         buttonText="Review Now"
                         color="orange"
                         isOpen={() => setIsOpenProfessionalList(true)}

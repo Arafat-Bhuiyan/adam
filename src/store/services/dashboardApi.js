@@ -8,7 +8,7 @@ export const dashboardApi = createApi({
   baseQuery: fetchBaseQuery({
     baseUrl,
     prepareHeaders: (headers, { getState }) => {
-      
+
       if ( getState().auth.token) {
         headers.set("authorization", `Bearer ${token}`);
       }
@@ -19,8 +19,12 @@ export const dashboardApi = createApi({
     getDashboardData: builder.query({
       query: () => "/dashboard/data/",
     }),
+    getPendingPhlebotomists: builder.query({
+      query: () => "/dashboard/phlebotomists/pending/list/",
+    }),
   }),
 });
 
 // Export hooks for usage in functional components
-export const { useGetDashboardDataQuery } = dashboardApi;
+export const { useGetDashboardDataQuery, useGetPendingPhlebotomistsQuery } =
+  dashboardApi;
