@@ -1,5 +1,5 @@
 import { configureStore } from '@reduxjs/toolkit';
-import { api } from './api';
+import { api } from './services/authApi';
 import authReducer from './authSlice';
 
 // Configure the Redux store with the RTK Query API reducer and middleware
