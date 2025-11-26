@@ -24,6 +24,7 @@ import MessagingInterface from "../Communication/MessagingInterface";
 import PayrollManagement from "../PayrollManagement/PayrollManagement";
 import Setting from "../Setting/Setting";
 import AnalyticsDashboard from "../AnalyticsDashboard/AnalyticsDashboard";
+import { useGetDashboardDataQuery } from "@/store/services/dashboardApi";
 
 export default function AdminDashboard() {
   const [currentComponent, setCurrentComponent] = useState("Dashboard"); // New state to track the active component
@@ -31,9 +32,14 @@ export default function AdminDashboard() {
     useState(false);
   const [messageOpen, setMessageOpen] = useState(false);
   const [isOpenProfessionalList, setIsOpenProfessionalList] = useState(false);
+
+  // Fetch dashboard data
+  const { data: dashboardData, isLoading, error } = useGetDashboardDataQuery();
+
   const handleComponentChange = (component) => {
     setCurrentComponent(component);
   };
+
   useEffect(() => {
     if (currentComponent !== "Communication & Reviews") {
       setMessageOpen(false);
@@ -130,25 +136,25 @@ export default function AdminDashboard() {
                     <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
                       <StatCard
                         title="Total Users"
-                        value="2,847"
+                        value={isLoading ? "..." : (dashboardData?.total_users || 0).toLocaleString()}
                         icon={FaUsers}
                         color="teal"
                       />
                       <StatCard
                         title="Pending Verifications"
-                        value="23"
+                        value={isLoading ? "..." : (dashboardData?.pending_verification || 0).toString()}
                         icon={FaClock}
                         color="orange"
                       />
                       <StatCard
-                        title="Active Jobs"
-                        value="156"
+                        title="Approved Jobs"
+                        value={isLoading ? "..." : (dashboardData?.total_approved_jobs || 0).toString()}
                         icon={FaBriefcase}
                         color="blue"
                       />
                       <StatCard
                         title="Revenue This Month"
-                        value="$48,290"
+                        value={isLoading ? "..." : `$${dashboardData?.revenue_this_month || 0}`}
                         icon={FaDollarSign}
                         color="green"
                       />
