@@ -7,6 +7,7 @@ import {
   FaClock,
 } from "react-icons/fa6";
 import SelectionDropdown from "./SelectionDropdown";
+import { useApproveRejectBusinessProfileMutation } from "../../store/services/dashboardApi";
 
 const DocumentManager = ({ isOpen, onClose,data,count }) => {
   const [searchTerm, setSearchTerm] = useState("");
@@ -152,9 +153,26 @@ const DocumentManager = ({ isOpen, onClose,data,count }) => {
     setCurrentPage(1);
   }, [searchTerm, documentType, dateFilter]);
 
-  const handleAction = (docId, action) => {
+  const handleAction = async (docId, action) => {
     console.log(`Document ${docId} -> ${action}`);
     setSelectedAction((prev) => ({ ...prev, [docId]: action }));
+
+    try {
+      const result = await approveRejectProfile({
+        user_id: docId.toString(),
+        action: action === "approved" ? "approve" : "reject",
+      });
+
+      if (result.data) {
+        console.log("Profile action successful:", result.data);
+        // Optionally, you can update the local state or refetch data here
+      } else if (result.error) {
+        console.error("Profile action failed:", result.error);
+      }
+    } catch (error) {
+      console.error("Error approving/rejecting profile:", error);
+    }
+
     setOpenDropdownId(null);
   };
 

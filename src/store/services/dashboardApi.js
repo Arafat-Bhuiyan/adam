@@ -28,9 +28,16 @@ export const dashboardApi = createApi({
     getPendingPhlebotomistDetails: builder.query({
       query: (id) => `/dashboard/phlebotomists/pending/${id}/profile/view/`,
     }),
-    approveRejectProfile: builder.mutation({
+    approveRejectBusinessProfile: builder.mutation({
       query: (body) => ({
         url: "/dashboard/business-owners/profile/approve-reject/",
+        method: "POST",
+        body,
+      }),
+    }),
+    approveRejectProfile: builder.mutation({
+      query: (body) => ({
+        url: "/dashboard/phlebotomists/profile/approve-reject/",
         method: "POST",
         body,
       }),
@@ -45,4 +52,5 @@ export const {
   useGetPendingBusinessOwnersQuery,
   useGetPendingPhlebotomistDetailsQuery,
   useApproveRejectProfileMutation,
+  useApproveRejectBusinessProfileMutation,
 } = dashboardApi;
