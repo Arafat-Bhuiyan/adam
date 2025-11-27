@@ -4,6 +4,7 @@ import DatePicker from "../DataPicker";
 import { FaAngleDown, FaBuilding } from "react-icons/fa6";
 import JobDetailsModal from "./JobDetailsModal";
 import SelectionDropdown from "../Dashboard/SelectionDropdown";
+import { useGetJobsListQuery } from "../../store/services/jobManagementApi";
 
 const JobManagement = ({ onMessage }) => {
   const [searchTerm, setSearchTerm] = useState("");
@@ -11,52 +12,18 @@ const JobManagement = ({ onMessage }) => {
   const [dateFilter, setDateFilter] = useState("");
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const jobs = [
-    {
-      id: 1,
-      title: "Blood Draw Station",
-      jobId: "#JOB-2025-001",
-      company: "Community Health Center",
-      location: "XYZ",
-      payRate: "$180-120/hr",
-      postedTime: "Posted 2 hours ago",
-      status: "Published",
-      statusColor: "bg-orange-500",
-    },
-    {
-      id: 2,
-      title: "Blood Draw Station",
-      jobId: "#JOB-2025-001",
-      company: "Community Health Center",
-      location: "XYZ",
-      payRate: "$180-120/hr",
-      postedTime: "Posted 2 hours ago",
-      status: "Approved",
-      statusColor: "bg-green-500",
-    },
-    {
-      id: 3,
-      title: "Blood Draw Station",
-      jobId: "#JOB-2025-001",
-      company: "Community Health Center",
-      location: "XYZ",
-      payRate: "$180-120/hr",
-      postedTime: "Posted 2 hours ago",
-      status: "Approved",
-      statusColor: "bg-green-500",
-    },
-    {
-      id: 4,
-      title: "Blood Draw Station",
-      jobId: "#JOB-2025-001",
-      company: "Community Health Center",
-      location: "XYZ",
-      payRate: "$180-120/hr",
-      postedTime: "Posted 2 hours ago",
-      status: "Approved",
-      statusColor: "bg-green-500",
-    },
-  ];
+  const { data, error, isLoading } = useGetJobsListQuery();
+
+  const jobs = data?.jobs?.map((job) => ({
+    id: job.id,
+    title: job.title,
+    jobId: `#JOB-${job.id}`,
+    company: job.created_by,
+    location: job.location,
+    payRate: `$${job.pay_rate}/${job.pay_type}`,
+    postedTime: `Posted ${job.posted_hours_ago} hours ago`,
+    status: job.active_status,
+  })) || [];
 
   // state for selected job status
   const [selectedJobStatus, setSelectedJobStatus] = useState({}); // { jobId: "Published" }
