@@ -130,53 +130,59 @@ const JobManagement = ({ onMessage }) => {
       {/* Job Listings */}
       <div className="max-w-3xl bg-gray-50 w-full rounded-md my-7">
         <div className="p-6">
-          <div className="space-y-4">
-            {filteredJobs.map((job) => (
-              <div
-                key={job.id}
-                className="bg-white rounded-lg p-4  transition-colors "
-              >
-                <div className="flex items-center justify-between">
-                  <div className="flex-1">
-                    <div className="flex items-center space-x-3 mb-2">
-                      <h3 className="text-lg font-medium text-gray-900">
-                        {job.title}
-                      </h3>
+          {isLoading ? (
+            <div className="text-center py-8">
+              <p className="text-gray-600">Loading jobs...</p>
+            </div>
+          ) : (
+            <div className="space-y-4">
+              {filteredJobs.map((job) => (
+                <div
+                  key={job.id}
+                  className="bg-white rounded-lg p-4  transition-colors "
+                >
+                  <div className="flex items-center justify-between">
+                    <div className="flex-1">
+                      <div className="flex items-center space-x-3 mb-2">
+                        <h3 className="text-lg font-medium text-gray-900">
+                          {job.title}
+                        </h3>
+                      </div>
+
+                      <div className="flex items-center space-x-4 text-sm  mb-2">
+                        <div className="flex items-center space-x-1">
+                          <span className="text-sm ">Job ID : {job.jobId}</span>
+                        </div>
+                        <div className="flex items-center space-x-1">
+                          <FaBuilding />
+                          <span>{job.company}</span>
+                        </div>
+                        <div className="flex items-center space-x-1">
+                          <MapPin className="w-4 h-4" />
+                          <span>{job.location}</span>
+                        </div>
+                        <span className="font-medium text-gray-900">
+                          {job.payRate}
+                        </span>
+                      </div>
+
+                      <div className="flex items-center space-x-3">
+                        {getStatusDropdown(job)}
+                        <span className="text-sm text-gray-500">
+                          {job.postedTime}
+                        </span>
+                      </div>
                     </div>
 
-                    <div className="flex items-center space-x-4 text-sm  mb-2">
-                      <div className="flex items-center space-x-1">
-                        <span className="text-sm ">Job ID : {job.jobId}</span>
-                      </div>
-                      <div className="flex items-center space-x-1">
-                        <FaBuilding />
-                        <span>{job.company}</span>
-                      </div>
-                      <div className="flex items-center space-x-1">
-                        <MapPin className="w-4 h-4" />
-                        <span>{job.location}</span>
-                      </div>
-                      <span className="font-medium text-gray-900">
-                        {job.payRate}
-                      </span>
-                    </div>
-
-                    <div className="flex items-center space-x-3">
-                      {getStatusDropdown(job)}
-                      <span className="text-sm text-gray-500">
-                        {job.postedTime}
-                      </span>
-                    </div>
+                    <ChevronRight
+                      onClick={() => setIsModalOpen(true)}
+                      className="w-5 h-5 cursor-pointer self-start text-gray-400"
+                    />
                   </div>
-
-                  <ChevronRight
-                    onClick={() => setIsModalOpen(true)}
-                    className="w-5 h-5 cursor-pointer self-start text-gray-400"
-                  />
                 </div>
-              </div>
-            ))}
-          </div>
+              ))}
+            </div>
+          )}
         </div>
       </div>
       <JobDetailsModal
