@@ -21,9 +21,11 @@ export const dashboardApi = createApi({
     }),
     getPendingPhlebotomists: builder.query({
       query: () => "/dashboard/phlebotomists/pending/list/",
+      providesTags: ["PhlebotomistsPending"],
     }),
     getPendingBusinessOwners: builder.query({
       query: () => "/dashboard/business-owners/pending/list/",
+      providesTags: ["PendingBusinessOwners"],
     }),
     getPendingPhlebotomistDetails: builder.query({
       query: (id) => `/dashboard/phlebotomists/pending/${id}/profile/view/`,
@@ -34,6 +36,7 @@ export const dashboardApi = createApi({
         method: "POST",
         body,
       }),
+      invalidatesTags: ["PendingBusinessOwners"],
     }),
     approveRejectProfile: builder.mutation({
       query: (body) => ({
@@ -41,6 +44,7 @@ export const dashboardApi = createApi({
         method: "POST",
         body,
       }),
+      invalidatesTags: ["PhlebotomistsPending"],
     }),
   }),
 });
