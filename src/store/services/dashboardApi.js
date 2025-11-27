@@ -22,6 +22,9 @@ export const dashboardApi = createApi({
     getPendingPhlebotomists: builder.query({
       query: () => "/dashboard/phlebotomists/pending/list/",
     }),
+    getPendingBusinessOwners: builder.query({
+      query: () => "/dashboard/business-owners/pending/list/",
+    }),
     getPendingPhlebotomistDetails: builder.query({
       query: (id) => `/dashboard/phlebotomists/pending/${id}/profile/view/`,
     }),
@@ -39,6 +42,7 @@ export const dashboardApi = createApi({
 export const {
   useGetDashboardDataQuery,
   useGetPendingPhlebotomistsQuery,
+  useGetPendingBusinessOwnersQuery,
   useGetPendingPhlebotomistDetailsQuery,
   useApproveRejectProfileMutation,
 } = dashboardApi;
