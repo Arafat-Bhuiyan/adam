@@ -8,6 +8,8 @@ import {
 } from "react-icons/fa6";
 import SelectionDropdown from "./SelectionDropdown";
 import { useApproveRejectBusinessProfileMutation } from "../../store/services/dashboardApi";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const DocumentManager = ({ isOpen, onClose,data,count }) => {
   const [searchTerm, setSearchTerm] = useState("");
@@ -17,6 +19,8 @@ const DocumentManager = ({ isOpen, onClose,data,count }) => {
   const [openDropdownId, setOpenDropdownId] = useState(null);
   const [selectedAction, setSelectedAction] = useState({}); // { docId: action }
   const [selectedStatus, setSelectedStatus] = useState("pending");
+
+  const [approveRejectBusinessProfile] = useApproveRejectBusinessProfileMutation();
 
   // Sample document data
   // const documents = [
@@ -158,19 +162,22 @@ const DocumentManager = ({ isOpen, onClose,data,count }) => {
     setSelectedAction((prev) => ({ ...prev, [docId]: action }));
 
     try {
-      const result = await approveRejectProfile({
+      const result = await approveRejectBusinessProfile({
         user_id: docId.toString(),
         action: action === "approved" ? "approve" : "reject",
       });
 
       if (result.data) {
         console.log("Profile action successful:", result.data);
+        toast.success("Business Owner account status updated to approved.");
         // Optionally, you can update the local state or refetch data here
       } else if (result.error) {
         console.error("Profile action failed:", result.error);
+        toast.error("Business Owner account status updated faild");
       }
     } catch (error) {
       console.error("Error approving/rejecting profile:", error);
+      toast.error("Business Owner account status updated faild");
     }
 
     setOpenDropdownId(null);
