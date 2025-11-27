@@ -11,6 +11,7 @@ const JobManagement = ({ onMessage }) => {
   const [statusFilter, setStatusFilter] = useState("All Status");
   const [dateFilter, setDateFilter] = useState("");
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [visibleJobsCount, setVisibleJobsCount] = useState(10);
 
   const { data, error, isLoading } = useGetJobsListQuery();
 
@@ -55,6 +56,12 @@ const JobManagement = ({ onMessage }) => {
       statusFilter === "All Status" || job.status === statusFilter;
     return matchesSearch && matchesStatus;
   });
+
+  const visibleJobs = filteredJobs.slice(0, visibleJobsCount);
+
+  const handleLoadMore = () => {
+    setVisibleJobsCount((prev) => prev + 10);
+  };
 
   return (
     <div style={{ fontFamily: "Montserrat" }} className=" ">
@@ -135,53 +142,65 @@ const JobManagement = ({ onMessage }) => {
               <p className="text-gray-600">Loading jobs...</p>
             </div>
           ) : (
-            <div className="space-y-4">
-              {filteredJobs.map((job) => (
-                <div
-                  key={job.id}
-                  className="bg-white rounded-lg p-4  transition-colors "
-                >
-                  <div className="flex items-center justify-between">
-                    <div className="flex-1">
-                      <div className="flex items-center space-x-3 mb-2">
-                        <h3 className="text-lg font-medium text-gray-900">
-                          {job.title}
-                        </h3>
+            <>
+              <div className="space-y-4">
+                {visibleJobs.map((job) => (
+                  <div
+                    key={job.id}
+                    className="bg-white rounded-lg p-4  transition-colors "
+                  >
+                    <div className="flex items-center justify-between">
+                      <div className="flex-1">
+                        <div className="flex items-center space-x-3 mb-2">
+                          <h3 className="text-lg font-medium text-gray-900">
+                            {job.title}
+                          </h3>
+                        </div>
+
+                        <div className="flex items-center space-x-4 text-sm  mb-2">
+                          <div className="flex items-center space-x-1">
+                            <span className="text-sm ">Job ID : {job.jobId}</span>
+                          </div>
+                          <div className="flex items-center space-x-1">
+                            <FaBuilding />
+                            <span>{job.company}</span>
+                          </div>
+                          <div className="flex items-center space-x-1">
+                            <MapPin className="w-4 h-4" />
+                            <span>{job.location}</span>
+                          </div>
+                          <span className="font-medium text-gray-900">
+                            {job.payRate}
+                          </span>
+                        </div>
+
+                        <div className="flex items-center space-x-3">
+                          {getStatusDropdown(job)}
+                          <span className="text-sm text-gray-500">
+                            {job.postedTime}
+                          </span>
+                        </div>
                       </div>
 
-                      <div className="flex items-center space-x-4 text-sm  mb-2">
-                        <div className="flex items-center space-x-1">
-                          <span className="text-sm ">Job ID : {job.jobId}</span>
-                        </div>
-                        <div className="flex items-center space-x-1">
-                          <FaBuilding />
-                          <span>{job.company}</span>
-                        </div>
-                        <div className="flex items-center space-x-1">
-                          <MapPin className="w-4 h-4" />
-                          <span>{job.location}</span>
-                        </div>
-                        <span className="font-medium text-gray-900">
-                          {job.payRate}
-                        </span>
-                      </div>
-
-                      <div className="flex items-center space-x-3">
-                        {getStatusDropdown(job)}
-                        <span className="text-sm text-gray-500">
-                          {job.postedTime}
-                        </span>
-                      </div>
+                      <ChevronRight
+                        onClick={() => setIsModalOpen(true)}
+                        className="w-5 h-5 cursor-pointer self-start text-gray-400"
+                      />
                     </div>
-
-                    <ChevronRight
-                      onClick={() => setIsModalOpen(true)}
-                      className="w-5 h-5 cursor-pointer self-start text-gray-400"
-                    />
                   </div>
+                ))}
+              </div>
+              {visibleJobsCount < filteredJobs.length && (
+                <div className="text-center mt-6">
+                  <button
+                    onClick={handleLoadMore}
+                    className="px-6 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors"
+                  >
+                    Load More
+                  </button>
                 </div>
-              ))}
-            </div>
+              )}
+            </>
           )}
         </div>
       </div>
