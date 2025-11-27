@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect, useMemo } from "react";
 import {
   FaCertificate,
   FaAngleDown,
@@ -75,14 +75,58 @@ const DocumentManager = ({ isOpen, onClose,data,count }) => {
   //   },
   // ];
 
-  const totalDocuments = data.length || 0;
+  // Filtered data based on search and filters
+  const filteredData = useMemo(() => {
+    let filtered = data || [];
+
+    // Search filter
+    if (searchTerm) {
+      filtered = filtered.filter((business) =>
+        business.business_name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        business.user_full_name.toLowerCase().includes(searchTerm.toLowerCase())
+      );
+    }
+
+    // Document type filter (using business_type)
+    if (documentType !== "All Document Types") {
+      filtered = filtered.filter((business) =>
+        business.business_type.toLowerCase() === documentType.toLowerCase()
+      );
+    }
+
+    // Date filter
+    if (dateFilter !== "All Dates") {
+      const now = new Date();
+      let daysLimit;
+      switch (dateFilter) {
+        case "Last 7 days":
+          daysLimit = 7;
+          break;
+        case "Last 30 days":
+          daysLimit = 30;
+          break;
+        case "Last 90 days":
+          daysLimit = 90;
+          break;
+        default:
+          daysLimit = null;
+      }
+      if (daysLimit) {
+        filtered = filtered.filter((business) => business.days_ago <= daysLimit);
+      }
+    }
+
+    return filtered;
+  }, [data, searchTerm, documentType, dateFilter]);
+
+  const totalDocuments = filteredData.length;
   const documentsPerPage = 6;
   const totalPages = Math.ceil(totalDocuments / documentsPerPage);
 
   // Calculate pagination
   const startIndex = (currentPage - 1) * documentsPerPage;
   const endIndex = startIndex + documentsPerPage;
-  const paginatedData = data.slice(startIndex, endIndex);
+  const paginatedData = filteredData.slice(startIndex, endIndex);
 
   // Generate page numbers to display
   const getPageNumbers = () => {
@@ -102,6 +146,11 @@ const DocumentManager = ({ isOpen, onClose,data,count }) => {
   };
 
   const pageNumbers = getPageNumbers();
+
+  // Reset to page 1 when filters change
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [searchTerm, documentType, dateFilter]);
 
   const handleAction = (docId, action) => {
     console.log(`Document ${docId} -> ${action}`);
@@ -158,7 +207,7 @@ const DocumentManager = ({ isOpen, onClose,data,count }) => {
               <select
                 value={documentType}
                 onChange={(e) => setDocumentType(e.target.value)}
-                className="px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="px-4 py-2 hidden border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
               >
                 <option>All Document Types</option>
                 <option>Medical Certificate</option>
@@ -178,7 +227,7 @@ const DocumentManager = ({ isOpen, onClose,data,count }) => {
               </select>
             </div>
 
-            <div className="w-32">
+            <div className="w-32 hidden">
               <SelectionDropdown
                 options={["pending", "active", "draft"]}
                 selected={selectedStatus}
