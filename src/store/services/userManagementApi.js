@@ -19,8 +19,11 @@ export const userManagementApi = createApi({
     getUsersList: builder.query({
       query: () => "/dashboard/users/list/",
     }),
+    getUserProfile: builder.query({
+      query: (userId) => `/dashboard/users/${userId}/profile/`,
+    }),
   }),
 });
 
 // Export hooks for usage in functional components
-export const { useGetUsersListQuery } = userManagementApi;
+export const { useGetUsersListQuery, useGetUserProfileQuery } = userManagementApi;
