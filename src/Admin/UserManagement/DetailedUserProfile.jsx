@@ -72,10 +72,10 @@ const DetailedUserProfile = ({ user, isOpen, onClose }) => {
           isLoading ? (
             <p>Loading profile...</p>
           ) : (
-            error && <p>Error loading profile.</p>
+            error && <p className=" p-10 text-red-600">Error loading profile.</p>
           )
         }
-        {data && (
+        {data && !isLoading && !error && (
           <>
             <div className="px-6 mt-5">
               {" "}
