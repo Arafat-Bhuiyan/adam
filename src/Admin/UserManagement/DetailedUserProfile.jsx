@@ -8,14 +8,32 @@ import {
   FaMessage,
 } from "react-icons/fa6";
 import { FaEdit } from "react-icons/fa";
-import { useGetUserProfileQuery } from "../../store/services/userManagementApi";
+import {
+  useGetUserProfileQuery,
+  useUpdateUserStatusMutation,
+} from "../../store/services/userManagementApi";
+import { useState } from "react";
+import { toast } from "react-toastify";
 
 const DetailedUserProfile = ({ user, isOpen, onClose }) => {
   const { data, isLoading, error } = useGetUserProfileQuery(user?.id);
+  const [updateUserStatus] = useUpdateUserStatusMutation();
+  const [dropdownOpen, setDropdownOpen] = useState(false);
 
   const handleSkillRemove = (skillToRemove) => {
     // Handle skill removal logic here
     console.log("Removing skill:", skillToRemove);
+  };
+
+  const handleUpdateStatus = async (status) => {
+    try {
+      await updateUserStatus({ userId: user?.id, status }).unwrap();
+      setDropdownOpen(false);
+      toast.success("Status updated successfully!");
+    } catch (error) {
+      console.error("Failed to update status:", error);
+      toast.error("Failed to update status.");
+    }
   };
 
   if (!isOpen) return null;
@@ -86,10 +104,14 @@ const DetailedUserProfile = ({ user, isOpen, onClose }) => {
                 <div className="flex items-center space-x-3 mt-1">
                   <span className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-green-100 text-green-800">
                     <div className="w-2 h-2 bg-[#166534] rounded-full mr-1"></div>
-                    Active
+                    Approved
                   </span>
                   <span className="text-sm text-gray-500">
-                    Member since {new Date(profile.date_joined).toLocaleDateString('en-US', { year: 'numeric', month: 'long' })}
+                    Member since{" "}
+                    {new Date(profile.date_joined).toLocaleDateString("en-US", {
+                      year: "numeric",
+                      month: "long",
+                    })}
                   </span>
                 </div>
               </div>
@@ -144,7 +166,12 @@ const DetailedUserProfile = ({ user, isOpen, onClose }) => {
                     <label className="block text-sm font-medium text-gray-700 mb-1">
                       Date of Birth
                     </label>
-                    <p className="text-gray-500">{new Date(profile.birth_date).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}</p>
+                    <p className="text-gray-500">
+                      {new Date(profile.birth_date).toLocaleDateString(
+                        "en-US",
+                        { year: "numeric", month: "long", day: "numeric" }
+                      )}
+                    </p>
                   </div>
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-1">
@@ -177,7 +204,7 @@ const DetailedUserProfile = ({ user, isOpen, onClose }) => {
                     Skill
                   </label>
                   <div className="flex flex-wrap gap-2">
-                    {profile?.skills?.split(', ').map((skill, index) => (
+                    {profile?.skills?.split(", ").map((skill, index) => (
                       <span
                         key={index}
                         className="inline-flex items-center px-3 py-1 rounded-full text-sm bg-gray-100 text-[#0C1A2A]"
@@ -302,10 +329,31 @@ const DetailedUserProfile = ({ user, isOpen, onClose }) => {
                     <FaMessage />
                     Send Message
                   </button>
-                  <button className="w-full justify-center items-center flex gap-2 bg-[#EAB308] text-white font-medium py-2 px-4 rounded-lg transition-colors">
-                    <FaAngleDown />
-                    Pending
-                  </button>
+                  <div className="relative">
+                    <button
+                      onClick={() => setDropdownOpen(!dropdownOpen)}
+                      className="w-full justify-center items-center flex gap-2 bg-[#EAB308] text-white font-medium py-2 px-4 rounded-lg transition-colors"
+                    >
+                      <FaAngleDown />
+                      {profile?.status}
+                    </button>
+                    {dropdownOpen && (
+                      <div className="absolute top-full left-0 right-0 mt-1 bg-white border border-gray-200 rounded-lg shadow-lg z-10">
+                        <button
+                          onClick={() => handleUpdateStatus("approved")}
+                          className="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                        >
+                          Approved
+                        </button>
+                        <button
+                          onClick={() => handleUpdateStatus("pending")}
+                          className="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                        >
+                          Pending
+                        </button>                       
+                      </div>
+                    )}
+                  </div>
                 </div>
               </div>
 
