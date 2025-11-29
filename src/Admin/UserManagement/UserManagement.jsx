@@ -303,8 +303,7 @@ const UserManagement = () => {
         isOpen={isProfileOpen}
         onClose={() => {
           setIsProfileOpen(false);
-          setSelectedUser(null);
-          
+          setSelectedUser(null);          
         }}
         user={selectedUser}
       />
