@@ -6,9 +6,10 @@ import Avatar from "../../assets/images/Image-52.png";
 import ProfessionalComparison from "./ProfessionalComparison";
 import { useGetAvailablePhlebotomistsQuery } from "../../store/services/jobMatchingApi";
 
-const AvailablePhlebotomists = ({ isOpen, onClose }) => {
+const AvailablePhlebotomists = ({ isOpen, onClose, job }) => {
   const [openJobMatchingDetails, setOpenJobMatchingDetails] = useState(false);
   const [showCount, setShowCount] = useState(3);
+  const [selectedPhlebotomist, setSelectedPhlebotomist] = useState(null);
 
   const { data, isLoading, isError } = useGetAvailablePhlebotomistsQuery();
 
@@ -37,7 +38,7 @@ const AvailablePhlebotomists = ({ isOpen, onClose }) => {
   };
 
   const handleLoadMore = () => {
-    setShowCount(prev => prev + 3);
+    setShowCount((prev) => prev + 3);
   };
 
   if (!isOpen) return null;
@@ -87,7 +88,11 @@ const AvailablePhlebotomists = ({ isOpen, onClose }) => {
             </div>
           ) : (
             phlebotomists.slice(0, showCount).map((phlebotomist) => (
-              <div key={phlebotomist.id} className="shadow-sm rounded-lg p-4">
+              <div
+                onClick={() => setSelectedPhlebotomist(phlebotomist)}
+                key={phlebotomist.id}
+                className="shadow-sm rounded-lg p-4"
+              >
                 {/* Status Badge */}
                 <div className="flex justify-end mb-2"></div>
 
@@ -201,6 +206,8 @@ const AvailablePhlebotomists = ({ isOpen, onClose }) => {
       <ProfessionalComparison
         isOpen={openJobMatchingDetails}
         onClose={() => setOpenJobMatchingDetails(false)}
+        job={job}
+        phlebotomist={selectedPhlebotomist}
       />
     </div>
   );
