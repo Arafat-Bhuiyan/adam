@@ -8,6 +8,7 @@ import { useGetAvailablePhlebotomistsQuery } from "../../store/services/jobMatch
 
 const AvailablePhlebotomists = ({ isOpen, onClose }) => {
   const [openJobMatchingDetails, setOpenJobMatchingDetails] = useState(false);
+  const [showCount, setShowCount] = useState(3);
 
   const { data, isLoading, isError } = useGetAvailablePhlebotomistsQuery();
 
@@ -33,6 +34,10 @@ const AvailablePhlebotomists = ({ isOpen, onClose }) => {
   const handleViewProfile = (phlebotomistId) => {
     setOpenJobMatchingDetails(true);
     // Handle view profile logic here
+  };
+
+  const handleLoadMore = () => {
+    setShowCount(prev => prev + 3);
   };
 
   if (!isOpen) return null;
@@ -81,7 +86,7 @@ const AvailablePhlebotomists = ({ isOpen, onClose }) => {
               Error loading phlebotomists
             </div>
           ) : (
-            phlebotomists.map((phlebotomist) => (
+            phlebotomists.slice(0, showCount).map((phlebotomist) => (
               <div key={phlebotomist.id} className="shadow-sm rounded-lg p-4">
                 {/* Status Badge */}
                 <div className="flex justify-end mb-2"></div>
@@ -182,11 +187,16 @@ const AvailablePhlebotomists = ({ isOpen, onClose }) => {
         </div>
 
         {/* Load More Button */}
-        <div className="p-4 ">
-          <button className="w-full text-center text-[#C9A14A] font-medium text-sm">
-            Load More Phlebotomists
-          </button>
-        </div>
+        {showCount < phlebotomists.length && (
+          <div className="p-4 ">
+            <button
+              onClick={handleLoadMore}
+              className="w-full text-center text-[#C9A14A] font-medium text-sm"
+            >
+              Load More Phlebotomists
+            </button>
+          </div>
+        )}
       </div>
       <ProfessionalComparison
         isOpen={openJobMatchingDetails}
