@@ -206,8 +206,8 @@ const AvailablePhlebotomists = ({ isOpen, onClose, job }) => {
       <ProfessionalComparison
         isOpen={openJobMatchingDetails}
         onClose={() => setOpenJobMatchingDetails(false)}
-        job={job}
-        phlebotomist={selectedPhlebotomist}
+        jobId={job.id}
+        phlebotomistId={selectedPhlebotomist?.id}
       />
     </div>
   );

@@ -1,16 +1,19 @@
 import { useState } from "react";
 import Avatar from "../../assets/images/Image-52.png";
 import { FaCheck } from "react-icons/fa6";
+import { useGetPhlebotomistProfileQuery } from "../../store/services/jobMatchingApi";
 
-const ProfessionalComparison = ({ isOpen, onClose }) => {
-  const [skills, setSkills] = useState([
-    "Blood Collection",
-    "Blood Collection",
-    "Blood Collection",
-  ]);
+const ProfessionalComparison = ({ isOpen, onClose, phlebotomistId, jobId }) => {
+  const {
+    data: profile,
+    isLoading,
+    isError,
+  } = useGetPhlebotomistProfileQuery(phlebotomistId);
 
+  const skills = profile?.skills ? profile.skills.split(", ") : [];
   const removeSkill = (index) => {
-    setSkills(skills.filter((_, i) => i !== index));
+    // Note: Since skills come from API, we might not need to remove them
+    // This could be removed or modified based on requirements
   };
 
   if (!isOpen) return null;
@@ -42,15 +45,17 @@ const ProfessionalComparison = ({ isOpen, onClose }) => {
         </div>
         {/* Header */}
         <div className="flex justify-between gap-10 items-start p-6 pt-9 ">
-          {/* FA Kabita Profile */}
+          {/* Phlebotomist Profile */}
           <div className="flex flex-1 items-center min-w-[400px] space-x-3 p-3  shadow-sm rounded-md">
             <img
-              src={Avatar}
-              alt="FA Kabita"
+              src={profile?.image || Avatar}
+              alt={profile?.user?.full_name || "Phlebotomist"}
               className="w-12 h-12 rounded-full object-cover"
             />
             <div>
-              <h3 className="font-semibold text-gray-900">FA Kabita</h3>
+              <h3 className="font-semibold text-gray-900">
+                {profile?.user?.full_name || "Loading..."}
+              </h3>
               <p className="text-sm text-gray-600">Certified Phlebotomist</p>
               <div className="flex items-center space-x-1">
                 <div className="flex text-yellow-400">{"★".repeat(5)}</div>
@@ -59,15 +64,15 @@ const ProfessionalComparison = ({ isOpen, onClose }) => {
             </div>
           </div>
 
-          {/* Dr. Ratul Hossain Profile */}
+          {/* Client Profile */}
           <div className="flex items-center flex-1 space-x-3 p-3 shadow-sm   rounded-md">
             <img
               src={Avatar}
-              alt="Dr. Ratul Hossain"
+              alt="Client"
               className="w-12 h-12 rounded-full object-cover"
             />
             <div>
-              <h3 className="font-semibold text-gray-900">Dr. Ratul Hossain</h3>
+              <h3 className="font-semibold text-gray-900">Client</h3>
               <p className="text-sm text-gray-600">Client</p>
               <div className="flex items-center space-x-1">
                 <div className="flex text-yellow-400">{"★".repeat(5)}</div>
@@ -186,14 +191,16 @@ const ProfessionalComparison = ({ isOpen, onClose }) => {
                 <div className="flex items-center justify-between p-3 bg-[#FFFCFA] cursor-pointer hover:bg-[#FFF8EF] border hover:border-[#C9A14A] rounded-lg">
                   <div className="flex items-center space-x-3">
                     <div className="w-8 h-8 bg-[#EFB944] text-white rounded-full flex items-center justify-center">
-                     <FaCheck />
+                      <FaCheck />
                     </div>
                     <div>
                       <div className="font-medium text-gray-900">
                         Phlebotomy License
                       </div>
                       <div className="text-sm text-gray-600">
-                        Valid • Expires 12/2025
+                        {profile?.license_number
+                          ? `Valid • Expires ${profile.license_expiry_date}`
+                          : "Not Available"}
                       </div>
                     </div>
                   </div>
