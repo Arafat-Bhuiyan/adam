@@ -7,7 +7,10 @@ export const jobMatchingApi = createApi({
     getJobMatchingList: builder.query({
       query: () => '/dashboard/jobs/matching/list/',
     }),
+    getAvailablePhlebotomists: builder.query({
+      query: () => '/dashboard/jobs/matching/phlebotomists/available/',
+    }),
   }),
 });
 
-export const { useGetJobMatchingListQuery } = jobMatchingApi;
+export const { useGetJobMatchingListQuery, useGetAvailablePhlebotomistsQuery } = jobMatchingApi;
