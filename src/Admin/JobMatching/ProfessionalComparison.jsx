@@ -1,7 +1,8 @@
 import { useState } from "react";
 import Avatar from "../../assets/images/Image-52.png";
 import { FaCheck } from "react-icons/fa6";
-import { useGetPhlebotomistProfileQuery } from "../../store/services/jobMatchingApi";
+import { useGetPhlebotomistProfileQuery, useAssignJobToPhlebotomistMutation } from "../../store/services/jobMatchingApi";
+import { toast } from "react-toastify";
 
 const ProfessionalComparison = ({ isOpen, onClose, phlebotomistId, jobId }) => {
   const {
@@ -9,11 +10,26 @@ const ProfessionalComparison = ({ isOpen, onClose, phlebotomistId, jobId }) => {
     isLoading,
     isError,
   } = useGetPhlebotomistProfileQuery(phlebotomistId);
+  const [assignJob] = useAssignJobToPhlebotomistMutation();
 
   const skills = profile?.skills ? profile.skills.split(", ") : [];
   const removeSkill = (index) => {
     // Note: Since skills come from API, we might not need to remove them
     // This could be removed or modified based on requirements
+  };
+
+  const handleAssignJob = async () => {
+    try {
+      await assignJob({
+        job_id: jobId,
+        phlebotomist_user_id: phlebotomistId,
+      }).unwrap();
+      toast.success("Job assigned successfully!");
+      onClose();
+    } catch (error) {
+      console.error("Failed to assign job:", error);
+      toast.error("Failed to assign job. Please try again.");
+    }
   };
 
   if (!isOpen) return null;
@@ -252,7 +268,10 @@ const ProfessionalComparison = ({ isOpen, onClose, phlebotomistId, jobId }) => {
 
               {/* Assign Job Button */}
               <div className="mt-6">
-                <button className="w-full bg-[#C9A14A] text-white font-medium py-2 px-4 rounded-lg transition-colors">
+                <button
+                  onClick={handleAssignJob}
+                  className="w-full bg-[#C9A14A] text-white font-medium py-2 px-4 rounded-lg transition-colors"
+                >
                   Assign Job
                 </button>
               </div>

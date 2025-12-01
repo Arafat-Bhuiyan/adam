@@ -4,7 +4,8 @@ import { useState } from "react";
 import { FaCertificate, FaLocationDot } from "react-icons/fa6";
 import Avatar from "../../assets/images/Image-52.png";
 import ProfessionalComparison from "./ProfessionalComparison";
-import { useGetAvailablePhlebotomistsQuery } from "../../store/services/jobMatchingApi";
+import { useGetAvailablePhlebotomistsQuery, useAssignJobToPhlebotomistMutation } from "../../store/services/jobMatchingApi";
+import { toast } from "react-toastify";
 
 const AvailablePhlebotomists = ({ isOpen, onClose, job }) => {
   const [openJobMatchingDetails, setOpenJobMatchingDetails] = useState(false);
@@ -27,9 +28,20 @@ const AvailablePhlebotomists = ({ isOpen, onClose, job }) => {
       avatar: item.image || Avatar,
     })) || [];
 
-  const handleAssignJob = (phlebotomistId) => {
-    console.log("Assigning job to phlebotomist:", phlebotomistId);
-    // Handle job assignment logic here
+  const [assignJob] = useAssignJobToPhlebotomistMutation();
+
+  const handleAssignJob = async (phlebotomistId) => {
+    try {
+      await assignJob({
+        job_id: job.id,
+        phlebotomist_user_id: phlebotomistId,
+      }).unwrap();
+      toast.success("Job assigned successfully!");
+      onClose();
+    } catch (error) {
+      console.error("Failed to assign job:", error);
+      toast.error("Failed to assign job. Please try again.");
+    }
   };
 
   const handleViewProfile = (phlebotomistId) => {
