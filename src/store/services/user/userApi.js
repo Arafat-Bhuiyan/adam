@@ -8,19 +8,20 @@ export const userApi = createApi({
     getServices: builder.query({
       query: () => "/accounts/get/all/service/list/",
       providesTags: ["Services"],
+    }),
 
-      //   Other endpoints can be added here
-      // getJobMatchingList: builder.query({
-      //   query: () => "/dashboard/jobs/matching/list/",
-      // }),
-      // assignJobToPhlebotomist: builder.mutation({
-      //   query: (body) => ({
-      //     url: "/dashboard/jobs/matching/phlebotomist/assign/",
-      //     method: "POST",
-      //     body,
-      //   }),
+    // POST to create a service request
+    createServiceRequest: builder.mutation({
+      query: (body) => ({
+        url: "/accounts/user/service/request/",
+        method: "POST",
+        body,
+      }),
+      // This will refetch queries with the 'Appointments' tag after a successful request.
+      invalidatesTags: ["Appointments"],
     }),
   }),
 });
 
-export const { useGetServicesQuery } = userApi;
+export const { useGetServicesQuery, useCreateServiceRequestMutation } =
+  userApi;

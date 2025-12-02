@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { useCreateServiceRequestMutation } from "@/store/services/user/userApi";
 import { PersonalInformationSection } from "./PersonalInformationSection";
 import { ServiceDetailsSection } from "./ServiceDetailsSection";
 import { MedicalInformationSection } from "./MedicalInformationSection";
@@ -17,20 +18,25 @@ export default function BloodDrawBooking() {
     dateOfBirth: "",
     gender: "",
     testPackage: "",
-    schedule: "",
+    scheduleDate: null,
+    scheduleDate2: null,
     hospital: "",
     location: "",
     medications: "",
+    prescription: "", // Assuming you'll add a way to upload this
     allergies: "",
     medicalConditions: [],
     specialRequests: "",
     emailNotifications: false,
-    smsReminders: false,
     termsAccepted: false,
     consentAccepted: false,
   });
 
   const [isPaymentModalOpen, setIsPaymentModalOpen] = useState(false);
+  const [appointmentId, setAppointmentId] = useState(null);
+
+  const [createServiceRequest, { isLoading }] =
+    useCreateServiceRequestMutation();
 
   const handleInputChange = (field, value) => {
     setFormData((prev) => ({ ...prev, [field]: value }));
@@ -45,8 +51,51 @@ export default function BloodDrawBooking() {
     }));
   };
 
-  const handleSubmitBooking = () => {
-    setIsPaymentModalOpen(true);
+  const formatDate = (date) => {
+    if (!date) return null;
+    return new Date(date).toISOString().split("T")[0];
+  };
+
+  const handleSubmitBooking = async () => {
+    // Basic validation
+    if (!formData.termsAccepted || !formData.consentAccepted) {
+      alert("Please accept the terms and consent to continue.");
+      return;
+    }
+
+    const apiBody = {
+      email: formData.email,
+      first_name: formData.firstName,
+      last_name: formData.lastName,
+      phone: formData.phone,
+      date_of_birth: formatDate(formData.dateOfBirth),
+      gender: formData.gender,
+      test_package: formData.testPackage,
+      start_date: formatDate(formData.scheduleDate),
+      start_date_start_time: "09:00", // Hardcoded as per UI
+      start_date_end_time: "18:00", // Hardcoded as per UI (6:00 PM)
+      end_date: formatDate(formData.scheduleDate2),
+      end_date_start_time: "09:00", // Hardcoded as per UI
+      end_date_end_time: "18:00", // Hardcoded as per UI (6:00 PM)
+      location: formData.location,
+      current_medication: formData.medications,
+      prescription: formData.prescription || "cloudinary_file_url", // Placeholder
+      known_allergies: formData.allergies,
+      medical_conditions: formData.medicalConditions,
+      special_request: formData.specialRequests,
+      email_notification_enable: formData.emailNotifications,
+      terms_and_condition_agreement: formData.termsAccepted,
+      agreement: formData.consentAccepted,
+    };
+
+    try {
+      const response = await createServiceRequest(apiBody).unwrap();
+      setAppointmentId(response.appointment_id);
+      setIsPaymentModalOpen(true);
+    } catch (error) {
+      console.error("Failed to create appointment:", error);
+      alert("Failed to create appointment. Please try again.");
+    }
   };
 
   return (
@@ -137,9 +186,10 @@ export default function BloodDrawBooking() {
             <div className="space-y-4">
               <button
                 onClick={handleSubmitBooking}
-                className="w-full bg-[#C9A14A] hover:bg-[#C9A14A]/80 text-white py-3 font-semibold text-base rounded-md"
+                className="w-full bg-[#C9A14A] hover:bg-[#C9A14A]/80 text-white py-3 font-semibold text-base rounded-md disabled:bg-gray-400"
+                disabled={isLoading}
               >
-                Submit Booking Request
+                {isLoading ? "Submitting..." : "Submit Booking Request"}
               </button>
               <p className="text-center text-sm text-[#5B5B5B]">
                 You will receive a confirmation email within 2 hours
@@ -154,6 +204,7 @@ export default function BloodDrawBooking() {
 
       <SecurePaymentModal
         isOpen={isPaymentModalOpen}
+        appointmentId={appointmentId}
         onClose={() => setIsPaymentModalOpen(false)}
       />
     </div>

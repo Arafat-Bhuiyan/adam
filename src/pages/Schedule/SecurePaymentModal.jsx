@@ -10,7 +10,7 @@ import ame from "../../assets/images/ame.png";
 import dis from "../../assets/images/dis.png";
 import { PaymentSuccess } from "./PaymentSuccess";
 
-export function SecurePaymentModal({ isOpen, onClose }) {
+export function SecurePaymentModal({ isOpen, onClose, appointmentId }) {
   const [isPaymentSuccessOpen, setIsPaymentSuccessOpen] = useState(false);
   const [billingData, setBillingData] = useState({
     streetAddress: "",
@@ -28,7 +28,7 @@ export function SecurePaymentModal({ isOpen, onClose }) {
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
       {isPaymentSuccessOpen ? (
-        <PaymentSuccess onClose={onClose} />
+        <PaymentSuccess onClose={onClose} appointmentId={appointmentId} />
       ) : (
         <div className="bg-white rounded-lg max-w-7xl w-full max-h-[90vh] pb-20">
           {/* Header */}

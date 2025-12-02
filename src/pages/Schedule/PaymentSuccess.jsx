@@ -1,6 +1,6 @@
 import { X } from "lucide-react";
 
-export const PaymentSuccess = ({ onClose }) => {
+export const PaymentSuccess = ({ onClose, appointmentId }) => {
   return (
     <div className="bg-white rounded-lg max-w-7xl w-full max-h-[90vh] pb-20">
       {/* Header */}
@@ -32,7 +32,7 @@ export const PaymentSuccess = ({ onClose }) => {
             Your Booking ID
           </p>
           <p className="text-gray-900 font-medium text-base mb-5">
-            Booking ID: SID-2025-001
+            Booking ID: {appointmentId}
           </p>
           <p className="text-gray-500 text-base font-medium mb-5">
             "You will be contacted by a healthcare professional soon."
