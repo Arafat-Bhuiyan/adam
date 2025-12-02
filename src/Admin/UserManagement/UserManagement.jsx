@@ -1,12 +1,11 @@
-import { useState, useEffect } from "react";
 import Avatar from "@/assets/images/Image-52.png";
+import { useEffect, useState } from "react";
 import { FaEye } from "react-icons/fa";
-import { FaAngleDown } from "react-icons/fa6";
-import DetailedUserProfile from "./DetailedUserProfile";
-import AppointmentDetails from "./AppointmentDetails";
-import SelectionDropdown from "../Dashboard/SelectionDropdown";
-import { useGetUsersListQuery, useUpdateUserStatusMutation } from "../../store/services/userManagementApi";
 import { toast } from "react-toastify";
+import { useGetUsersListQuery, useUpdateUserStatusMutation } from "../../store/services/userManagementApi";
+import SelectionDropdown from "../Dashboard/SelectionDropdown";
+import AppointmentDetails from "./AppointmentDetails";
+import DetailedUserProfile from "./DetailedUserProfile";
 
 const UserManagement = () => {
   const [searchTerm, setSearchTerm] = useState("");

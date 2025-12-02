@@ -157,7 +157,7 @@ const JobDetailsModal = ({ isOpen, onClose, job, onMessage }) => {
           <div className="flex-1">
             <div className="border p-4 rounded-md shadow-sm">
               <h2 className="text-2xl font-semibold mb-3 text-gray-900">
-                Blood Draw Station
+               {jobDetail?.title}
               </h2>
               <div className="flex items-center space-x-4 text-sm text-gray-600 mb-4">
                 <span>Job ID: #JOB-{jobDetail?.id}</span>
@@ -201,11 +201,7 @@ const JobDetailsModal = ({ isOpen, onClose, job, onMessage }) => {
                   Job Description
                 </h3>
                 <p className="text-gray-600 leading-relaxed">
-                  A phlebotomist is responsible for the collection of blood
-                  samples from patients for diagnostic testing, blood donations,
-                  or medical procedures. This role is critical in ensuring the
-                  proper handling, labeling, and delivery of blood samples to
-                  the laboratory for analysis.
+                  {jobDetail?.job_info}
                 </p>
               </div>
 
@@ -217,7 +213,7 @@ const JobDetailsModal = ({ isOpen, onClose, job, onMessage }) => {
                 <div className="grid grid-cols-2 gap-4">
                   <div>
                     <p className="text-sm text-gray-600 mb-1">Salary Range</p>
-                    <p className="font-medium text-gray-900">$30</p>
+                    <p className="font-medium text-gray-900">${jobDetail?.pay_rate}</p>
                     <p className="text-xs text-gray-500">Per Hour</p>
                   </div>
                   <div>
