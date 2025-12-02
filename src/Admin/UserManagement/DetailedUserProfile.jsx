@@ -16,7 +16,7 @@ import { useState } from "react";
 import { toast } from "react-toastify";
 
 const DetailedUserProfile = ({ user, isOpen, onClose }) => {
-  console.log("🚀 ~ DetailedUserProfile ~ user:", user)
+  console.log("🚀 ~ DetailedUserProfile ~ user:", user);
   if (!user) return null;
   const { data, isLoading, error } = useGetUserProfileQuery(user?.id);
 
@@ -314,7 +314,31 @@ const DetailedUserProfile = ({ user, isOpen, onClose }) => {
                       </div>
                     </div>
                   </div>
-
+                  {/* Weekly Availability */}
+                  <div className="mt-6">
+                    <h4 className="font-semibold text-gray-900 mb-4">
+                      Weekly Availability
+                    </h4>
+                    <div className="space-y-2">
+                      {profile?.weekly_schedule?.map((schedule, index) => (
+                        <div
+                          key={index}
+                          className="flex justify-between items-center p-2 bg-gray-50 rounded-lg"
+                        >
+                          <span className="font-medium text-gray-900">
+                            {schedule.day}
+                          </span>
+                          <span className="text-sm text-gray-600">
+                            {schedule.start_time} - {schedule.end_time}
+                          </span>
+                        </div>
+                      )) || (
+                        <div className="text-sm text-gray-600">
+                          No schedule available
+                        </div>
+                      )}
+                    </div>
+                  </div>
                   {/* Quick Actions */}
                   <div>
                     <h3 className="text-lg font-semibold text-gray-900 mb-4">
