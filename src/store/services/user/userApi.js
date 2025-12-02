@@ -20,8 +20,20 @@ export const userApi = createApi({
       // This will refetch queries with the 'Appointments' tag after a successful request.
       invalidatesTags: ["Appointments"],
     }),
+
+    // POST to update billing and create Stripe checkout session
+    updateBillingAndCreateStripeSession: builder.mutation({
+      query: (body) => ({
+        url: "/accounts/appointment/update-billing-and-create-stripe-checkout/",
+        method: "POST",
+        body,
+      }),
+    }),
   }),
 });
 
-export const { useGetServicesQuery, useCreateServiceRequestMutation } =
-  userApi;
+export const {
+  useGetServicesQuery,
+  useCreateServiceRequestMutation,
+  useUpdateBillingAndCreateStripeSessionMutation,
+} = userApi;

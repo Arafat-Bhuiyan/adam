@@ -10,7 +10,13 @@ import ame from "../../assets/images/ame.png";
 import dis from "../../assets/images/dis.png";
 import { PaymentSuccess } from "./PaymentSuccess";
 
-export function SecurePaymentModal({ isOpen, onClose, appointmentId }) {
+export function SecurePaymentModal({
+  isOpen,
+  onClose,
+  appointmentId,
+  appointmentDetails,
+  selectedServiceTitle,
+}) {
   const [isPaymentSuccessOpen, setIsPaymentSuccessOpen] = useState(false);
   const [billingData, setBillingData] = useState({
     streetAddress: "",
@@ -18,6 +24,37 @@ export function SecurePaymentModal({ isOpen, onClose, appointmentId }) {
     state: "",
     zipCode: "",
   });
+
+  console.log("Appointment Details:", appointmentDetails);
+  console.log("Service Title:", selectedServiceTitle);
+
+  if (!isOpen) return null;
+
+  // Helper to format time from "HH:MM:SS.ms" to "h:mm AM/PM"
+  const formatTime = (timeString) => {
+    if (!timeString) return "";
+    const [hours, minutes] = timeString.split(":");
+    const date = new Date();
+    date.setHours(parseInt(hours, 10));
+    date.setMinutes(parseInt(minutes, 10));
+    return date.toLocaleTimeString("en-US", {
+      hour: "numeric",
+      minute: "2-digit",
+      hour12: true,
+    });
+  };
+
+  // Helper to format date from "YYYY-MM-DD" to "Month Day, Year"
+  const formatDate = (dateString) => {
+    if (!dateString) return "";
+    // Appending T00:00:00 helps avoid timezone-related date shifts
+    const date = new Date(dateString + "T00:00:00");
+    return date.toLocaleDateString("en-US", {
+      year: "numeric",
+      month: "long",
+      day: "numeric",
+    });
+  };
 
   const handleInputChange = (field, value) => {
     setBillingData((prev) => ({ ...prev, [field]: value }));
@@ -28,7 +65,7 @@ export function SecurePaymentModal({ isOpen, onClose, appointmentId }) {
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
       {isPaymentSuccessOpen ? (
-        <PaymentSuccess onClose={onClose} appointmentId={appointmentId} />
+        <PaymentSuccess appointmentId={appointmentId} />
       ) : (
         <div className="bg-white rounded-lg max-w-7xl w-full max-h-[90vh] pb-20">
           {/* Header */}
@@ -76,7 +113,7 @@ export function SecurePaymentModal({ isOpen, onClose, appointmentId }) {
                           Service:
                         </span>
                         <span className="font-semibold text-base text-[#2c2c2c]">
-                          Mobile Blood Draw
+                          {selectedServiceTitle}
                         </span>
                       </div>
                       <div className="flex justify-between">
@@ -84,7 +121,7 @@ export function SecurePaymentModal({ isOpen, onClose, appointmentId }) {
                           Date:
                         </span>
                         <span className="text-[#2c2c2c] text-base">
-                          March 15, 2024
+                          {formatDate(appointmentDetails?.created_date)}
                         </span>
                       </div>
                       <div className="flex justify-between">
@@ -92,7 +129,7 @@ export function SecurePaymentModal({ isOpen, onClose, appointmentId }) {
                           Time:
                         </span>
                         <span className="text-[#2c2c2c] text-base">
-                          10:30 AM
+                          {formatTime(appointmentDetails?.created_time)}
                         </span>
                       </div>
                       <div className="flex justify-between items-center pt-3 border-t">
@@ -100,7 +137,7 @@ export function SecurePaymentModal({ isOpen, onClose, appointmentId }) {
                           Total Amount:
                         </span>
                         <span className="text-2xl font-bold text-[#C9A14A]">
-                          $89.00
+                          ${appointmentDetails?.total_fee?.toFixed(2) || "0.00"}
                         </span>
                       </div>
                     </div>
@@ -164,19 +201,27 @@ export function SecurePaymentModal({ isOpen, onClose, appointmentId }) {
                   <div className="space-y-3 mb-6 text-base">
                     <div className="flex justify-between">
                       <span className="text-[#4B5563]">Mobile Blood Draw</span>
-                      <span className="font-medium">$75.00</span>
+                      <span className="font-medium">
+                        ${appointmentDetails?.initial_fee?.toFixed(2) || "0.00"}
+                      </span>
                     </div>
                     <div className="flex justify-between">
                       <span className="text-[#4B5563]">Service Fee</span>
-                      <span className="font-medium">$9.00</span>
+                      <span className="font-medium">
+                        ${appointmentDetails?.service_fee?.toFixed(2) || "0.00"}
+                      </span>
                     </div>
                     <div className="flex justify-between">
                       <span className="text-[#4B5563]">Tax</span>
-                      <span className="font-medium">$5.00</span>
+                      <span className="font-medium">
+                        ${appointmentDetails?.tax_fee?.toFixed(2) || "0.00"}
+                      </span>
                     </div>
                     <div className="flex justify-between pt-3 border-t border-gray-300 text-lg font-bold">
                       <span className="text-black">Total</span>
-                      <span className="text-[#C9A14A]">$89.00</span>
+                      <span className="text-[#C9A14A]">
+                        ${appointmentDetails?.total_fee?.toFixed(2) || "0.00"}
+                      </span>
                     </div>
                   </div>
 

@@ -1,18 +1,10 @@
 import { X } from "lucide-react";
 
-export const PaymentSuccess = ({ onClose, appointmentId }) => {
+export const PaymentSuccess = ({ appointmentId }) => {
   return (
-    <div className="bg-white rounded-lg max-w-7xl w-full max-h-[90vh] pb-20">
+    <div className="min-h-screen bg-gray-50 flex items-center justify-center p-4">
+      <div className="max-w-7xl w-full pb-20">
       {/* Header */}
-      <div className="flex items-center justify-end p-6">
-        <button
-          onClick={onClose}
-          className="text-[#747480] bg-[#747480]/40 rounded-full p-2 transition-colors "
-        >
-          <X size={12} />
-        </button>
-      </div>
-
       <div className="max-w-4xl mx-auto">
         {/* Title */}
         <h2 className="text-4xl font-bold text-[#2C2C2C] mb-3 text-center">
@@ -69,6 +61,7 @@ export const PaymentSuccess = ({ onClose, appointmentId }) => {
             </div>
           </div>
         </div>
+      </div>
       </div>
     </div>
   );

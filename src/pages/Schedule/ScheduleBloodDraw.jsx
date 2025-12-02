@@ -1,7 +1,10 @@
 "use client";
 
 import { useState } from "react";
-import { useCreateServiceRequestMutation } from "@/store/services/user/userApi";
+import {
+  useCreateServiceRequestMutation,
+  useGetServicesQuery,
+} from "@/store/services/user/userApi";
 import { PersonalInformationSection } from "./PersonalInformationSection";
 import { ServiceDetailsSection } from "./ServiceDetailsSection";
 import { MedicalInformationSection } from "./MedicalInformationSection";
@@ -34,9 +37,13 @@ export default function BloodDrawBooking() {
 
   const [isPaymentModalOpen, setIsPaymentModalOpen] = useState(false);
   const [appointmentId, setAppointmentId] = useState(null);
+  const [appointmentDetails, setAppointmentDetails] = useState(null);
 
-  const [createServiceRequest, { isLoading }] =
+  const [createServiceRequest, { isLoading: isSubmitting }] =
     useCreateServiceRequestMutation();
+
+  const { data: services, isLoading: areServicesLoading } =
+    useGetServicesQuery();
 
   const handleInputChange = (field, value) => {
     setFormData((prev) => ({ ...prev, [field]: value }));
@@ -91,6 +98,7 @@ export default function BloodDrawBooking() {
     try {
       const response = await createServiceRequest(apiBody).unwrap();
       setAppointmentId(response.appointment_id);
+      setAppointmentDetails(response);
       setIsPaymentModalOpen(true);
     } catch (error) {
       console.error("Failed to create appointment:", error);
@@ -122,6 +130,8 @@ export default function BloodDrawBooking() {
             <ServiceDetailsSection
               formData={formData}
               onInputChange={handleInputChange}
+              services={services}
+              isLoading={areServicesLoading}
             />
 
             <MedicalInformationSection
@@ -187,9 +197,9 @@ export default function BloodDrawBooking() {
               <button
                 onClick={handleSubmitBooking}
                 className="w-full bg-[#C9A14A] hover:bg-[#C9A14A]/80 text-white py-3 font-semibold text-base rounded-md disabled:bg-gray-400"
-                disabled={isLoading}
+                disabled={isSubmitting}
               >
-                {isLoading ? "Submitting..." : "Submit Booking Request"}
+                {isSubmitting ? "Submitting..." : "Submit Booking Request"}
               </button>
               <p className="text-center text-sm text-[#5B5B5B]">
                 You will receive a confirmation email within 2 hours
@@ -202,11 +212,17 @@ export default function BloodDrawBooking() {
         </div>
       </div>
 
-      <SecurePaymentModal
-        isOpen={isPaymentModalOpen}
-        appointmentId={appointmentId}
-        onClose={() => setIsPaymentModalOpen(false)}
-      />
+      {isPaymentModalOpen && (
+        <SecurePaymentModal
+          isOpen={isPaymentModalOpen}
+          appointmentId={appointmentId}
+          appointmentDetails={appointmentDetails}
+          selectedServiceTitle={
+            services?.find((s) => s.id === formData.testPackage)?.title || ""
+          }
+          onClose={() => setIsPaymentModalOpen(false)}
+        />
+      )}
     </div>
   );
 }

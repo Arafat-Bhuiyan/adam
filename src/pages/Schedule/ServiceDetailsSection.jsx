@@ -1,12 +1,9 @@
 "use client";
-import { useGetServicesQuery } from "@/store/services/user/userApi";
 import { Calendar, Clock } from "lucide-react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
-export function ServiceDetailsSection({ formData, onInputChange }) {
-  const { data: services, isLoading } = useGetServicesQuery();
-
+export function ServiceDetailsSection({ formData, onInputChange, services, isLoading }) {
   // Create a unique list of hospitals for the dropdown
   const hospitals = services
     ? [...new Set(services.map((s) => s.hospital_name))]
