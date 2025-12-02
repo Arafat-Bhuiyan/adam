@@ -37,6 +37,16 @@ const JobDetailsModal = ({ isOpen, onClose, job, onMessage }) => {
   });
   const [updateJobStatus] = useUpdateJobStatusMutation();
 
+  // Function to format time from 24hr to 12hr
+  const formatTime = (timeString) => {
+    if (!timeString) return "";
+    const [hours, minutes] = timeString.split(":");
+    const hour = parseInt(hours, 10);
+    const ampm = hour >= 12 ? "PM" : "AM";
+    const formattedHour = hour % 12 || 12;
+    return `${formattedHour}:${minutes} ${ampm}`;
+  };
+
   const handleDecision = async (status) => {
     try {
       await updateJobStatus({ id: job?.id, active_status: status }).unwrap();
@@ -214,22 +224,22 @@ const JobDetailsModal = ({ isOpen, onClose, job, onMessage }) => {
                   <div>
                     <p className="text-sm text-gray-600 mb-1">Salary Range</p>
                     <p className="font-medium text-gray-900">${jobDetail?.pay_rate}</p>
-                    <p className="text-xs text-gray-500">Per Hour</p>
+                    <p className="text-xs text-gray-500">Per {jobDetail?.pay_type}</p>
                   </div>
                   <div>
                     <p className="text-sm text-gray-600 mb-1">
                       Contract Duration
                     </p>
-                    <p className="font-medium text-gray-900">1day</p>
-                    <p className="text-xs text-gray-500">Full-time position</p>
+                    <p className="font-medium text-gray-900">1 Day</p>
+                    <p className="text-xs text-gray-500">{jobDetail?.job_types.replace('_', ' ')} position</p>
                   </div>
                   <div>
                     <p className="text-sm text-gray-600 mb-1">Start Date</p>
-                    <p className="font-medium text-gray-900">Aug 15, 2025</p>
+                    <p className="font-medium text-gray-900">{new Date(jobDetail?.date).toLocaleDateString()}</p>
                   </div>
                   <div>
                     <p className="text-sm text-gray-600 mb-1">Work Schedule</p>
-                    <p className="font-medium text-gray-900">08 hrs</p>
+                    <p className="font-medium text-gray-900">{jobDetail?.total_working_hour.split(':')[0]} hrs</p>
                   </div>
                 </div>
               </div>
@@ -313,11 +323,11 @@ const JobDetailsModal = ({ isOpen, onClose, job, onMessage }) => {
                 <div className="space-y-3">
                   <div className="flex items-center space-x-2">
                     <FaLocationDot className="w-4 h-4 text-teal-500" />
-                    <span className="text-gray-700">XYZ XYZ XYZ</span>
+                    <span className="text-gray-700">{jobDetail?.location}</span>
                   </div>
                   <div className="flex items-center space-x-2">
                     <FaClock className="w-4 h-4 text-teal-500" />
-                    <span className="text-gray-700">10:00 am to 12:00 pm</span>
+                    <span className="text-gray-700">{formatTime(jobDetail?.start_time)} to {formatTime(jobDetail?.end_time)}</span>
                   </div>
                 </div>
               </div>

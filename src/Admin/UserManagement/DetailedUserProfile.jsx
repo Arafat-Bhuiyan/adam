@@ -16,7 +16,10 @@ import { useState } from "react";
 import { toast } from "react-toastify";
 
 const DetailedUserProfile = ({ user, isOpen, onClose }) => {
+  console.log("🚀 ~ DetailedUserProfile ~ user:", user)
+  if (!user) return null;
   const { data, isLoading, error } = useGetUserProfileQuery(user?.id);
+
   const [updateUserStatus] = useUpdateUserStatusMutation();
   const [dropdownOpen, setDropdownOpen] = useState(false);
 
@@ -72,7 +75,9 @@ const DetailedUserProfile = ({ user, isOpen, onClose }) => {
           isLoading ? (
             <p>Loading profile...</p>
           ) : (
-            error && <p className=" p-10 text-red-600">Error loading profile.</p>
+            error && (
+              <p className=" p-10 text-red-600">Error loading profile.</p>
+            )
           )
         }
         {data && !isLoading && !error && (

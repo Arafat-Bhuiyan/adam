@@ -1,2 +1,3 @@
-- [x] Add getAvailablePhlebotomists endpoint to jobMatchingApi.js
-- [x] Update AvailablePhlebotomists.jsx to integrate API data
+- [ ] Add time formatting function to convert 24hr to 12hr format
+- [ ] Update Payment & Timeline section to use dynamic data from jobDetail
+- [ ] Update Location & Work Type section to use dynamic data from jobDetail
