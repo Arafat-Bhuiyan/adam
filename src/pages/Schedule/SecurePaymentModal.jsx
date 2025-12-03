@@ -28,7 +28,7 @@ export function SecurePaymentModal({
     useUpdateBillingAndCreateStripeSessionMutation();
 
   console.log("Appointment Details:", appointmentDetails);
-  console.log("Appointment ID:", appointmentDetails.appointment_id);
+  console.log("Appointment ID from prop:", appointmentId); // Correctly logging the prop
   console.log("Service Title:", selectedServiceTitle);
 
   if (!isOpen) return null;
@@ -86,7 +86,12 @@ export function SecurePaymentModal({
         street_address: billingData.streetAddress,
         city: billingData.city,
         state: billingData.state,
-        zip_code: parseInt(billingData.zipCode, 10), // Ensure zip_code is an integer
+        zip_code: parseInt(billingData.zipCode, 10),
+        success_url: `${window.location.origin}/payment-success`,
+        cancel_url: `${window.location.origin}/schedule`,
+        metadata: {
+          appointmentId: appointmentId.toString(),
+        },
       };
 
       const response = await updateBillingAndStripe(body).unwrap();
