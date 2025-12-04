@@ -58,25 +58,25 @@ export const PaymentSuccess = () => {
   return (
     <div className="min-h-screen bg-gray-50 flex items-center justify-center p-4">
       <div className="max-w-7xl w-full pb-20">
-        <div className="max-w-4xl mx-auto">
-          <h2 className="text-4xl font-bold text-[#2C2C2C] mb-3 text-center">
+        <div className="max-w-4xl mx-auto px-2">
+          <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-[#2C2C2C] mb-3 text-center">
             Payment Successful!
           </h2>
 
-          <p className="text-gray-600 text-lg mb-6 text-center max-w-3xl mx-auto">
+          <p className="text-gray-600 text-base md:text-lg mb-6 text-center max-w-3xl mx-auto">
             Your payment has been successfully processed.
           </p>
 
-          <div className="text-center bg-white shadow-md rounded-xl p-6 border border-gray-200 max-w-2xl mx-auto">
-            <h3 className="text-[#C9A14A] font-semibold text-xl ">
+          <div className="text-center bg-white shadow-md rounded-xl p-4 sm:p-6 border border-gray-200 max-w-2xl mx-auto">
+            <h3 className="text-[#C9A14A] font-semibold text-lg sm:text-xl">
               Your Booking is Confirmed!
             </h3>
 
-            <p className="text-[#2c2c2c] text-xl font-semibold my-5">
+            <p className="text-[#2c2c2c] text-lg sm:text-xl font-semibold my-5">
               Your Booking ID: {appointmentId}
             </p>
 
-            <p className="text-gray-500 text-base font-medium mb-5">
+            <p className="text-gray-500 text-sm sm:text-base font-medium mb-5">
               You will be contacted soon.
             </p>
           </div>
