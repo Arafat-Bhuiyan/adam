@@ -107,14 +107,14 @@ export default function BloodDrawBooking() {
   };
 
   return (
-    <div className="bg-white p-28">
-      <div className="max-w-7xl mx-auto">
+    <div className="bg-white p-4 sm:p-8 md:p-16 lg:p-20 xl:p-28">
+      <div className="max-w-7xl mx-auto w-full">
         {/* Header */}
         <div className="mb-8">
-          <h1 className="text-3xl font-bold text-[#2c2c2c] mb-2">
+          <h1 className="text-2xl sm:text-3xl font-bold text-[#2c2c2c] mb-2">
             Schedule Your Blood Draw
           </h1>
-          <p className="text-[#4B5563] text-base">
+          <p className="text-[#4B5563] text-sm sm:text-base">
             Complete all sections below to book your appointment
           </p>
         </div>
