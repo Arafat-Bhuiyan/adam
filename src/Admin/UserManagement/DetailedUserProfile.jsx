@@ -345,14 +345,17 @@ const DetailedUserProfile = ({ user, isOpen, onClose }) => {
                       Quick Actions
                     </h3>
                     <div className="space-y-3">
-                      <button className="w-full gap-1 bg-[#00A6A6] text-white font-medium py-2 px-4 rounded-lg transition-colors flex items-center justify-center">
+                      {/* <button className="w-full gap-1 bg-[#00A6A6] text-white font-medium py-2 px-4 rounded-lg transition-colors flex items-center justify-center">
                         <FaEdit />
                         Edit Profile
-                      </button>
-                      <button className="w-full gap-2 bg-[#3B82F6] text-white font-medium py-2 px-4 rounded-lg transition-colors flex items-center justify-center">
-                        <FaMessage />
-                        Send Message
-                      </button>
+                      </button> */}
+                      {profile?.status.toLowerCase() === "approved" && (
+                        <button className="w-full gap-2 bg-[#3B82F6] text-white font-medium py-2 px-4 rounded-lg transition-colors flex items-center justify-center">
+                          <FaMessage />
+                          Send Message
+                        </button>
+                      )}
+
                       <div className="relative">
                         <button
                           onClick={() => setDropdownOpen(!dropdownOpen)}
@@ -363,18 +366,19 @@ const DetailedUserProfile = ({ user, isOpen, onClose }) => {
                         </button>
                         {dropdownOpen && (
                           <div className="absolute top-full left-0 right-0 mt-1 bg-white border border-gray-200 rounded-lg shadow-lg z-10">
+                              <button
+                              onClick={() => handleUpdateStatus("pending")}
+                              className="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                            >
+                              Pending
+                            </button>
                             <button
                               onClick={() => handleUpdateStatus("approved")}
                               className="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
                             >
                               Approved
                             </button>
-                            <button
-                              onClick={() => handleUpdateStatus("pending")}
-                              className="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-                            >
-                              Pending
-                            </button>
+                          
                           </div>
                         )}
                       </div>

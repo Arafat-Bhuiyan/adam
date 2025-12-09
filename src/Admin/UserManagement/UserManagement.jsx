@@ -17,6 +17,7 @@ const UserManagement = () => {
   const [isProfileOpen, setIsProfileOpen] = useState(false);
   const [isAppointmentOpen, setIsAppointmentOpen] = useState(false);
   const [selectedUser, setSelectedUser] = useState(null);
+  const [visibleUsersCount, setVisibleUsersCount] = useState(10);
 
   const { data: usersData, isLoading, error } = useGetUsersListQuery();
   const [updateUserStatus] = useUpdateUserStatusMutation();
@@ -116,6 +117,17 @@ const UserManagement = () => {
     return matchesSearch && matchesRole && matchesStatus;
   });
 
+  const visibleUsers = filteredUsers.slice(0, visibleUsersCount);
+
+  const handleLoadMore = () => {
+    setVisibleUsersCount((prev) => prev + 10);
+  };
+
+  // Reset visible count when filters change
+  useEffect(() => {
+    setVisibleUsersCount(10);
+  }, [searchTerm, selectedRole, selectedStatus]);
+
   return (
     <div
       style={{ fontFamily: "Montserrat" }}
@@ -199,7 +211,7 @@ const UserManagement = () => {
 
       {/* User List */}
       <div className=" space-y-3 my-6">
-        {filteredUsers.map((user) => (
+        {visibleUsers.map((user) => (
           <div key={user.id}>
           
             <div className="p-6 rounded-md bg-[#f6f6f6] hover:bg-gray-50 transition-colors">
@@ -287,11 +299,18 @@ const UserManagement = () => {
           </div>
         ))}
       </div>
-      <div className=" space-y-3 mt-6 pb-[100px]">
-        {filteredUsers.map((user) => (
-          <></>
-        ))}
-      </div>
+
+      {/* Load More Button */}
+      {visibleUsersCount < filteredUsers.length && (
+        <div className="flex justify-center mt-6 pb-[100px]">
+          <button
+            onClick={handleLoadMore}
+            className="px-6 py-2 bg-[#C9A14A] text-white rounded-md hover:bg-[#b8943f] transition-colors"
+          >
+            Load More
+          </button>
+        </div>
+      )}
 
       {/* Empty State */}
       {filteredUsers.length === 0 && !isLoading && (
