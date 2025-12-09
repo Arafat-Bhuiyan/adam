@@ -97,9 +97,22 @@ const DetailedUserProfile = ({ user, isOpen, onClose }) => {
                     </h2>
                     <p className="text-gray-600">{profile.role}</p>
                     <div className="flex items-center space-x-3 mt-1">
-                      <span className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-green-100 text-green-800">
-                        <div className="w-2 h-2 bg-[#166534] rounded-full mr-1"></div>
-                        Approved
+                      <span
+                        className={`inline-flex items-center px-2 py-1 rounded-full text-xs font-medium ${
+                          profile.status.toLowerCase() === "approved"
+                            ? "bg-green-100 text-green-800"
+                            : profile.status.toLowerCase() === "pending"
+                            ? "bg-yellow-100 text-yellow-800"
+                            : "bg-red-100 text-red-800"
+                        } `}
+                      >
+                        {profile.status.toLowerCase() === "approved"
+                          ? "🟢"
+                          : profile.status.toLowerCase() === "pending"
+                          ? "🟡"
+                          : "🔴"}
+
+                        {profile.status}
                       </span>
                       <span className="text-sm text-gray-500">
                         Member since{" "}
@@ -190,59 +203,62 @@ const DetailedUserProfile = ({ user, isOpen, onClose }) => {
                           <label className="block text-sm font-medium text-gray-700 mb-1">
                             Service Area
                           </label>
-                          <p className="text-gray-500">{profile.service_area}</p>
+                          <p className="text-gray-500">
+                            {profile.service_area}
+                          </p>
                         </div>
                       )}
                     </div>
                   </div>
-
                   {/* Professional Information */}
-                  <div className="shadow-sm border border-gray-100 p-6 rounded-lg">
-                    <h3 className="text-lg font-semibold text-gray-900 mb-4">
-                      Professional Information
-                    </h3>
-                    <div className="mb-6">
-                      <label className="block text-sm font-medium text-gray-700 mb-1">
-                        Years of Experience
-                      </label>
-                      <p className="text-gray-900">3.5 years</p>
-                    </div>
-                    {profile?.skills && profile.skills.trim() && (
-                      <div>
-                        <label className="block text-md font-semibold text-gray-900 mb-2">
-                          Skill
+                  {profile.role.toLowerCase() == "phlebotomist" && (
+                    <div className="shadow-sm border border-gray-100 p-6 rounded-lg">
+                      <h3 className="text-lg font-semibold text-gray-900 mb-4">
+                        Professional Information
+                      </h3>
+                      <div className="mb-6">
+                        <label className="block text-sm font-medium text-gray-700 mb-1">
+                          Years of Experience
                         </label>
-                        <div className="flex flex-wrap gap-2">
-                          {profile.skills.split(", ").map((skill, index) => (
-                            <span
-                              key={index}
-                              className="inline-flex items-center px-3 py-1 rounded-full text-sm bg-gray-100 text-[#0C1A2A]"
-                            >
-                              {skill.trim()}
-                              <button
-                                onClick={() => handleSkillRemove(skill)}
-                                className="ml-2 text-gray-700 "
-                              >
-                                <svg
-                                  className="w-4 h-4"
-                                  fill="none"
-                                  stroke="currentColor"
-                                  viewBox="0 0 24 24"
-                                >
-                                  <path
-                                    strokeLinecap="round"
-                                    strokeLinejoin="round"
-                                    strokeWidth={2}
-                                    d="M6 18L18 6M6 6l12 12"
-                                  />
-                                </svg>
-                              </button>
-                            </span>
-                          ))}
-                        </div>
+                        <p className="text-gray-900">3.5 years</p>
                       </div>
-                    )}
-                  </div>
+                      {profile?.skills && profile.skills.trim() && (
+                        <div>
+                          <label className="block text-md font-semibold text-gray-900 mb-2">
+                            Skill
+                          </label>
+                          <div className="flex flex-wrap gap-2">
+                            {profile.skills.split(", ").map((skill, index) => (
+                              <span
+                                key={index}
+                                className="inline-flex items-center px-3 py-1 rounded-full text-sm bg-gray-100 text-[#0C1A2A]"
+                              >
+                                {skill.trim()}
+                                <button
+                                  onClick={() => handleSkillRemove(skill)}
+                                  className="ml-2 text-gray-700 "
+                                >
+                                  <svg
+                                    className="w-4 h-4"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    viewBox="0 0 24 24"
+                                  >
+                                    <path
+                                      strokeLinecap="round"
+                                      strokeLinejoin="round"
+                                      strokeWidth={2}
+                                      d="M6 18L18 6M6 6l12 12"
+                                    />
+                                  </svg>
+                                </button>
+                              </span>
+                            ))}
+                          </div>
+                        </div>
+                      )}
+                    </div>
+                  )}
 
                   {/* Document Verification */}
                   <div className="p-6">
@@ -250,7 +266,7 @@ const DetailedUserProfile = ({ user, isOpen, onClose }) => {
                       Document Verification
                     </h3>
                     <div className="space-y-4">
-                      <div className="flex items-center justify-between p-4 border rounded-lg">
+                      <div className="flex  flex-col p-4 border rounded-lg">
                         <div className="flex items-center space-x-3">
                           <div className="w-8 h-8  rounded-lg flex items-center justify-center">
                             <HiDocumentAdd className="text-[24px] text-[#00A6A6]" />
@@ -264,12 +280,15 @@ const DetailedUserProfile = ({ user, isOpen, onClose }) => {
                             </p>
                           </div>
                         </div>
-                        <span className="inline-flex gap-1 items-center px-2 py-1 rounded-full text-xs font-medium bg-green-100 text-green-800">
+                        <div className="self-center mt-5">
+                          No License Available
+                        </div>
+                        {/* <span className="inline-flex gap-1 items-center px-2 py-1 rounded-full text-xs font-medium bg-green-100 text-green-800">
                           <FaCircleCheck />
                           Approved
-                        </span>
+                        </span> */}
                       </div>
-                      <div className="flex items-center justify-between p-4 border rounded-lg">
+                      <div className="flex flex-col p-4 border rounded-lg">
                         <div className="flex items-center space-x-3">
                           <div className="w-8 h-8  rounded-lg flex items-center justify-center">
                             <FaCertificate className="text-[20px] text-[#00A6A6]" />
@@ -283,10 +302,13 @@ const DetailedUserProfile = ({ user, isOpen, onClose }) => {
                             </p>
                           </div>
                         </div>
-                        <span className="inline-flex gap-1 items-center px-2 py-1 rounded-full text-xs font-medium bg-green-100 text-green-800">
+                        {/* <span className="inline-flex gap-1 items-center px-2 py-1 rounded-full text-xs font-medium bg-green-100 text-green-800">
                           <FaCircleCheck />
                           Approved
-                        </span>
+                        </span> */}
+                        <div className="self-center mt-5">
+                          No Certification Available{" "}
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -378,7 +400,7 @@ const DetailedUserProfile = ({ user, isOpen, onClose }) => {
                         </button>
                         {dropdownOpen && (
                           <div className="absolute top-full left-0 right-0 mt-1 bg-white border border-gray-200 rounded-lg shadow-lg z-10">
-                              <button
+                            <button
                               onClick={() => handleUpdateStatus("pending")}
                               className="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
                             >
@@ -390,7 +412,6 @@ const DetailedUserProfile = ({ user, isOpen, onClose }) => {
                             >
                               Approved
                             </button>
-                          
                           </div>
                         )}
                       </div>

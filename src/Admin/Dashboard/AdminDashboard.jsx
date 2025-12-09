@@ -24,7 +24,7 @@ import Header from "./Header";
 import QuickStats, { ActivityCard } from "./QuickStats";
 import { Sidebar } from "./Sidebar";
 import { StatCard } from "./StatCard";
-import ClientManagement from "../UserManagement/ClientManagement";
+import ClientManagement from "../UserManagement/PatientManagement";
 
 export default function AdminDashboard() {
   const dispatch = useDispatch();
