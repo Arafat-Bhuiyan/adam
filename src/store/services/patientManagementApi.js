@@ -19,8 +19,11 @@ export const patientManagementApi = createApi({
     getAppointmentsList: builder.query({
       query: () => "/accounts/admin/appointments/view/list/",
     }),
+    getAppointmentDetails: builder.query({
+      query: (appointmentId) => `/accounts/admin/appointment/${appointmentId}/details/`,
+    }),
   }),
 });
 
 // Export hooks for usage in functional components
-export const { useGetAppointmentsListQuery } = patientManagementApi;
+export const { useGetAppointmentsListQuery, useGetAppointmentDetailsQuery } = patientManagementApi;

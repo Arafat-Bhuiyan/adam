@@ -8,6 +8,7 @@ import AppointmentDetails from "./AppointmentDetails";
 const PatientManagement = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [isAppointmentOpen, setIsAppointmentOpen] = useState(false);
+  const [selectedAppointmentId, setSelectedAppointmentId] = useState(null);
 
   const { data: appointmentsData, isLoading, error } = useGetAppointmentsListQuery();
 
@@ -88,7 +89,10 @@ const PatientManagement = () => {
 
                 <div className="flex items-center gap-2">
                   <button
-                    onClick={() => setIsAppointmentOpen(true)}
+                    onClick={() => {
+                      setSelectedAppointmentId(appointment.appointment_id);
+                      setIsAppointmentOpen(true);
+                    }}
                     className="px-3 flex gap-1 items-center justify-center py-1 bg-[#C9A14A] text-white text-sm rounded-md transition-colors"
                   >
                     <FaEye /> View
@@ -124,7 +128,11 @@ const PatientManagement = () => {
 
       <AppointmentDetails
         isOpen={isAppointmentOpen}
-        onClose={() => setIsAppointmentOpen(false)}
+        onClose={() => {
+          setIsAppointmentOpen(false);
+          setSelectedAppointmentId(null);
+        }}
+        appointmentId={selectedAppointmentId}
       />
     </div>
   );
