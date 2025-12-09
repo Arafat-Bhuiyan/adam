@@ -148,41 +148,51 @@ const DetailedUserProfile = ({ user, isOpen, onClose }) => {
                       Personal Information
                     </h3>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                      <div>
-                        <label className="block text-sm font-medium text-gray-700 mb-1">
-                          Email Address
-                        </label>
-                        <p className="text-gray-500">{profile.email}</p>
-                      </div>
-                      <div>
-                        <label className="block text-sm font-medium text-gray-700 mb-1">
-                          Phone Number
-                        </label>
-                        <p className="text-gray-500">{profile.phone}</p>
-                      </div>
-                      <div>
-                        <label className="block text-sm font-medium text-gray-700 mb-1">
-                          Date of Birth
-                        </label>
-                        <p className="text-gray-500">
-                          {new Date(profile.birth_date).toLocaleDateString(
-                            "en-US",
-                            { year: "numeric", month: "long", day: "numeric" }
-                          )}
-                        </p>
-                      </div>
-                      <div>
-                        <label className="block text-sm font-medium text-gray-700 mb-1">
-                          Gender
-                        </label>
-                        <p className="text-gray-500">{profile.gender}</p>
-                      </div>
-                      <div className="md:col-span-2">
-                        <label className="block text-sm font-medium text-gray-700 mb-1">
-                          Service Area
-                        </label>
-                        <p className="text-gray-500">{profile.service_area}</p>
-                      </div>
+                      {profile.email && (
+                        <div>
+                          <label className="block text-sm font-medium text-gray-700 mb-1">
+                            Email Address
+                          </label>
+                          <p className="text-gray-500">{profile.email}</p>
+                        </div>
+                      )}
+                      {profile.phone && (
+                        <div>
+                          <label className="block text-sm font-medium text-gray-700 mb-1">
+                            Phone Number
+                          </label>
+                          <p className="text-gray-500">{profile.phone}</p>
+                        </div>
+                      )}
+                      {profile.birth_date && (
+                        <div>
+                          <label className="block text-sm font-medium text-gray-700 mb-1">
+                            Date of Birth
+                          </label>
+                          <p className="text-gray-500">
+                            {new Date(profile.birth_date).toLocaleDateString(
+                              "en-US",
+                              { year: "numeric", month: "long", day: "numeric" }
+                            )}
+                          </p>
+                        </div>
+                      )}
+                      {profile.gender && (
+                        <div>
+                          <label className="block text-sm font-medium text-gray-700 mb-1">
+                            Gender
+                          </label>
+                          <p className="text-gray-500">{profile.gender}</p>
+                        </div>
+                      )}
+                      {profile.service_area && (
+                        <div className="md:col-span-2">
+                          <label className="block text-sm font-medium text-gray-700 mb-1">
+                            Service Area
+                          </label>
+                          <p className="text-gray-500">{profile.service_area}</p>
+                        </div>
+                      )}
                     </div>
                   </div>
 
@@ -197,39 +207,41 @@ const DetailedUserProfile = ({ user, isOpen, onClose }) => {
                       </label>
                       <p className="text-gray-900">3.5 years</p>
                     </div>
-                    <div>
-                      <label className="block text-md font-semibold text-gray-900 mb-2">
-                        Skill
-                      </label>
-                      <div className="flex flex-wrap gap-2">
-                        {profile?.skills?.split(", ").map((skill, index) => (
-                          <span
-                            key={index}
-                            className="inline-flex items-center px-3 py-1 rounded-full text-sm bg-gray-100 text-[#0C1A2A]"
-                          >
-                            {skill.trim()}
-                            <button
-                              onClick={() => handleSkillRemove(skill)}
-                              className="ml-2 text-gray-700 "
+                    {profile?.skills && profile.skills.trim() && (
+                      <div>
+                        <label className="block text-md font-semibold text-gray-900 mb-2">
+                          Skill
+                        </label>
+                        <div className="flex flex-wrap gap-2">
+                          {profile.skills.split(", ").map((skill, index) => (
+                            <span
+                              key={index}
+                              className="inline-flex items-center px-3 py-1 rounded-full text-sm bg-gray-100 text-[#0C1A2A]"
                             >
-                              <svg
-                                className="w-4 h-4"
-                                fill="none"
-                                stroke="currentColor"
-                                viewBox="0 0 24 24"
+                              {skill.trim()}
+                              <button
+                                onClick={() => handleSkillRemove(skill)}
+                                className="ml-2 text-gray-700 "
                               >
-                                <path
-                                  strokeLinecap="round"
-                                  strokeLinejoin="round"
-                                  strokeWidth={2}
-                                  d="M6 18L18 6M6 6l12 12"
-                                />
-                              </svg>
-                            </button>
-                          </span>
-                        ))}
+                                <svg
+                                  className="w-4 h-4"
+                                  fill="none"
+                                  stroke="currentColor"
+                                  viewBox="0 0 24 24"
+                                >
+                                  <path
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round"
+                                    strokeWidth={2}
+                                    d="M6 18L18 6M6 6l12 12"
+                                  />
+                                </svg>
+                              </button>
+                            </span>
+                          ))}
+                        </div>
                       </div>
-                    </div>
+                    )}
                   </div>
 
                   {/* Document Verification */}
