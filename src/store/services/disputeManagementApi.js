@@ -22,8 +22,14 @@ export const disputeManagementApi = createApi({
       query: () => "/accounts/admin/reports/list/",
       providesTags: ["Reports"],
     }),
+
+    // GET report details by ID
+    getReportDetails: builder.query({
+      query: (reportId) => `/accounts/admin/reports/${reportId}/`,
+      providesTags: ["Reports"],
+    }),
   }),
 });
 
 // Export hooks for usage in functional components
-export const { useGetReportsListQuery } = disputeManagementApi;
+export const { useGetReportsListQuery, useGetReportDetailsQuery } = disputeManagementApi;

@@ -157,7 +157,11 @@ function DisputeManagement() {
           </div>
         </div>
       </div>
-      <CaseDetails isOpen={openIssueDetails} onClose={()=>setOpenIssueDetails(false)} />
+      <CaseDetails
+        isOpen={!!openIssueDetails}
+        reportId={openIssueDetails}
+        onClose={() => setOpenIssueDetails(false)}
+      />
     </div>
   );
 }
