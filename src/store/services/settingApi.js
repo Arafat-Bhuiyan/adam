@@ -19,6 +19,13 @@ export const settingApi = createApi({
     getTermsAndConditions: builder.query({
       query: () => "/dashboard/terms-and-conditions/",
     }),
+    updateTermsAndConditions: builder.mutation({
+      query: (body) => ({
+        url: "/dashboard/terms-and-conditions/",
+        method: "PATCH",
+        body,
+      }),
+    }),
     getPrivacyPolicy: builder.query({
       query: () => "/dashboard/privacy-policy/",
     }),
@@ -28,5 +35,6 @@ export const settingApi = createApi({
 // Export hooks for usage in functional components
 export const {
   useGetTermsAndConditionsQuery,
+  useUpdateTermsAndConditionsMutation,
   useGetPrivacyPolicyQuery,
 } = settingApi;

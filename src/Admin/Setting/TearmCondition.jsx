@@ -1,13 +1,14 @@
 import { useState, useEffect } from "react";
 import PrivacyPolicy from "./Privacy";
 import RichTextEditor from "./RichTextEditor";
-import { useGetTermsAndConditionsQuery } from "../../store/services/settingApi";
+import { useGetTermsAndConditionsQuery, useUpdateTermsAndConditionsMutation } from "../../store/services/settingApi";
 
 
 const TermsAndConditions = () => {
   const [currentView, setCurrentView] = useState("terms"); // 'terms' or 'privacy'
   const [isEditing, setIsEditing] = useState(false);
   const { data: termsData, error: termsError, isLoading: termsLoading } = useGetTermsAndConditionsQuery();
+  const [updateTermsAndConditions, { isLoading: updateLoading, error: updateError }] = useUpdateTermsAndConditionsMutation();
   const [content, setContent] = useState({
     termsOfService:
       "By using Phlebotomist services, you agree to provide accurate healthcare services in accordance with professional standards and applicable regulations. This agreement establishes the framework for our partnership.",
@@ -24,7 +25,7 @@ const TermsAndConditions = () => {
   });
 
   // Update content when API data is loaded
-  useState(() => {
+  useEffect(() => {
     if (termsData) {
       setContent({
         termsOfService: termsData.termsOfService || content.termsOfService,
@@ -36,9 +37,14 @@ const TermsAndConditions = () => {
     }
   }, [termsData]);
 
-  const handleEdit = () => {
+  const handleEdit = async () => {
     if (isEditing) {
-      console.log("Saving changes:", content);
+      try {
+        await updateTermsAndConditions({ content: JSON.stringify(content) }).unwrap();
+        console.log("Changes saved successfully");
+      } catch (err) {
+        console.error("Failed to save changes:", err);
+      }
     }
     setIsEditing(!isEditing);
   };
