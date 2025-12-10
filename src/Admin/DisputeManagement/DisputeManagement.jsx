@@ -30,6 +30,22 @@ function DisputeManagement() {
     }
   };
 
+  // Filter logic for reports
+  const filteredReports = data?.reports?.filter((report) => {
+    const info = report.complaint_information;
+
+    // Status filter
+    const statusMatch =
+      selectedStatusFilter === "All Status" ||
+      (info.case_status || "").toLowerCase() === selectedStatusFilter.toLowerCase();
+
+    // Issue type filter
+    const issueMatch =
+      selectedIssueFilter === "All Issues" || info.type === selectedIssueFilter;
+
+    return statusMatch && issueMatch;
+  });
+
   return (
     <div style={{ fontFamily: "Montserrat" }}>
       <div className="">
@@ -115,10 +131,10 @@ function DisputeManagement() {
           <div className="">
             {isLoading && <div className="mx-6 p-4">Loading...</div>}
             {isError && <div className="mx-6 p-4 text-red-500">Failed to load issues.</div>}
-            {!isLoading && !isError && data?.reports?.length === 0 && (
+            {!isLoading && !isError && filteredReports?.length === 0 && (
               <div className="mx-6 p-4">No issues found.</div>
             )}
-            {!isLoading && !isError && data?.reports?.map((report, idx) => {
+            {!isLoading && !isError && filteredReports?.map((report, idx) => {
               const info = report.complaint_information;
               return (
                 <div
