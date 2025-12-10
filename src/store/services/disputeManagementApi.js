@@ -39,6 +39,16 @@ export const disputeManagementApi = createApi({
       }),
       invalidatesTags: ["Reports"],
     }),
+
+    // POST - Do Action Against Reported User
+    takeReportAction: builder.mutation({
+      query: ({ reportId, actionType, ...body }) => ({
+        url: `/accounts/admin/report/${reportId}/action/${actionType}/`,
+        method: "POST",
+        body,
+      }),
+      invalidatesTags: ["Reports"],
+    }),
   }),
 });
 
@@ -47,4 +57,5 @@ export const {
   useGetReportsListQuery,
   useGetReportDetailsQuery,
   useSubmitReportSummaryMutation,
+  useTakeReportActionMutation,
 } = disputeManagementApi;

@@ -6,6 +6,7 @@ import { IoWarning } from "react-icons/io5";
 import {
   useGetReportDetailsQuery,
   useSubmitReportSummaryMutation,
+  useTakeReportActionMutation,
 } from "../../store/services/disputeManagementApi";
 
 function CaseDetails({ isOpen, onClose, reportId }) {
@@ -15,6 +16,9 @@ function CaseDetails({ isOpen, onClose, reportId }) {
 
   const [submitReportSummary, { isLoading: isSubmitting }] =
     useSubmitReportSummaryMutation();
+
+  const [takeReportAction, { isLoading: isTakingAction }] =
+    useTakeReportActionMutation();
 
   const {
     data: reportDetails,
@@ -44,6 +48,25 @@ function CaseDetails({ isOpen, onClose, reportId }) {
     }
   };
 
+  const handleTakeAction = async (actionType) => {
+    // Ensure we have the necessary data before proceeding
+    if (!info?.report_id) {
+      toast.error("Reported user ID is missing. Cannot take action.");
+      return;
+    }
+
+    try {
+      const response = await takeReportAction({
+        reportId,
+        actionType,
+        reported_id: info.report_id, // Pass reported_id in the body
+        action: actionType, // Pass action in the body as per API requirement
+      }).unwrap();
+      toast.success(response.message);
+    } catch (error) {
+      toast.error(error.data?.message || `Failed to ${actionType} user.`);
+    }
+  };
   const handleImageUpload = (e, key) => {
     const file = e.target.files[0];
     if (file) {
@@ -54,16 +77,10 @@ function CaseDetails({ isOpen, onClose, reportId }) {
 
   const actions = [
     {
-      id: "resolve",
+      id: "warn",
       label: "Resolve Case - Warning Issued",
       color: "bg-teal-500  text-white",
       icon: <FaCheckCircle />,
-    },
-    {
-      id: "warning",
-      label: "Send Final Warning",
-      color: "bg-orange-500  text-white",
-      icon: <IoWarning />,
     },
     {
       id: "suspend",
@@ -77,7 +94,7 @@ function CaseDetails({ isOpen, onClose, reportId }) {
       color: "bg-gray-500  text-white",
       icon: <FaTimesCircle />,
     },
-  ];
+  ]; // warn - suspend - dismiss
 
   const evidenceItems = [
     {
@@ -290,8 +307,9 @@ function CaseDetails({ isOpen, onClose, reportId }) {
                           {actions.map((action) => (
                             <button
                               key={action.id}
-                              onClick={() => setSelectedAction(action.id)}
-                              className={`w-full flex items-center justify-center gap-2 py-3 px-4 rounded-lg font-medium transition-colors focus:outline-none ${action.color} ${selectedAction === action.id ? "" : ""}`}
+                              onClick={() => handleTakeAction(action.id)}
+                              disabled={isTakingAction}
+                              className={`w-full flex items-center justify-center gap-2 py-3 px-4 rounded-lg font-medium transition-colors focus:outline-none ${action.color} disabled:bg-gray-400 disabled:cursor-not-allowed`}
                             >
                               <span>{action.icon}</span>
                               {action.label}
