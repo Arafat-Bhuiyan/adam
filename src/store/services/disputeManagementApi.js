@@ -1,7 +1,7 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { sub } from "date-fns";
 
-// Job Management API slice
+// Dispute Management API slice
 const baseUrl = import.meta.env.VITE_BASE_URL;
 
 export const disputeManagementApi = createApi({

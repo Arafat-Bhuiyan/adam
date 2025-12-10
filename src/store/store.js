@@ -6,6 +6,7 @@ import { jobManagementApi } from "./services/jobManagementApi";
 import { jobMatchingApi } from "./services/jobMatchingApi";
 import { settingApi } from "./services/settingApi";
 import { disputeManagementApi } from "./services/disputeManagementApi";
+import { communicationApi } from "./services/communicationApi";
 import authReducer from "./authSlice";
 import { userApi } from "./services/user/userApi";
 
@@ -20,8 +21,8 @@ export const store = configureStore({
     [settingApi.reducerPath]: settingApi.reducer,
     [userApi.reducerPath]: userApi.reducer,
     [disputeManagementApi.reducerPath]: disputeManagementApi.reducer,
+    [communicationApi.reducerPath]: communicationApi.reducer,
     auth: authReducer,
-    // add other reducers here
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().concat(
@@ -32,7 +33,8 @@ export const store = configureStore({
       jobMatchingApi.middleware,
       settingApi.middleware,
       userApi.middleware,
-      disputeManagementApi.middleware
+      disputeManagementApi.middleware,
+      communicationApi.middleware
     ),
 });
 
