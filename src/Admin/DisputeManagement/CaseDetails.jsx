@@ -205,97 +205,11 @@ function CaseDetails({ isOpen, onClose, reportId }) {
                 </div>
               </div>
               <div className="p-6">
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                <div className="flex flex-col lg:flex-row gap-8">
                   {/* Left Column */}
-                  <div className="space-y-6">
-                    {/* Evidence & Timeline Review */}
-                    <div className="rounded p-6 shadow-md">
-                      <h3 className="text-lg font-medium text-gray-900 mb-4">
-                        Evidence & Timeline Review
-                      </h3>{" "}
-                      <div className="flex items-center gap-2 mb-3">
-                        <FaFileImage className="text-[#00A6A6]" />
-                        <span className="font-medium text-gray-900">
-                          Submitted Evidence
-                        </span>
-                      </div>
-                      <div className="">
-                        <div className="space-y-2">
-                          {/* Screenshot 1 */}
-                          <div className="py-2 px-3 bg-white rounded border">
-                            <div className="flex justify-between items-center mt-2">
-                              <span className="text-gray-700 text-sm">
-                                ScreenShoot 1
-                              </span>
-                              <span className="text-sm text-gray-500">
-                                Dec 5, 9:20 AM
-                              </span>
-                            </div>
-
-                            {/* Upload area */}
-                            <label className="border py-3 my-2 h-[130px] w-full rounded-md flex items-center justify-center cursor-pointer">
-                              {images.one ? (
-                                <img
-                                  src={images.one}
-                                  alt="screenshot1"
-                                  className="h-[100px] w-[100px] self-start object-cover rounded-md" />
-                              ) : (
-                                <span className="text-gray-400 text-sm">
-                                  Click to upload
-                                </span>
-                              )}
-                              <input
-                                type="file"
-                                accept="image/*"
-                                className="hidden"
-                                onChange={(e) => handleImageUpload(e, "one")} />
-                            </label>
-
-                            <p className="text-[13px] text-gray-400">
-                              Messages from alternate account
-                            </p>
-                          </div>
-
-                          {/* Screenshot 2 */}
-                          <div className="py-2 px-3 bg-white rounded border">
-                            <div className="flex justify-between items-center mt-2">
-                              <span className="text-gray-700 text-sm">
-                                ScreenShoot 2
-                              </span>
-                              <span className="text-sm text-gray-500">
-                                Dec 5, 9:20 AM
-                              </span>
-                            </div>
-
-                            {/* Upload area */}
-                            <label className="border py-3 my-2 h-[130px] w-full rounded-md flex items-center justify-center cursor-pointer">
-                              {images.two ? (
-                                <img
-                                  src={images.two}
-                                  alt="screenshot2"
-                                  className="h-[100px] self-start w-[100px] object-cover rounded-md" />
-                              ) : (
-                                <span className="text-gray-400 text-sm">
-                                  Click to upload
-                                </span>
-                              )}
-                              <input
-                                type="file"
-                                accept="image/*"
-                                className="hidden"
-                                onChange={(e) => handleImageUpload(e, "two")} />
-                            </label>
-
-                            <p className="text-[13px] text-gray-400">
-                              Profile page showing continued attempts
-                            </p>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-
+                  <div className="w-full lg:w-1/2">
                     {/* Decision & Action */}
-                    <div className=" p-6 shadow-md rounded-md">
+                    <div className="p-6 shadow-md rounded-md h-full">
                       <h3 className="text-lg font-medium text-gray-900 mb-4">
                         Decision & Action
                       </h3>
@@ -321,9 +235,9 @@ function CaseDetails({ isOpen, onClose, reportId }) {
                   </div>
 
                   {/* Right Column */}
-                  <div className="space-y-6 shadow-md rounded-md p-5  self-start">
+                  <div className="w-full lg:w-1/2 space-y-6 shadow-md rounded-md p-5">
                     {/* Decision Summary */}
-                    <div className=" p-4">
+                    <div className="p-4">
                       <h3 className="text-lg font-medium text-gray-900 mb-4">
                         Decision Summary
                       </h3>
