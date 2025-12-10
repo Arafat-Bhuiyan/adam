@@ -1,12 +1,20 @@
 import { useState } from "react";
 import { FaBan, FaCheckCircle, FaTimesCircle } from "react-icons/fa";
 import { FaFileImage } from "react-icons/fa6";
+import toast from "react-hot-toast"; // Import toast library
 import { IoWarning } from "react-icons/io5";
-import { useGetReportDetailsQuery } from "../../store/services/disputeManagementApi";
+import {
+  useGetReportDetailsQuery,
+  useSubmitReportSummaryMutation,
+} from "../../store/services/disputeManagementApi";
 
 function CaseDetails({ isOpen, onClose, reportId }) {
   const [selectedAction, setSelectedAction] = useState("");
   const [images, setImages] = useState({ one: null, two: null });
+  const [decisionSummary, setDecisionSummary] = useState("");
+
+  const [submitReportSummary, { isLoading: isSubmitting }] =
+    useSubmitReportSummaryMutation();
 
   const {
     data: reportDetails,
@@ -17,6 +25,24 @@ function CaseDetails({ isOpen, onClose, reportId }) {
   });
 
   const info = reportDetails?.complaint_information;
+
+  const handleSubmitDecision = async () => {
+    if (!decisionSummary.trim()) {
+      toast.error("Please enter a decision summary.");
+      return;
+    }
+    try {
+      const response = await submitReportSummary({
+        reportId,
+        message: decisionSummary,
+      }).unwrap();
+      toast.success(response.message); // Show success message from API response
+      onClose(); // Close modal on success
+    } catch (error) {
+      toast.error(error.data?.message || "Failed to submit decision."); // Show error message
+      console.error("Failed to submit decision:", error); // Log full error for debugging
+    }
+  };
 
   const handleImageUpload = (e, key) => {
     const file = e.target.files[0];
@@ -283,11 +309,15 @@ function CaseDetails({ isOpen, onClose, reportId }) {
                       <h3 className="text-lg font-medium text-gray-900 mb-4">
                         Decision Summary
                       </h3>
-                      <div className="   rounded-lg">
+                      <div className="rounded-lg">
                         <textarea
                           rows={10}
+                          value={decisionSummary}
+                          onChange={(e) => setDecisionSummary(e.target.value)}
                           placeholder="Enter your decision summary and reasoning here. This will be logged and may be shared with relevant parties..."
-                          className="text-gray-700 rounded-md p-3 border h-[100px] w-full text-[13px] leading-relaxed" />
+                          className="text-gray-700 rounded-md p-3 border h-[100px] w-full text-[13px] leading-relaxed"
+                          disabled={isSubmitting}
+                        />
                       </div>
                     </div>
 
@@ -305,7 +335,11 @@ function CaseDetails({ isOpen, onClose, reportId }) {
                       </div>
                     </div>
                     <div className="flex justify-end">
-                      <button className=" bg-[#C9A14A] text-white font-medium py-2 px-5 rounded-lg transition-colors">
+                      <button
+                        onClick={handleSubmitDecision}
+                        disabled={isSubmitting}
+                        className=" bg-[#C9A14A] text-white font-medium py-2 px-5 rounded-lg transition-colors disabled:bg-gray-400 disabled:cursor-not-allowed"
+                      >
                         Submit Decision
                       </button>
                     </div>

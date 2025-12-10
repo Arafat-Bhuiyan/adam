@@ -1,4 +1,5 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+import { sub } from "date-fns";
 
 // Job Management API slice
 const baseUrl = import.meta.env.VITE_BASE_URL;
@@ -28,8 +29,22 @@ export const disputeManagementApi = createApi({
       query: (reportId) => `/accounts/admin/reports/${reportId}/`,
       providesTags: ["Reports"],
     }),
+
+    // POST - Send Summary To Both Parties
+    submitReportSummary: builder.mutation({
+      query: ({ reportId, ...body }) => ({
+        url: `/accounts/admin/report/${reportId}/send-message/`,
+        method: "POST",
+        body,
+      }),
+      invalidatesTags: ["Reports"],
+    }),
   }),
 });
 
 // Export hooks for usage in functional components
-export const { useGetReportsListQuery, useGetReportDetailsQuery } = disputeManagementApi;
+export const {
+  useGetReportsListQuery,
+  useGetReportDetailsQuery,
+  useSubmitReportSummaryMutation,
+} = disputeManagementApi;
