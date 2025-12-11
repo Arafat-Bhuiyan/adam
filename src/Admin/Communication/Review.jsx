@@ -7,7 +7,7 @@ import ContentReviewDetails from "./ContentReviewDetails";
 const Review = ({onPageShow}) => {
   const [contentType, setContentType] = useState("All Types");
   const [reportReason, setReportReason] = useState("All Reasons");
-  const [isDetailsOpen, setIsDetailsOpen] = useState(false);
+  const [selectedReportId, setSelectedReportId] = useState(null);
 
   const {
     data: inappropriateMessages,
@@ -15,8 +15,8 @@ const Review = ({onPageShow}) => {
     isError,
   } = useGetInappropriateMessagesQuery();
 
-  const openDetailsModal = () => {
-    setIsDetailsOpen(true);
+  const openDetailsModal = (id) => {
+    setSelectedReportId(id);
   };
 
   return (
@@ -105,7 +105,7 @@ const Review = ({onPageShow}) => {
           !isError &&
           inappropriateMessages?.map((item) => (
             <div
-              onClick={openDetailsModal}
+              onClick={() => openDetailsModal(item.id)}
               key={item.id}
               className="flex items-center justify-between p-4 transition-colors cursor-pointer"
             >
@@ -149,9 +149,9 @@ const Review = ({onPageShow}) => {
           ))}
       </div>
       <ContentReviewDetails
-        isOpen={isDetailsOpen}
-        onClose={() => setIsDetailsOpen(false)}
-        contentItem={true}
+        isOpen={!!selectedReportId}
+        onClose={() => setSelectedReportId(null)}
+        reportId={selectedReportId}
       />
     </div>
   );

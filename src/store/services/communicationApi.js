@@ -5,7 +5,7 @@ const baseUrl = import.meta.env.VITE_BASE_URL;
 
 export const communicationApi = createApi({
   reducerPath: "communicationApi",
-  tagTypes: ["Communication"],
+  tagTypes: ["Communication", "InappropriateMessages"],
   baseQuery: fetchBaseQuery({
     baseUrl,
     prepareHeaders: (headers, { getState }) => {
@@ -22,8 +22,20 @@ export const communicationApi = createApi({
       query: () => "/communication/admin/reports/inappropriate/",
       providesTags: ["InappropriateMessages"],
     }),
+
+    // Get Single Report Message Details View
+    getInappropriateMessageDetails: builder.query({
+      query: (reportId) =>
+        `/communication/admin/reports/inappropriate/${reportId}/`,
+      providesTags: (result, error, reportId) => [
+        { type: "InappropriateMessages", id: reportId },
+      ],
+    }),
   }),
 });
 
 // Export hooks for usage in functional components
-export const { useGetInappropriateMessagesQuery } = communicationApi;
+export const {
+  useGetInappropriateMessagesQuery,
+  useGetInappropriateMessageDetailsQuery,
+} = communicationApi;
