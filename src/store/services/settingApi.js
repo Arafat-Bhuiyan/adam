@@ -29,6 +29,13 @@ export const settingApi = createApi({
     getPrivacyPolicy: builder.query({
       query: () => "/dashboard/privacy-policy/",
     }),
+    updatePrivacyPolicy: builder.mutation({
+      query: (body) => ({
+        url: "/dashboard/privacy-policy/",
+        method: "PATCH",
+        body,
+      }),
+    }),
   }),
 });
 
@@ -37,4 +44,5 @@ export const {
   useGetTermsAndConditionsQuery,
   useUpdateTermsAndConditionsMutation,
   useGetPrivacyPolicyQuery,
+  useUpdatePrivacyPolicyMutation,
 } = settingApi;

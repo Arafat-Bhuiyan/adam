@@ -9,6 +9,7 @@ import { disputeManagementApi } from "./services/disputeManagementApi";
 import { communicationApi } from "./services/communicationApi";
 import authReducer from "./authSlice";
 import { userApi } from "./services/user/userApi";
+import { patientManagementApi } from "./services/patientManagementApi";
 
 // Configure the Redux store with the RTK Query API reducer and middleware
 export const store = configureStore({
@@ -16,6 +17,7 @@ export const store = configureStore({
     [api.reducerPath]: api.reducer,
     [dashboardApi.reducerPath]: dashboardApi.reducer,
     [userManagementApi.reducerPath]: userManagementApi.reducer,
+    [patientManagementApi.reducerPath]: patientManagementApi.reducer,
     [jobManagementApi.reducerPath]: jobManagementApi.reducer,
     [jobMatchingApi.reducerPath]: jobMatchingApi.reducer,
     [settingApi.reducerPath]: settingApi.reducer,
@@ -34,7 +36,9 @@ export const store = configureStore({
       settingApi.middleware,
       userApi.middleware,
       disputeManagementApi.middleware,
-      communicationApi.middleware
+      communicationApi.middleware,
+      patientManagementApi.middleware,
+      disputeManagementApi.middleware
     ),
 });
 
