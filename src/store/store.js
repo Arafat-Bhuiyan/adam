@@ -5,6 +5,7 @@ import { userManagementApi } from "./services/userManagementApi";
 import { jobManagementApi } from "./services/jobManagementApi";
 import { jobMatchingApi } from "./services/jobMatchingApi";
 import { settingApi } from "./services/settingApi";
+import { disputeManagementApi } from "./services/disputeManagementApi";
 import authReducer from "./authSlice";
 import { userApi } from "./services/user/userApi";
 import { patientManagementApi } from "./services/patientManagementApi";
@@ -20,6 +21,7 @@ export const store = configureStore({
     [jobMatchingApi.reducerPath]: jobMatchingApi.reducer,
     [settingApi.reducerPath]: settingApi.reducer,
     [userApi.reducerPath]: userApi.reducer,
+    [disputeManagementApi.reducerPath]: disputeManagementApi.reducer,
     auth: authReducer,
     // add other reducers here
   },
@@ -32,7 +34,8 @@ export const store = configureStore({
       jobMatchingApi.middleware,
       settingApi.middleware,
       userApi.middleware,
-      patientManagementApi.middleware
+      patientManagementApi.middleware,
+      disputeManagementApi.middleware
     ),
 });
 
