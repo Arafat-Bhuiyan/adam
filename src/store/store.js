@@ -37,8 +37,7 @@ export const store = configureStore({
       userApi.middleware,
       disputeManagementApi.middleware,
       communicationApi.middleware,
-      patientManagementApi.middleware,
-      disputeManagementApi.middleware
+      patientManagementApi.middleware
     ),
 });
 
