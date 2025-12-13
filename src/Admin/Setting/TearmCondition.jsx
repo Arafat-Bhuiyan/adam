@@ -9,8 +9,13 @@ import {
 const TermsAndConditions = () => {
   const [currentView, setCurrentView] = useState("terms"); // 'terms' or 'privacy'
   const [isEditing, setIsEditing] = useState(false);
-  const { data, error: termsError, isLoading: termsLoading } = useGetTermsAndConditionsQuery();
-  const termsData = data ? JSON.parse(data.content) : null;
+  const {
+    data,
+    error: termsError,
+    isLoading: termsLoading,
+  } = useGetTermsAndConditionsQuery();
+    console.log("🚀 ~ TermsAndConditions ~ data:", data)
+  const termsData = data?.content ? JSON.parse(data.content || "") : "";
   const [
     updateTermsAndConditions,
     { isLoading: updateLoading, error: updateError },
