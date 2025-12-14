@@ -133,8 +133,6 @@ const DocumentManager = ({ isOpen, onClose, data, count }) => {
     return filtered;
   }, [data, searchTerm, documentType, dateFilter]);
 
-
-
   const totalDocuments = filteredData.length;
   const documentsPerPage = 6;
   const totalPages = Math.ceil(totalDocuments / documentsPerPage);
@@ -143,7 +141,7 @@ const DocumentManager = ({ isOpen, onClose, data, count }) => {
   const startIndex = (currentPage - 1) * documentsPerPage;
   const endIndex = startIndex + documentsPerPage;
   const paginatedData = filteredData.slice(startIndex, endIndex);
-  console.log("🚀 ~ DocumentManager ~ paginatedData:", paginatedData)
+  console.log("🚀 ~ DocumentManager ~ paginatedData:", paginatedData);
 
   // Generate page numbers to display
   const getPageNumbers = () => {
@@ -170,7 +168,6 @@ const DocumentManager = ({ isOpen, onClose, data, count }) => {
   }, [searchTerm, documentType, dateFilter]);
 
   const handleAction = async (docId, action) => {
-    debugger;
     console.log(`Document ${docId} -> ${action}`);
     setSelectedAction((prev) => ({ ...prev, [docId]: action }));
 
@@ -182,7 +179,7 @@ const DocumentManager = ({ isOpen, onClose, data, count }) => {
 
       if (result.data) {
         console.log("Profile action successful:", result.data);
-        toast.success("Business Owner account status updated to approved.");
+        toast.success(`Profile action successful: ${action.charAt(0).toUpperCase() + action.slice(1)}`);
         // Optionally, you can update the local state or refetch data here
       } else if (result.error) {
         console.error("Profile action failed:", result.error);
