@@ -1,22 +1,13 @@
-import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+import { createApi } from "@reduxjs/toolkit/query/react";
+import { baseQueryWithReauth } from "../baseQuery";
 import { sub } from "date-fns";
 
 // Dispute Management API slice
-const baseUrl = import.meta.env.VITE_BASE_URL;
 
 export const disputeManagementApi = createApi({
   reducerPath: "disputeManagementApi",
   tagTypes: ["Disputes"],
-  baseQuery: fetchBaseQuery({
-    baseUrl,
-    prepareHeaders: (headers, { getState }) => {
-      let token = getState()?.auth?.token;
-      if (token) {
-        headers.set("authorization", `Bearer ${token}`);
-      }
-      return headers;
-    },
-  }),
+  baseQuery: baseQueryWithReauth,
   endpoints: (builder) => ({
     // GET all reports lists for admin dispute management
     getReportsList: builder.query({

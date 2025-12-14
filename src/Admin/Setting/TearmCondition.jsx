@@ -14,8 +14,10 @@ const TermsAndConditions = () => {
     error: termsError,
     isLoading: termsLoading,
   } = useGetTermsAndConditionsQuery();
-    console.log("🚀 ~ TermsAndConditions ~ data:", data)
+
   const termsData = data?.content ? JSON.parse(data.content || "") : "";
+  console.log("🚀 ~ TermsAndConditions ~ termsData:", termsData)
+
   const [
     updateTermsAndConditions,
     { isLoading: updateLoading, error: updateError },
